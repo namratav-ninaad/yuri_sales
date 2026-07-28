@@ -1,32 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_images.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
-import 'package:yuri_sale/core/routes/app_routes.dart';
-import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_network_image.dart';
 import 'package:yuri_sale/core/widgets/common_outline_button.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/features/product/data/model/product_model.dart';
-import 'package:yuri_sale/features/product/domain/entities/add_cart_data.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_bloc.dart';
-import 'package:yuri_sale/features/product/presentation/bloc/product_event.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_state.dart';
 
 class ProductCard extends StatelessWidget {
   final ProductModel product;
+  final Function() onTap;
 
-  const ProductCard({super.key, required this.product});
+  const ProductCard({super.key, required this.product, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: AppColorsConstants.greyC8),
+        border: Border.all(color: context.greyC8),
       ),
       child: Padding(
         padding: const EdgeInsets.all(AppSizes.p6),
@@ -48,7 +45,7 @@ class ProductCard extends StatelessWidget {
             CommonTextWidget(
               overFlow: TextOverflow.ellipsis,
               title: product.name,
-              color: AppColorsConstants.black,
+              color: context.black,
               fontWeight: FontWeight.w700,
               fontSize: AppSizes.f14,
             ),
@@ -56,7 +53,7 @@ class ProductCard extends StatelessWidget {
             // Price
             CommonTextWidget(
               title: product.list_price.toString(),
-              color: AppColorsConstants.primaryRedColor,
+              color: context.primaryRedColor,
               fontWeight: FontWeight.w500,
               fontSize: AppSizes.f14,
             ),
@@ -66,7 +63,7 @@ class ProductCard extends StatelessWidget {
               AppSizes.h4,
               CommonTextWidget(
                 title: product.warehouse_stock.first.available_stock.toString(),
-                color: AppColorsConstants.grey89,
+                color: context.grey89,
                 fontWeight: FontWeight.w500,
                 fontSize: AppSizes.f12,
               ),
@@ -82,7 +79,7 @@ class ProductCard extends StatelessWidget {
                   AppSizes.w4,
                   CommonTextWidget(
                     title: product.warehouse_stock.first.warehouse_name,
-                    color: AppColorsConstants.black,
+                    color: context.black,
                     fontWeight: FontWeight.w400,
                     fontSize: AppSizes.f12,
                   ),
@@ -95,15 +92,7 @@ class ProductCard extends StatelessWidget {
               builder: (context, state) {
                 return CommonOutlineButton(
                   isLoading: state.loadingProductId == product.id,
-                  onTap: product.already_in_cart
-                      ? () => AppRoutes.pushNamed(RouteNames.cartPage)
-                      : () {
-                          context.read<ProductBloc>().add(
-                            AddCartEvent(
-                              AddCartData(productId: product.id.toInt()),
-                            ),
-                          );
-                        },
+                  onTap: onTap,
                   borderRadius: AppSizes.r8,
                   imagePath: product.already_in_cart
                       ? null
@@ -113,8 +102,8 @@ class ProductCard extends StatelessWidget {
                       : AppStringsConstants.addToCart,
                   height: AppSizes.hS35,
                   fontWeight: FontWeight.w600,
-                  borderColor: AppColorsConstants.primaryRedColor,
-                  textColor: AppColorsConstants.primaryRedColor,
+                  borderColor: context.primaryRedColor,
+                  textColor: context.primaryRedColor,
                 );
               },
             ),

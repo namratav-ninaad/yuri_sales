@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:yuri_sale/features/profile/data/model/profile_model.dart';
 
 class ProfileState extends Equatable {
@@ -15,6 +16,7 @@ class ProfileState extends Equatable {
   final String? error;
   final ProfileModel? profile;
   final File? selectedProfileImage;
+  final ThemeMode themeMode;
 
   const ProfileState({
     this.oldPassword = '',
@@ -27,6 +29,7 @@ class ProfileState extends Equatable {
     this.isSuccess = false,
     this.error,
     this.profile,
+    this.themeMode = ThemeMode.system,
     this.selectedProfileImage,
   });
 
@@ -42,6 +45,7 @@ class ProfileState extends Equatable {
     String? error,
     ProfileModel? profile,
     File? selectedProfileImage,
+    ThemeMode? themeMode,
   }) {
     return ProfileState(
       oldPassword: oldPassword ?? this.oldPassword,
@@ -56,6 +60,7 @@ class ProfileState extends Equatable {
       isSuccess: isSuccess ?? this.isSuccess,
       error: error,
       profile: profile ?? this.profile,
+      themeMode: themeMode ?? this.themeMode,
     );
   }
 
@@ -72,5 +77,6 @@ class ProfileState extends Equatable {
     selectedProfileImage,
     error,
     profile,
+    themeMode,
   ];
 }

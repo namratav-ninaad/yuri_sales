@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_images.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
 import 'package:yuri_sale/core/share_preference/share_pref_helper.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
@@ -36,6 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.white,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -47,11 +50,12 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             //App Logo
-            CommonAssetsImageWidget(imagePath: AppImagesConstants.logoIcon),
+            CommonAssetsImageWidget(imagePath: AppImagesConstants.logoIcon,color: context.white),
             //App Title
-            CommonTextWidget(title: AppStringsConstants.appName),
+            CommonTextWidget(title: AppStringsConstants.appName,color: AppColorsConstants.white),
           ],
         ),
       ),

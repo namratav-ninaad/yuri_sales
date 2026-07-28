@@ -3,7 +3,6 @@ import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/error/exeptions.dart';
 import 'package:yuri_sale/core/error/failures.dart';
 import 'package:yuri_sale/core/model/common_response.dart';
-import 'package:yuri_sale/features/cart/data/model/cart.dart';
 import 'package:yuri_sale/features/product/data/model/product_model.dart';
 import 'package:yuri_sale/features/product/domain/entities/add_cart_data.dart';
 import 'package:yuri_sale/features/product/domain/entities/product_filter_data.dart';

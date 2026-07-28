@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
@@ -16,6 +16,8 @@ import 'package:yuri_sale/features/cart/presentation/bloc/cart_event.dart';
 import 'package:yuri_sale/features/cart/presentation/bloc/cart_state.dart';
 import 'package:yuri_sale/features/cart/presentation/widget/cart_card.dart';
 import 'package:yuri_sale/features/cart/presentation/widget/cart_sumary.dart';
+import 'package:yuri_sale/features/product/presentation/bloc/product_bloc.dart';
+import 'package:yuri_sale/features/product/presentation/bloc/product_event.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -28,6 +30,7 @@ class _CartPageState extends State<CartPage> {
   @override
   void initState() {
     super.initState();
+    context.read<CartBloc>().add(ResetCart());
     context.read<CartBloc>().add(FetchCart());
   }
 
@@ -35,7 +38,7 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     var bloc = context.read<CartBloc>();
     return Scaffold(
-      backgroundColor: AppColorsConstants.white,
+      backgroundColor: context.white,
       appBar: CommonAppbarWidget(title: AppStringsConstants.myCart),
       body: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {
@@ -86,7 +89,7 @@ class _CartPageState extends State<CartPage> {
                                     bloc.add(
                                       DecreaseQuantity(
                                         data: UpdateCartQty(
-                                          lineId: cartData.line_id.toInt(),
+                                          lineId: cartData.lineId.toInt(),
                                           qty: cartData.qty.toInt() - 1,
                                         ),
                                       ),
@@ -95,16 +98,21 @@ class _CartPageState extends State<CartPage> {
                                   onIncrease: () => bloc.add(
                                     IncreaseQuantity(
                                       data: UpdateCartQty(
-                                        lineId: cartData.line_id.toInt(),
+                                        lineId: cartData.lineId.toInt(),
                                         qty: cartData.qty.toInt() + 1,
                                       ),
                                     ),
                                   ),
-                                  onRemove: () => bloc.add(
-                                    RemoveCart(
-                                      lineId: cartData.line_id.toInt(),
-                                    ),
-                                  ),
+                                  onRemove: () {
+                                    bloc.add(
+                                      RemoveCart(
+                                        lineId: cartData.lineId.toInt(),
+                                      ),
+                                    );
+                                    context.read<ProductBloc>().add(
+                                      FetchProductsEvent(''),
+                                    );
+                                  },
                                 );
                               },
                             ),
@@ -113,10 +121,10 @@ class _CartPageState extends State<CartPage> {
                     // Summary + Button
                     Container(
                       decoration: BoxDecoration(
-                        color: AppColorsConstants.white,
+                        color: context.white,
                         boxShadow: [
                           BoxShadow(
-                            color: AppColorsConstants.black,
+                            color: context.black,
                             blurRadius: 10,
                             spreadRadius: 0,
                             offset: const Offset(0, 4),
@@ -129,10 +137,12 @@ class _CartPageState extends State<CartPage> {
                           children: [
                             if (state.cartData != null)
                               CartSummary(
-                                subtotal: state.cartData!.amount_untaxed
-                                    .toDouble(),
-                                vat: state.cartData!.amount_tax.toDouble(),
-                                total: state.cartData!.amount_total.toDouble(),
+                                subtotal:
+                                    '${state.cartData!.currency} ${state.cartData!.amountUntaxed}',
+                                vat:
+                                    '${state.cartData!.currency} ${state.cartData!.amountTax}',
+                                total:
+                                    '${state.cartData!.currency} ${state.cartData!.amountTotal}',
                               ),
                             AppSizes.h24,
                             CommonButton(

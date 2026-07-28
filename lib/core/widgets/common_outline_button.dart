@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 import 'package:yuri_sale/core/widgets/common_circular_progress_indicator.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
@@ -41,7 +41,7 @@ class CommonOutlineButton extends StatelessWidget {
         height: height ?? AppSizes.hS45,
         padding: padding,
         decoration: BoxDecoration(
-          border: Border.all(color: borderColor ?? AppColorsConstants.greyC8),
+          border: Border.all(color: borderColor ?? context.greyC8),
           borderRadius: BorderRadius.circular(borderRadius ?? AppSizes.r12),
         ),
         alignment: Alignment.center,
@@ -65,7 +65,7 @@ class CommonOutlineButton extends StatelessWidget {
                   ],
                   CommonTextWidget(
                     title: title,
-                    color: textColor ?? AppColorsConstants.black,
+                    color: textColor ?? context.black,
                     fontSize: fontSize ?? AppSizes.f16,
                     fontWeight: fontWeight ?? FontWeight.w400,
                   ),

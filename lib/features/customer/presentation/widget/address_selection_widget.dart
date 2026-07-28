@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/enum/app_enum.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
 class AddressSelectionWidget extends StatelessWidget {
@@ -22,8 +22,9 @@ class AddressSelectionWidget extends StatelessWidget {
       AddressType.billingAddress,
     ];
 
-    return SizedBox(
-      width: double.infinity,
+    return RadioGroup<AddressType>(
+      groupValue: groupValue,
+      onChanged: onChanged,
       child: Wrap(
         spacing: AppSizes.p4,
         children: addressList.map((item) {
@@ -32,14 +33,12 @@ class AddressSelectionWidget extends StatelessWidget {
             children: [
               Radio<AddressType>(
                 value: item,
-                groupValue: groupValue,
-                activeColor: AppColorsConstants.primaryRedColor,
-                onChanged: onChanged,
+                activeColor: context.primaryRedColor,
               ),
               CommonTextWidget(
                 title: item.label,
                 fontSize: AppSizes.f14,
-                color: AppColorsConstants.black,
+                color: context.black,
               ),
             ],
           );

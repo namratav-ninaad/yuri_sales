@@ -61,6 +61,11 @@ class SharedPrefHelper {
     return prefs.containsKey(AppStringsConstants.accessToken);
   }
 
+  static Future<void> remove(String key) async {
+    final pref = await SharedPreferences.getInstance();
+    await pref.remove(key);
+  }
+
   static Future<void> clearAll() async {
     final prefs = await _prefs;
     await prefs.clear();

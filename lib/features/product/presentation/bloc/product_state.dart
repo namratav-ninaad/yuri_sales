@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:yuri_sale/features/cart/data/model/cart.dart';
 import 'package:yuri_sale/features/product/data/model/product_model.dart';
 
 class ProductState extends Equatable {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_images.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/features/customer/presentation/page/customer_page.dart';
@@ -11,6 +11,8 @@ import 'package:yuri_sale/features/dashboard/presentation/pages/dashboard_page.d
 import 'package:yuri_sale/features/home/presentation/bloc/home_bloc.dart';
 import 'package:yuri_sale/features/home/presentation/bloc/home_event.dart';
 import 'package:yuri_sale/features/home/presentation/bloc/home_state.dart';
+import 'package:yuri_sale/features/order/domain/entities/order_data.dart';
+import 'package:yuri_sale/features/order/presentation/page/order_page.dart';
 import 'package:yuri_sale/features/product/presentation/page/product_page.dart';
 import 'package:yuri_sale/features/profile/presentation/page/profile_page.dart';
 
@@ -27,12 +29,7 @@ class _HomePageState extends State<HomePage> {
       case 0:
         return DashboardPage();
       case 1:
-        return Center(
-          child: const CommonTextWidget(
-            title: 'Order',
-            color: AppColorsConstants.black,
-          ),
-        );
+        return OrderPage(data: OrderData());
       case 2:
         return ProductPage();
       case 3:
@@ -54,9 +51,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) => Scaffold(
-        backgroundColor: AppColorsConstants.white,
+        backgroundColor: context.white,
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: AppColorsConstants.white,
+          backgroundColor: context.white,
           elevation: 1,
           selectedLabelStyle: TextStyle(
             fontWeight: FontWeight.w500,
@@ -67,8 +64,8 @@ class _HomePageState extends State<HomePage> {
             fontSize: AppSizes.f12,
           ),
           currentIndex: state.selectedIndex,
-          selectedItemColor: AppColorsConstants.primaryRedColor,
-          unselectedItemColor: AppColorsConstants.greyA3,
+          selectedItemColor: context.primaryRedColor,
+          unselectedItemColor: context.greyA3,
           type: BottomNavigationBarType.fixed,
           onTap: (index) {
             context.read<HomeBloc>().add(ChangeBottomNavEvent(index));
@@ -80,8 +77,8 @@ class _HomePageState extends State<HomePage> {
                 imageHeight: AppSizes.icon24,
                 imageWidth: AppSizes.icon24,
                 color: state.selectedIndex == 0
-                    ? AppColorsConstants.primaryRedColor
-                    : AppColorsConstants.greyA3,
+                    ? context.primaryRedColor
+                    : context.greyA3,
               ),
               label: AppStringsConstants.dashboard,
             ),
@@ -91,8 +88,8 @@ class _HomePageState extends State<HomePage> {
                 imageHeight: AppSizes.icon24,
                 imageWidth: AppSizes.icon24,
                 color: state.selectedIndex == 1
-                    ? AppColorsConstants.primaryRedColor
-                    : AppColorsConstants.greyA3,
+                    ? context.primaryRedColor
+                    : context.greyA3,
               ),
               label: AppStringsConstants.orders,
             ),
@@ -102,8 +99,8 @@ class _HomePageState extends State<HomePage> {
                 imageHeight: AppSizes.icon24,
                 imageWidth: AppSizes.icon24,
                 color: state.selectedIndex == 2
-                    ? AppColorsConstants.primaryRedColor
-                    : AppColorsConstants.greyA3,
+                    ? context.primaryRedColor
+                    : context.greyA3,
               ),
               label: AppStringsConstants.products,
             ),
@@ -113,8 +110,8 @@ class _HomePageState extends State<HomePage> {
                 imageHeight: AppSizes.icon24,
                 imageWidth: AppSizes.icon24,
                 color: state.selectedIndex == 3
-                    ? AppColorsConstants.primaryRedColor
-                    : AppColorsConstants.greyA3,
+                    ? context.primaryRedColor
+                    : context.greyA3,
               ),
               label: AppStringsConstants.customer,
             ),
@@ -124,8 +121,8 @@ class _HomePageState extends State<HomePage> {
                 imageHeight: AppSizes.icon24,
                 imageWidth: AppSizes.icon24,
                 color: state.selectedIndex == 4
-                    ? AppColorsConstants.primaryRedColor
-                    : AppColorsConstants.greyA3,
+                    ? context.primaryRedColor
+                    : context.greyA3,
               ),
               label: AppStringsConstants.profile,
             ),

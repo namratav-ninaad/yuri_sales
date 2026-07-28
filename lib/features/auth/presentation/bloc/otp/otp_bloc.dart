@@ -15,6 +15,11 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
     on<ResendOtp>(_resendOtp);
     on<OtpChanged>(_onOtpChanged);
     on<VerifyOtpSubmitted>(_verifyOtp);
+    on<ResetOtp>(_onResetOtp);
+  }
+
+  void _onResetOtp(ResetOtp event, Emitter<OtpState> emit) {
+    emit(OtpState());
   }
 
   void _startTimer(StartOtpTimer event, Emitter<OtpState> emit) {
@@ -52,17 +57,25 @@ class OtpBloc extends Bloc<OtpEvent, OtpState> {
     VerifyOtpSubmitted event,
     Emitter<OtpState> emit,
   ) async {
-    emit(state.copyWith(isLoading: true, isSuccess: false));
+    emit(state.copyWith(isLoading: true, isSuccess: false, isOTPSubmit: false));
     final result = await verifyOtpUseCase(
       data: VerifyOtpData(email: event.email, otp: event.otp),
     );
 
     result.fold(
       (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure.message));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            errorMessage: failure.message,
+            isOTPSubmit: false,
+          ),
+        );
       },
       (message) {
-        emit(state.copyWith(isLoading: false, isSuccess: true));
+        emit(
+          state.copyWith(isLoading: false, isSuccess: true, isOTPSubmit: true),
+        );
       },
     );
   }

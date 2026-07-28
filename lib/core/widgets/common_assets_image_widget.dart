@@ -4,7 +4,7 @@ import 'package:yuri_sale/core/constants/app_sizes.dart';
 class CommonAssetsImageWidget extends StatelessWidget {
   const CommonAssetsImageWidget({
     super.key,
-    this.imageHeight = AppSizes.image180,
+    this.imageHeight = AppSizes.image100,
     this.imageWidth = AppSizes.image180,
     required this.imagePath,
     this.color,
@@ -21,6 +21,7 @@ class CommonAssetsImageWidget extends StatelessWidget {
       imagePath,
       height: imageHeight,
       width: imageWidth,
+      fit: BoxFit.contain,
       color: color,
     );
   }

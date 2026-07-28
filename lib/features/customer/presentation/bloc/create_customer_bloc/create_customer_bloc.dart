@@ -5,6 +5,7 @@ import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/enum/app_enum.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
+import 'package:yuri_sale/core/widgets/date_helper.dart';
 import 'package:yuri_sale/features/customer/data/model/company_model.dart';
 import 'package:yuri_sale/features/customer/data/model/contact_tag.dart';
 import 'package:yuri_sale/features/customer/data/model/country.dart';
@@ -310,7 +311,7 @@ class CreateCustomerBloc
     emit(state.copyWith(isSaving: true));
 
     final now = DateTime.now();
-    final timeString = DateFormat('h:mm a').format(now);
+    final timeString = DateHelper.time(now.toIso8601String());
 
     Note newNote;
 

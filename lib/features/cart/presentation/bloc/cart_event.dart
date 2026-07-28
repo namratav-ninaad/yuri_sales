@@ -8,6 +8,8 @@ abstract class CartEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class ResetCart extends CartEvent {}
+
 class FetchCart extends CartEvent {
   final bool? isFirstTimeLoading;
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_circular_progress_indicator.dart';
 import 'package:yuri_sale/core/widgets/common_empty_text.dart';
@@ -36,7 +36,7 @@ class _CustomerPageState extends State<CustomerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorsConstants.white,
+      backgroundColor: context.white,
       appBar: CommonAppbarWidget(
         leading: widget.backButtonShow ? null : AppSizes.h0,
         title: widget.backButtonShow ? AppStringsConstants.customer : '',
@@ -58,7 +58,7 @@ class _CustomerPageState extends State<CustomerPage> {
                     },
                     prefixIcon: Icons.search_outlined,
                     controller: searchController,
-                    labelText: AppStringsConstants.searchCustomer,
+                    labelText: AppStringsConstants.searchOrder,
                   ),
                 ),
                 AppSizes.w12,
@@ -67,13 +67,13 @@ class _CustomerPageState extends State<CustomerPage> {
                   child: Container(
                     padding: EdgeInsets.all(AppSizes.p8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: AppColorsConstants.greyC8),
+                      border: Border.all(color: context.greyC8),
                       borderRadius: BorderRadius.circular(AppSizes.r12),
                     ),
                     child: CommonIconWidget(
                       icon: Icons.add_circle_outline,
                       size: AppSizes.icon24,
-                      color: AppColorsConstants.primaryRedColor,
+                      color: context.primaryRedColor,
                     ),
                   ),
                 ),

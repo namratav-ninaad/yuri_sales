@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_circular_progress_indicator.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
@@ -24,7 +25,7 @@ class CommonButton extends StatelessWidget {
         height: AppSizes.hS45,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: AppColorsConstants.primaryRedColor,
+          color: context.primaryRedColor,
           borderRadius: BorderRadius.circular(AppSizes.r12),
         ),
         alignment: Alignment.center,

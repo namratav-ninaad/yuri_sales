@@ -1,3 +1,4 @@
+// ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:yuri_sale/features/customer/domain/entities/customer_filter_data.dart';
 import 'package:yuri_sale/features/customer/domain/usecases/customer_uc.dart';

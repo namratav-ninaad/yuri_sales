@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
 class CommonDropdown<T> extends StatelessWidget {
@@ -33,46 +33,34 @@ class CommonDropdown<T> extends StatelessWidget {
         title: hintText,
         fontSize: AppSizes.f14,
         fontWeight: FontWeight.w400,
-        color: enabled
-            ? AppColorsConstants.grey89
-            : AppColorsConstants.grey89.withValues(alpha: 0.5),
+        color: enabled ? context.grey89 : context.grey89.withValues(alpha: 0.5),
       ),
       decoration: InputDecoration(
         enabled: enabled,
         filled: true,
-        fillColor: enabled
-            ? AppColorsConstants.white
-            : AppColorsConstants.greyF2,
+        fillColor: enabled ? context.white : context.greyF2,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.p12),
           borderSide: BorderSide(
-            color: enabled
-                ? AppColorsConstants.greyC8
-                : AppColorsConstants.greyF2,
+            color: enabled ? context.greyC8 : context.greyF2,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
           borderSide: BorderSide(
-            color: enabled
-                ? AppColorsConstants.greyC8
-                : AppColorsConstants.greyF2,
+            color: enabled ? context.greyC8 : context.greyF2,
           ),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
           borderSide: BorderSide(
-            color: enabled
-                ? AppColorsConstants.greyC8
-                : AppColorsConstants.greyF2,
+            color: enabled ? context.greyC8 : context.greyF2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
           borderSide: BorderSide(
-            color: enabled
-                ? AppColorsConstants.greyC8
-                : AppColorsConstants.greyF2,
+            color: enabled ? context.greyC8 : context.greyF2,
           ),
         ),
         contentPadding: const EdgeInsets.symmetric(
@@ -88,7 +76,7 @@ class CommonDropdown<T> extends StatelessWidget {
             title: itemLabel(item),
             fontSize: AppSizes.f14,
             fontWeight: FontWeight.w500,
-            color: AppColorsConstants.black,
+            color: context.black,
             overFlow: TextOverflow.ellipsis,
           ),
         );

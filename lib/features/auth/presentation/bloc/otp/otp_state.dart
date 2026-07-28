@@ -8,6 +8,7 @@ class OtpState extends Equatable {
   final int remainingSeconds;
   final bool canResend;
   final String? errorMessage;
+  final bool isOTPSubmit;
 
   const OtpState({
     this.otpValue = '',
@@ -17,12 +18,14 @@ class OtpState extends Equatable {
     this.remainingSeconds = 30,
     this.canResend = false,
     this.errorMessage,
+    this.isOTPSubmit = false,
   });
 
   OtpState copyWith({
     String? otpValue,
     String? otpError,
     bool? isLoading,
+    bool? isOTPSubmit,
     bool? isSuccess,
     int? remainingSeconds,
     bool? canResend,
@@ -35,6 +38,7 @@ class OtpState extends Equatable {
       isSuccess: isSuccess ?? this.isSuccess,
       remainingSeconds: remainingSeconds ?? this.remainingSeconds,
       canResend: canResend ?? this.canResend,
+      isOTPSubmit: isOTPSubmit ?? this.isOTPSubmit,
       errorMessage: errorMessage,
     );
   }
@@ -48,5 +52,6 @@ class OtpState extends Equatable {
     remainingSeconds,
     canResend,
     errorMessage,
+    isOTPSubmit,
   ];
 }

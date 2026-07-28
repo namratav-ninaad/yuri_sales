@@ -38,6 +38,7 @@ class AppSizes {
   static const double hS150 = 150.0;
 
   // Padding
+  static const double p2 = 2.0;
   static const double p4 = 4.0;
   static const double p6 = 6.0;
   static const double p8 = 8.0;
@@ -49,6 +50,8 @@ class AppSizes {
   static const double p60 = 60.0;
 
   // Radius
+  static const double r4 = 4.0;
+  static const double r5 = 5.0;
   static const double r8 = 8.0;
   static const double r12 = 12.0;
   static const double r16 = 16.0;
@@ -61,6 +64,7 @@ class AppSizes {
   static const double icon20 = 20.0;
   static const double icon22 = 22.0;
   static const double icon24 = 24.0;
+  static const double icon28 = 28.0;
   static const double icon32 = 32.0;
   static const double icon40 = 40.0;
   static const double icon50 = 50.0;
@@ -76,6 +80,7 @@ class AppSizes {
   static const double chart70 = 70.0;
 
   // Image Sizes
+  static const double image50 = 50.0;
   static const double image80 = 80.0;
   static const double image100 = 100.0;
   static const double image120 = 120.0;

@@ -4,22 +4,36 @@ part 'cart.g.dart';
 
 @JsonSerializable()
 class CartModel {
-  num cart_id;
-  String cart_name;
-  num total_items;
-  num amount_untaxed;
-  num amount_tax;
-  num amount_total;
-  String currency;
-  List<CartItem> cartProducts;
+  @JsonKey(name: 'cart_id')
+  final num? cartId;
+
+  @JsonKey(name: 'cart_name')
+  final String? cartName;
+
+  @JsonKey(name: 'total_items')
+  final num totalItems;
+
+  @JsonKey(name: 'amount_untaxed')
+  final num amountUntaxed;
+
+  @JsonKey(name: 'amount_tax')
+  final num amountTax;
+
+  @JsonKey(name: 'amount_total')
+  final num amountTotal;
+
+  final String currency;
+
+  @JsonKey(name: 'lines')
+  final List<CartItem> cartProducts;
 
   CartModel({
-    required this.cart_id,
-    required this.cart_name,
-    required this.total_items,
-    required this.amount_untaxed,
-    required this.amount_tax,
-    required this.amount_total,
+    this.cartId,
+    this.cartName,
+    required this.totalItems,
+    required this.amountUntaxed,
+    required this.amountTax,
+    required this.amountTotal,
     required this.currency,
     required this.cartProducts,
   });
@@ -32,19 +46,27 @@ class CartModel {
 
 @JsonSerializable()
 class CartItem {
-  num line_id;
-  num product_id;
-  String product_name;
-  String product_image;
-  num qty;
-  num price;
-  num subtotal;
+  @JsonKey(name: 'line_id')
+  final num lineId;
+
+  @JsonKey(name: 'product_id')
+  final num productId;
+
+  @JsonKey(name: 'product_name')
+  final String productName;
+
+  @JsonKey(name: 'product_image')
+  final String productImage;
+
+  final num qty;
+  final num price;
+  final num subtotal;
 
   CartItem({
-    required this.product_image,
-    required this.line_id,
-    required this.product_id,
-    required this.product_name,
+    required this.lineId,
+    required this.productId,
+    required this.productName,
+    required this.productImage,
     required this.qty,
     required this.price,
     required this.subtotal,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
 class CommonEmptyText extends StatelessWidget {
@@ -15,7 +15,7 @@ class CommonEmptyText extends StatelessWidget {
         title: title,
         fontSize: AppSizes.f16,
         fontWeight: FontWeight.w700,
-        color: AppColorsConstants.black,
+        color: context.black,
       ),
     );
   }

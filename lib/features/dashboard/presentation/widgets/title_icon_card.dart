@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
@@ -22,9 +22,9 @@ class TitleIconCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSizes.p8),
       decoration: BoxDecoration(
-        color: AppColorsConstants.white,
+        color: context.white,
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: AppColorsConstants.greyC8),
+        border: Border.all(color: context.greyC8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,14 +39,14 @@ class TitleIconCard extends StatelessWidget {
                 padding: const EdgeInsets.all(AppSizes.p8),
                 margin: EdgeInsets.only(bottom: AppSizes.p12),
                 decoration: BoxDecoration(
-                  color: AppColorsConstants.primaryRedColor.withValues(
+                  color: context.primaryRedColor.withValues(
                     alpha: 0.1,
                   ),
                   shape: BoxShape.circle,
                 ),
                 child: CommonAssetsImageWidget(
                   imagePath: imagePath,
-                  color: AppColorsConstants.primaryRedColor,
+                  color: context.primaryRedColor,
                   imageHeight: AppSizes.icon32,
                   imageWidth: AppSizes.icon32,
                 ),
@@ -55,7 +55,7 @@ class TitleIconCard extends StatelessWidget {
 
           CommonTextWidget(
             title: title,
-            color: AppColorsConstants.black,
+            color: context.black,
             fontSize: AppSizes.f10,
             fontWeight: FontWeight.w500,
           ),
@@ -67,7 +67,7 @@ class TitleIconCard extends StatelessWidget {
               children: [
                 CommonTextWidget(
                   title: value,
-                  color: AppColorsConstants.black,
+                  color: context.black,
                   fontSize: AppSizes.f14,
                   fontWeight: FontWeight.w700,
                 ),
@@ -78,14 +78,14 @@ class TitleIconCard extends StatelessWidget {
                     height: AppSizes.icon22,
                     padding: const EdgeInsets.all(AppSizes.p4),
                     decoration: BoxDecoration(
-                      color: AppColorsConstants.primaryRedColor.withValues(
+                      color: context.primaryRedColor.withValues(
                         alpha: 0.1,
                       ),
                       shape: BoxShape.circle,
                     ),
                     child: CommonAssetsImageWidget(
                       imagePath: imagePath,
-                      color: AppColorsConstants.primaryRedColor,
+                      color: context.primaryRedColor,
                       imageHeight: AppSizes.icon16,
                       imageWidth: AppSizes.icon16,
                     ),

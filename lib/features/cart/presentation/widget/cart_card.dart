@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_network_image.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
@@ -29,7 +30,7 @@ class CartCard extends StatelessWidget {
         CommonNetworkImage(
           height: AppSizes.image80,
           width: AppSizes.image80,
-          imageUrl: item.product_image,
+          imageUrl: item.productImage,
         ),
 
         AppSizes.w12,
@@ -39,17 +40,17 @@ class CartCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CommonTextWidget(
-                title: item.product_name,
+                title: item.productName,
                 fontSize: AppSizes.f14,
                 fontWeight: FontWeight.w600,
-                color: AppColorsConstants.black,
+                color: context.black,
               ),
               AppSizes.h4,
               CommonTextWidget(
                 title: item.price.toString(),
                 fontSize: AppSizes.f14,
                 fontWeight: FontWeight.w600,
-                color: AppColorsConstants.primaryRedColor,
+                color: context.primaryRedColor,
               ),
               AppSizes.h4,
               // Quantity and Remove controls
@@ -60,7 +61,7 @@ class CartCard extends StatelessWidget {
                     padding: EdgeInsets.all(AppSizes.p4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(AppSizes.r12),
-                      border: Border.all(color: AppColorsConstants.greyC8),
+                      border: Border.all(color: context.greyC8),
                     ),
                     child: Row(
                       children: [
@@ -68,18 +69,18 @@ class CartCard extends StatelessWidget {
                           icon: Icons.remove,
                           onTap: onDecrease,
                           color: item.qty <= 1
-                              ? AppColorsConstants.greyC8
-                              : AppColorsConstants.black,
+                              ? context.greyC8
+                              : context.black,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             horizontal: AppSizes.p12,
                           ),
                           child: CommonTextWidget(
-                            title: item.qty.toString(),
+                            title: item.qty.toInt().toString(),
                             fontSize: AppSizes.f14,
                             fontWeight: FontWeight.w600,
-                            color: AppColorsConstants.black,
+                            color: context.black,
                           ),
                         ),
                         CommonIconWidget(icon: Icons.add, onTap: onIncrease),

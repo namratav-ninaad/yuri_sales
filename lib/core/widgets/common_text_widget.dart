@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 
 class CommonTextWidget extends StatelessWidget {
   final String title;
@@ -12,7 +12,7 @@ class CommonTextWidget extends StatelessWidget {
 
   const CommonTextWidget({
     super.key,
-    this.title = 'eCommerce',
+    this.title = '',
     this.fontSize,
     this.fontWeight,
     this.color,
@@ -29,7 +29,7 @@ class CommonTextWidget extends StatelessWidget {
         overflow: overFlow,
         fontSize: fontSize ?? AppSizes.f28,
         fontWeight: fontWeight ?? FontWeight.w700,
-        color: color ?? AppColorsConstants.white,
+        color: color,
       ),
     );
   }

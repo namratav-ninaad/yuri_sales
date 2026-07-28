@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
 class TagWidget extends StatelessWidget {
@@ -28,18 +28,19 @@ class TagWidget extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         border: Border.all(
-          color: borderColor ?? AppColorsConstants.primaryRedColor,
+          color: borderColor ?? context.primaryRedColor,
         ),
         borderRadius: BorderRadius.circular(AppSizes.r8),
         color:
             backgroundColor ??
-            AppColorsConstants.primaryRedColor.withValues(alpha: 0.1),
+            context.primaryRedColor.withValues(alpha: 0.1),
       ),
       child: CommonTextWidget(
         title: title,
-        color: textColor ?? AppColorsConstants.primaryRedColor,
+        color: textColor ?? context.primaryRedColor,
         fontWeight: FontWeight.w500,
         fontSize: fontSize ?? AppSizes.f12,
+        overFlow: TextOverflow.ellipsis,
       ),
     );
   }

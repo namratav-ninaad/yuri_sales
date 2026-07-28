@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
 import 'package:yuri_sale/core/widgets/common_outline_button.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
@@ -35,7 +35,7 @@ class AddAttachmentBottomSheet extends StatelessWidget {
             title: '${AppStringsConstants.add} $title',
             fontSize: AppSizes.f16,
             fontWeight: FontWeight.w700,
-            color: AppColorsConstants.black,
+            color: context.black,
           ),
           AppSizes.h24,
           CommonButton(
@@ -70,8 +70,8 @@ class AddAttachmentBottomSheet extends StatelessWidget {
           CommonOutlineButton(
             title: 'Cancel',
             onTap: () =>  AppRoutes.pop(),
-            textColor: AppColorsConstants.grey89,
-            borderColor: AppColorsConstants.greyC8,
+            textColor: context.grey89,
+            borderColor: context.greyC8,
           ),
         ],
       ),

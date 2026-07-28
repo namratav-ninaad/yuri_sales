@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
@@ -19,10 +19,10 @@ class ProfileIconEditTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: CommonIconWidget(icon: icon, color: AppColorsConstants.black),
+      leading: CommonIconWidget(icon: icon, color: context.black),
       title: CommonTextWidget(
         title: title,
-        color: AppColorsConstants.black,
+        color: context.black,
         fontWeight: FontWeight.w700,
         fontSize: AppSizes.f14,
       ),

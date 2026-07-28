@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_images.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
+import 'package:yuri_sale/features/auth/presentation/widgets/common_logo_image.dart';
 import 'package:yuri_sale/features/dashboard/presentation/widgets/achievement_card.dart';
 import 'package:yuri_sale/features/dashboard/presentation/widgets/customer_tile.dart';
 import 'package:yuri_sale/features/dashboard/presentation/widgets/product_tile.dart';
@@ -49,7 +50,11 @@ class DashboardPage extends StatelessWidget {
     return Scaffold(
       appBar: CommonAppbarWidget(
         leading: AppSizes.h0,
-        title: AppStringsConstants.logo,
+        title: AppStringsConstants.goToHome,
+        icon: CommonLogoImage(
+          imageWidth: AppSizes.image120,
+          imageHeight: AppSizes.image80,
+        ),
         action: [
           CommonAssetsImageWidget(
             imagePath: AppImagesConstants.notificationIcon,
@@ -59,7 +64,7 @@ class DashboardPage extends StatelessWidget {
           AppSizes.w24,
         ],
       ),
-      backgroundColor: AppColorsConstants.white,
+      backgroundColor: context.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.all(AppSizes.p24),
         child: Column(
@@ -69,14 +74,14 @@ class DashboardPage extends StatelessWidget {
               title: AppStringsConstants.welcomeBackUser,
               fontWeight: FontWeight.w700,
               fontSize: AppSizes.f16,
-              color: AppColorsConstants.black,
+              color: context.black,
             ),
             AppSizes.h4,
             CommonTextWidget(
               title: AppStringsConstants.businessDescription,
               fontWeight: FontWeight.w500,
               fontSize: AppSizes.f12,
-              color: AppColorsConstants.grey89,
+              color: context.grey89,
             ),
             AppSizes.h24,
 

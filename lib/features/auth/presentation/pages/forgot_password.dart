@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/constants/app_validators.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_back_button.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
@@ -25,6 +25,7 @@ class ForgotPassword extends StatelessWidget {
     final emailController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: context.white,
       body: Padding(
         padding: EdgeInsets.all(AppSizes.p24),
         child: Column(
@@ -40,14 +41,14 @@ class ForgotPassword extends StatelessWidget {
 
             CommonTextWidget(
               title: AppStringsConstants.forgotPasswordTitle,
-              color: AppColorsConstants.black,
+              color: context.black,
               fontSize: AppSizes.f24,
               fontWeight: FontWeight.w700,
             ),
             AppSizes.h4,
             CommonTextWidget(
               title: AppStringsConstants.forgotPasswordDescription,
-              color: AppColorsConstants.grey89,
+              color: context.grey89,
               fontSize: AppSizes.f12,
               fontWeight: FontWeight.w400,
             ),

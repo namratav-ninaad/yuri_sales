@@ -1,5 +1,6 @@
 class RouteNames {
   RouteNames._();
+
   static const String splash = '/';
   static const login = '/login';
   static const forgotPassword = '/forgot_password';
@@ -14,4 +15,7 @@ class RouteNames {
   static const changePasswordPage = '/change_password_page';
   static const cartPage = '/cart_page';
   static const requestToQuotePage = '/request_to_quote_page';
+  static const thankYouPage = '/thank_you_page';
+  static const orderDetailPage = '/order_detail';
+  static const orderPage = '/order_page';
 }

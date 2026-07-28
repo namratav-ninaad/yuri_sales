@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_outline_button.dart';
@@ -31,21 +31,21 @@ class LogoutDialog extends StatelessWidget {
               height: AppSizes.icon60,
               width: AppSizes.icon60,
               decoration: BoxDecoration(
-                color: AppColorsConstants.primaryRedColor.withValues(
+                color: context.primaryRedColor.withValues(
                   alpha: 0.1,
                 ),
                 shape: BoxShape.circle,
               ),
               child: CommonIconWidget(
                 icon: Icons.logout_outlined,
-                color: AppColorsConstants.primaryRedColor,
+                color: context.primaryRedColor,
                 size: AppSizes.icon32,
               ),
             ),
             AppSizes.h20,
             CommonTextWidget(
               title: AppStringsConstants.logout,
-              color: AppColorsConstants.black,
+              color: context.black,
               fontSize: AppSizes.f20,
               fontWeight: FontWeight.w700,
             ),
@@ -53,7 +53,7 @@ class LogoutDialog extends StatelessWidget {
             CommonTextWidget(
               title: AppStringsConstants.logoutAccountMsg,
               textAlign: TextAlign.center,
-              color: AppColorsConstants.grey89,
+              color: context.grey89,
               fontSize: AppSizes.f14,
               fontWeight: FontWeight.w500,
             ),
@@ -70,8 +70,8 @@ class LogoutDialog extends StatelessWidget {
             CommonOutlineButton(
               title: AppStringsConstants.cancel,
               onTap: () => AppRoutes.pop(),
-              borderColor: AppColorsConstants.primaryRedColor,
-              textColor: AppColorsConstants.primaryRedColor,
+              borderColor: context.primaryRedColor,
+              textColor: context.primaryRedColor,
             ),
           ],
         ),

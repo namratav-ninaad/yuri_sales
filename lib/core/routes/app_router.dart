@@ -7,15 +7,21 @@ import 'package:yuri_sale/features/auth/presentation/pages/otp_verification.dart
 import 'package:yuri_sale/features/auth/presentation/pages/reset_password.dart';
 import 'package:yuri_sale/features/auth/presentation/pages/splash_page.dart';
 import 'package:yuri_sale/features/cart/presentation/page/cart_page.dart';
-import 'package:yuri_sale/features/customer/data/model/customer.dart';
+import 'package:yuri_sale/features/customer/data/model/customer.dart'
+    show CustomerModel;
 import 'package:yuri_sale/features/customer/presentation/page/create_customer.dart';
 import 'package:yuri_sale/features/customer/presentation/page/customer_details.dart';
 import 'package:yuri_sale/features/customer/presentation/page/customer_page.dart';
 import 'package:yuri_sale/features/home/presentation/page/home_page.dart';
+import 'package:yuri_sale/features/order/data/model/order.dart';
+import 'package:yuri_sale/features/order/domain/entities/order_data.dart';
+import 'package:yuri_sale/features/order/presentation/page/order_detail.dart';
+import 'package:yuri_sale/features/order/presentation/page/order_page.dart';
 import 'package:yuri_sale/features/product/presentation/page/product_page.dart';
 import 'package:yuri_sale/features/profile/presentation/page/change_password_page.dart';
 import 'package:yuri_sale/features/profile/presentation/page/edit_profile_page.dart';
 import 'package:yuri_sale/features/quote/presentation/page/request_to_quote_page.dart';
+import 'package:yuri_sale/features/quote/presentation/page/thank_you_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -65,6 +71,19 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteNames.changePasswordPage:
       return MaterialPageRoute(builder: (_) => ChangePasswordPage());
+
+    case RouteNames.thankYouPage:
+      return MaterialPageRoute(builder: (_) => ThankYouPage());
+
+    case RouteNames.orderPage:
+      final orderData = settings.arguments as OrderData;
+      return MaterialPageRoute(builder: (_) => OrderPage(data: orderData));
+
+    case RouteNames.orderDetailPage:
+      final orderModel = settings.arguments as OrderModel;
+      return MaterialPageRoute(
+        builder: (_) => OrderDetail(orderModel: orderModel),
+      );
 
     case RouteNames.customerDetail:
       final customer = settings.arguments as CustomerModel;

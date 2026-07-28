@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_divider.dart';
 import 'package:yuri_sale/features/cart/presentation/widget/summary_row.dart';
 
 class CartSummary extends StatelessWidget {
-  final double subtotal;
-  final double vat;
-  final double total;
+  final String subtotal;
+  final String vat;
+  final String total;
 
   const CartSummary({
     super.key,
@@ -32,7 +33,8 @@ class CartSummary extends StatelessWidget {
         SummaryRow(
           label: AppStringsConstants.total,
           value: total.toString(),
-          isTotal: true,
+          textColor: context.primaryRedColor,
+          valueColor: context.primaryRedColor,
         ),
       ],
     );

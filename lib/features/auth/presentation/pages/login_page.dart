@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/constants/app_validators.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/share_preference/share_pref_helper.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
@@ -37,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.white,
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state.isSuccess) {
@@ -59,22 +61,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const CommonLogoImage(),
                   AppSizes.h20,
-
                   CommonTextWidget(
                     title: AppStringsConstants.welcomeBack,
-                    color: AppColorsConstants.black,
+                    color: context.black,
                     fontSize: AppSizes.f20,
                     fontWeight: FontWeight.w700,
                   ),
                   AppSizes.h4,
                   CommonTextWidget(
                     title: AppStringsConstants.loginContinueAccount,
-                    color: AppColorsConstants.grey89,
+                    color: context.grey89,
                     fontSize: AppSizes.f14,
                     fontWeight: FontWeight.w500,
                   ),
                   AppSizes.h32,
-
                   Form(
                     key: formKey,
                     child: Column(
@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               TogglePasswordVisibility(),
                             ),
 
-                            color: AppColorsConstants.black,
+                            color: context.black,
                             icon: state.obscurePassword
                                 ? Icons.visibility_outlined
                                 : Icons.visibility_off_outlined,
@@ -121,17 +121,36 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Checkbox(
                                   activeColor:
-                                      AppColorsConstants.primaryRedColor,
+                                      context.primaryRedColor,
                                   value: state.rememberMe,
-                                  onChanged: (value) {
+                                  onChanged: (value) async {
                                     context.read<LoginBloc>().add(
                                       ToggleRememberMe(value ?? false),
                                     );
+                                    bool rememberMe =
+                                        await SharedPrefHelper.getBool(
+                                          AppStringsConstants.rememberMeKey,
+                                        ) ??
+                                        false;
+                                    if (rememberMe) {
+                                      emailController.text =
+                                          (await SharedPrefHelper.getString(
+                                            AppStringsConstants.rememberEmail,
+                                          )) ??
+                                          '';
+
+                                      passwordController.text =
+                                          (await SharedPrefHelper.getString(
+                                            AppStringsConstants
+                                                .rememberPassword,
+                                          )) ??
+                                          '';
+                                    }
                                   },
                                 ),
-                                const CommonTextWidget(
+                                CommonTextWidget(
                                   title: AppStringsConstants.rememberMe,
-                                  color: AppColorsConstants.grey89,
+                                  color: context.grey89,
                                   fontSize: AppSizes.f12,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -141,9 +160,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               onTap: () {
                                 AppRoutes.pushNamed(RouteNames.forgotPassword);
                               },
-                              child: const CommonTextWidget(
+                              child: CommonTextWidget(
                                 title: AppStringsConstants.forgotPassword,
-                                color: AppColorsConstants.primaryRedColor,
+                                color: context.primaryRedColor,
                                 fontSize: AppSizes.f12,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -179,7 +198,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Expanded(
                       child: Container(
-                        color: AppColorsConstants.greyC8,
+                        color: context.greyC8,
                         height: 1,
                       ),
                     ),
@@ -189,14 +208,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       child: CommonTextWidget(
                         title: AppStringsConstants.orContinueWith,
-                        color: AppColorsConstants.grey89,
+                        color: context.grey89,
                         fontSize: AppSizes.f16,
                         fontWeight: FontWeight.w400,
                       ),
                     ),
                     Expanded(
                       child: Container(
-                        color: AppColorsConstants.greyC8,
+                        color: context.greyC8,
                         height: 1,
                       ),
                     ),
@@ -232,14 +251,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       title: AppStringsConstants.doNotAccount,
                       fontSize: AppSizes.f12,
                       fontWeight: FontWeight.w400,
-                      color: AppColorsConstants.grey89,
+                      color: context.grey89,
                     ),
                     AppSizes.w4,
                     CommonTextWidget(
                       title: AppStringsConstants.signUp,
                       fontSize: AppSizes.f12,
                       fontWeight: FontWeight.w700,
-                      color: AppColorsConstants.primaryRedColor,
+                      color: context.primaryRedColor,
                     ),
                   ],
                 ),*/

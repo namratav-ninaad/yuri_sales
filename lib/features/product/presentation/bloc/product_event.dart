@@ -8,19 +8,15 @@ abstract class ProductEvent extends Equatable {
 
 class FetchProductsEvent extends ProductEvent {
   final String query;
+
   FetchProductsEvent(this.query);
 
   @override
   List<Object?> get props => [query];
-
 }
 
-
-
 class AddCartEvent extends ProductEvent {
-
   final AddCartData data;
 
   AddCartEvent(this.data);
-
 }

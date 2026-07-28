@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 
 class CommonCircularProgressIndicator extends StatelessWidget {
   const CommonCircularProgressIndicator({super.key, this.color});
@@ -9,7 +9,7 @@ class CommonCircularProgressIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircularProgressIndicator(
-      color: color ?? AppColorsConstants.primaryRedColor,
+      color: color ?? context.primaryRedColor,
     );
   }
 }

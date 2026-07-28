@@ -26,6 +26,10 @@ import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bl
 import 'package:yuri_sale/features/customer/presentation/bloc/customer/customer_bloc.dart';
 import 'package:yuri_sale/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:yuri_sale/features/home/presentation/bloc/home_bloc.dart';
+import 'package:yuri_sale/features/order/data/datasource/order_remote_datasource.dart';
+import 'package:yuri_sale/features/order/data/repository/order_repository.dart';
+import 'package:yuri_sale/features/order/domain/usecases/fetch_order_uc.dart';
+import 'package:yuri_sale/features/order/presentation/bloc/order_bloc.dart';
 import 'package:yuri_sale/features/product/data/datasource/product_remote_data_source.dart';
 import 'package:yuri_sale/features/product/data/repository/product_repository.dart';
 import 'package:yuri_sale/features/product/domain/usecases/add_cart_us.dart';
@@ -33,11 +37,16 @@ import 'package:yuri_sale/features/product/domain/usecases/product_usecase.dart'
 import 'package:yuri_sale/features/product/presentation/bloc/product_bloc.dart';
 import 'package:yuri_sale/features/profile/data/datasource/profile_remote_data_source.dart';
 import 'package:yuri_sale/features/profile/data/repository/profile_repository.dart';
+import 'package:yuri_sale/features/profile/data/repository/theme_repository.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/change_password_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/get_profile_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/logout_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/update_profile_uc.dart';
 import 'package:yuri_sale/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yuri_sale/features/quote/data/datasource/quote_remote_data_source.dart';
+import 'package:yuri_sale/features/quote/data/repository/quote_repository.dart';
+import 'package:yuri_sale/features/quote/domain/usecase/submit_rfq_usecase.dart';
+import 'package:yuri_sale/features/quote/presentation/bloc/quote_bloc.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -60,6 +69,10 @@ Future<void> configureDependencies() async {
   sl.registerFactory(
     () => ProductBloc(productUseCase: sl(), addCartUseCase: sl()),
   );
+  sl.registerFactory(() => QuoteBloc(submitRfqUseCase: sl()));
+
+  sl.registerFactory(() => OrderBloc(fetchOrdersUseCase: sl()));
+
   sl.registerFactory(
     () => CreateCustomerBloc(
       customerBloc: sl(),
@@ -73,6 +86,7 @@ Future<void> configureDependencies() async {
   );
   sl.registerFactory(
     () => ProfileBloc(
+      repository: sl(),
       homeBloc: sl(),
       changePasswordUseCase: sl(),
       getProfileUseCase: sl(),
@@ -110,6 +124,7 @@ Future<void> configureDependencies() async {
   sl.registerLazySingleton<ProfileRepository>(
     () => ProfileRepositoryImpl(sl()),
   );
+  sl.registerLazySingleton<ThemeRepository>(() => ThemeRepository());
   sl.registerLazySingleton(() => ChangePasswordUseCase(sl()));
   sl.registerLazySingleton(() => GetProfileUseCase(sl()));
   sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
@@ -138,4 +153,18 @@ Future<void> configureDependencies() async {
   sl.registerLazySingleton(() => CartUseCase(sl()));
   sl.registerLazySingleton(() => RemoveCartUseCase(sl()));
   sl.registerLazySingleton(() => UpdateCartQtyUseCase(sl()));
+
+  //Quote
+  sl.registerLazySingleton<QuoteRemoteDataSource>(
+    () => QuoteRemoteDataSourceImpl(sl<DioClient>().dio),
+  );
+  sl.registerLazySingleton<QuoteRepository>(() => QuoteRepositoryImpl(sl()));
+  sl.registerLazySingleton(() => SubmitRfqUseCase(sl()));
+
+  //Order
+  sl.registerLazySingleton<OrderRemoteDataSource>(
+    () => OrderRemoteDataSourceImpl(sl<DioClient>().dio),
+  );
+  sl.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl(sl()));
+  sl.registerLazySingleton(() => FetchOrdersUseCase(sl()));
 }

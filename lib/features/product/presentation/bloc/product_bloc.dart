@@ -11,8 +11,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ProductUseCase productUseCase;
   final AddCartUseCase addCartUseCase;
 
-  ProductBloc({required this.productUseCase, required this.addCartUseCase})
-    : super(const ProductState()) {
+  ProductBloc({
+    required this.productUseCase,
+    required this.addCartUseCase,
+  }) : super(const ProductState()) {
     on<FetchProductsEvent>(_onFetchProducts);
     on<AddCartEvent>(_onAddCart);
   }

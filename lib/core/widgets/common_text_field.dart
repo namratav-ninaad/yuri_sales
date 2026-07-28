@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 
 class CommonTextFormField extends StatelessWidget {
@@ -66,11 +66,11 @@ class CommonTextFormField extends StatelessWidget {
       readOnly: readOnly,
       enabled: enabled,
       maxLength: maxLength,
-      cursorColor: AppColorsConstants.primaryRedColor,
+      cursorColor: context.primaryRedColor,
       style: TextStyle(
         fontSize: AppSizes.f14,
         fontWeight: FontWeight.w400,
-        color: textColor ?? AppColorsConstants.black,
+        color: textColor ?? context.black,
       ),
       inputFormatters: inputFormatters,
       onTap: onTap,
@@ -85,7 +85,7 @@ class CommonTextFormField extends StatelessWidget {
           vertical: AppSizes.p12,
         ),
         labelStyle: TextStyle(
-          color: textColor ?? AppColorsConstants.black,
+          color: textColor ?? context.black,
           fontSize: AppSizes.f14,
           fontWeight: FontWeight.w500,
         ),
@@ -93,31 +93,31 @@ class CommonTextFormField extends StatelessWidget {
         prefixIcon: prefixIcon != null
             ? CommonIconWidget(
                 icon: prefixIcon!,
-                color: textColor ?? AppColorsConstants.black,
+                color: textColor ?? context.black,
               )
             : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
           borderSide: BorderSide(
-            color: borderColor ?? AppColorsConstants.greyC8,
+            color: borderColor ?? context.greyC8,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
           borderSide: BorderSide(
-            color: borderColor ?? AppColorsConstants.greyC8,
+            color: borderColor ?? context.greyC8,
           ),
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
           borderSide: BorderSide(
-            color: borderColor ?? AppColorsConstants.greyC8,
+            color: borderColor ?? context.greyC8,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
           borderSide: BorderSide(
-            color: borderColor ?? AppColorsConstants.greyC8,
+            color: borderColor ?? context.greyC8,
           ),
         ),
       ),

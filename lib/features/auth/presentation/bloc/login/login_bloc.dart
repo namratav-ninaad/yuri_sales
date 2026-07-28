@@ -39,14 +39,39 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             loginData: loginData,
           ),
         );
+        // Save Access Token
         await SharedPrefHelper.setString(
           AppStringsConstants.accessToken,
           loginData.accessToken,
         );
-        /* await SharedPrefHelper.setString(
-          AppStringsConstants.sessionId,
-          loginData.sessionId,
-        );*/
+
+        // Save Remember Me Status
+        await SharedPrefHelper.setBool(
+          AppStringsConstants.rememberMeKey,
+          event.rememberMe,
+        );
+
+        // Save Company Id
+        await SharedPrefHelper.setInt(
+          AppStringsConstants.companyId,
+          loginData.companyId,
+        );
+
+        if (event.rememberMe) {
+          await SharedPrefHelper.setString(
+            AppStringsConstants.rememberEmail,
+            event.email,
+          );
+
+          await SharedPrefHelper.setString(
+            AppStringsConstants.rememberPassword,
+            event.password,
+          );
+        } else {
+          await SharedPrefHelper.remove(AppStringsConstants.rememberEmail);
+
+          await SharedPrefHelper.remove(AppStringsConstants.rememberPassword);
+        }
       },
     );
   }

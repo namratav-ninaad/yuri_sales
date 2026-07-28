@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/constants/app_validators.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_back_button.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
@@ -30,6 +30,7 @@ class ResetPassword extends StatelessWidget {
     final confirmPasswordController = TextEditingController();
 
     return Scaffold(
+      backgroundColor: context.white,
       body: BlocConsumer<ResetPasswordBloc, ResetPasswordState>(
         listener: (context, state) {
           if (state.isSuccess) {
@@ -57,9 +58,9 @@ class ResetPassword extends StatelessWidget {
                 ),
                 AppSizes.h40,
 
-                const CommonTextWidget(
+                CommonTextWidget(
                   title: AppStringsConstants.newCredentials,
-                  color: AppColorsConstants.black,
+                  color: context.black,
                   fontSize: AppSizes.f24,
                   fontWeight: FontWeight.w700,
                 ),
@@ -68,7 +69,7 @@ class ResetPassword extends StatelessWidget {
                   title: AppStringsConstants.min8Characters,
                 ),
                 const IconAndTextWidget(
-                  title: AppStringsConstants.AtoZUpperCharacters,
+                  title: AppStringsConstants.atoZUpperCharacters,
                 ),
                 const IconAndTextWidget(
                   title: AppStringsConstants.aTozLowerCharacters,
@@ -91,7 +92,7 @@ class ResetPassword extends StatelessWidget {
                         validator: AppValidators.password,
                         suffixIcon: CommonIconWidget(
                           onTap: () => bloc.add(ToggleNewPasswordVisibility()),
-                          color: AppColorsConstants.black,
+                          color: context.black,
                           icon: state.obscureNewPassword
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
@@ -110,8 +111,9 @@ class ResetPassword extends StatelessWidget {
                           newPasswordController.text,
                         ),
                         suffixIcon: CommonIconWidget(
-                          onTap: () => bloc.add(ToggleNewPasswordVisibility()),
-                          color: AppColorsConstants.black,
+                          onTap: () =>
+                              bloc.add(ToggleConfirmPasswordVisibility()),
+                          color: context.black,
                           icon: state.obscureConfirmPassword
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,

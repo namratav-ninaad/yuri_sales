@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
@@ -14,9 +16,7 @@ class DioClient {
         baseUrl: AppStringsConstants.baseUrl,
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: {'Content-Type': 'application/json'},
       ),
     );
 
@@ -80,10 +80,8 @@ class SessionInterceptor extends Interceptor {
           AppStringsConstants.sessionId,
           sessionId,
         );
-
-        print('Session Saved : $sessionId');
       } catch (e) {
-        print('Session Error : $e');
+        log('Session Error : $e');
       }
     }
 

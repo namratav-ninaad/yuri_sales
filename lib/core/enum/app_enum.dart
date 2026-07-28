@@ -1,5 +1,3 @@
-// lib/features/customer/data/model/note_type.dart
-
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
@@ -38,18 +36,6 @@ enum NoteType {
         return Icons.calendar_today_outlined;
     }
   }
-
-  // Color for chips/labels
-  Color get color {
-    switch (this) {
-      case NoteType.text:
-        return AppColorsConstants.green;
-      case NoteType.voice:
-        return AppColorsConstants.blue;
-      case NoteType.followup:
-        return AppColorsConstants.orange;
-    }
-  }
 }
 
 enum AddressType {
@@ -71,6 +57,53 @@ enum AddressType {
         return AppStringsConstants.shippingAddress;
       case AddressType.billingAddress:
         return AppStringsConstants.billingAddress;
+    }
+  }
+}
+
+enum InvoiceStatus {
+  invoiced,
+  fullyInvoiced,
+  toInvoice,
+  no;
+
+  String get label {
+    switch (this) {
+      case InvoiceStatus.invoiced:
+        return AppStringsConstants.invoiced;
+      case InvoiceStatus.fullyInvoiced:
+        return AppStringsConstants.fullInvoiced;
+      case InvoiceStatus.toInvoice:
+        return AppStringsConstants.toInvoice;
+      case InvoiceStatus.no:
+        return AppStringsConstants.notInvoiced;
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case InvoiceStatus.invoiced:
+      case InvoiceStatus.fullyInvoiced:
+        return AppColorsConstants.green;
+      case InvoiceStatus.toInvoice:
+        return AppColorsConstants.blue;
+      case InvoiceStatus.no:
+        return AppColorsConstants.red;
+    }
+  }
+
+  static InvoiceStatus fromString(String value) {
+    switch (value.toLowerCase().trim()) {
+      case AppStringsConstants.invoicedL:
+        return InvoiceStatus.invoiced;
+      case AppStringsConstants.fullInvoicedL:
+        return InvoiceStatus.fullyInvoiced;
+      case AppStringsConstants.toInvoiceL:
+        return InvoiceStatus.toInvoice;
+      case AppStringsConstants.no:
+        return InvoiceStatus.no;
+      default:
+        return InvoiceStatus.no;
     }
   }
 }

@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/constants/app_validators.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
@@ -87,6 +87,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
               content: base64Content,
             );
 
+            // ignore: use_build_context_synchronously
             context.read<CreateCustomerBloc>().add(
               AddAttachmentEvent(attachment),
             );
@@ -158,7 +159,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
   Widget build(BuildContext context) {
     var bloc = context.read<CreateCustomerBloc>();
     return Scaffold(
-      backgroundColor: AppColorsConstants.white,
+      backgroundColor: context.white,
       appBar: CommonAppbarWidget(title: AppStringsConstants.createCustomer),
       body: BlocConsumer<CreateCustomerBloc, CreateCustomerState>(
         listenWhen: (prev, curr) =>
@@ -228,7 +229,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                     CommonTextFormField(
                       keyboardType: TextInputType.phone,
                       controller: mobileController,
-                      maxLength: 10,
+                      maxLength: 9,
                       labelText: AppStringsConstants.mobileNumber,
                       prefixIcon: Icons.call,
                       validator: (value) => AppValidators.phone(value),
@@ -290,7 +291,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                       padding: EdgeInsets.all(AppSizes.p12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppSizes.r12),
-                        border: Border.all(color: AppColorsConstants.greyC8),
+                        border: Border.all(color: context.greyC8),
                       ),
                       child: Column(
                         children: [
@@ -428,7 +429,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                       padding: EdgeInsets.all(AppSizes.p12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppSizes.r12),
-                        border: Border.all(color: AppColorsConstants.greyC8),
+                        border: Border.all(color: context.greyC8),
                       ),
                       child: Column(
                         children: [
@@ -437,7 +438,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                             children: [
                               CommonTextWidget(
                                 title: AppStringsConstants.notes,
-                                color: AppColorsConstants.black,
+                                color: context.black,
                                 fontSize: AppSizes.f16,
                                 fontWeight: FontWeight.w700,
                               ),
@@ -450,8 +451,8 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                                 title: state.note != null
                                     ? AppStringsConstants.editNotePlus
                                     : AppStringsConstants.addNotePlus,
-                                textColor: AppColorsConstants.primaryRedColor,
-                                borderColor: AppColorsConstants.primaryRedColor,
+                                textColor: context.primaryRedColor,
+                                borderColor: context.primaryRedColor,
                                 fontWeight: FontWeight.w400,
                                 fontSize: AppSizes.f10,
                                 height: AppSizes.hS24,
@@ -472,14 +473,14 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                       padding: EdgeInsets.all(AppSizes.p12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppSizes.r12),
-                        border: Border.all(color: AppColorsConstants.greyC8),
+                        border: Border.all(color: context.greyC8),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const CommonTextWidget(
+                          CommonTextWidget(
                             title: AppStringsConstants.tag,
-                            color: AppColorsConstants.black,
+                            color: context.black,
                             fontSize: AppSizes.f16,
                             fontWeight: FontWeight.w700,
                           ),
@@ -493,32 +494,31 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                                   showCheckmark: false,
                                   label: CommonTextWidget(
                                     title: tag.name,
-                                    color: AppColorsConstants.primaryRedColor,
+                                    color: context.primaryRedColor,
                                     fontSize: AppSizes.f12,
                                     fontWeight: FontWeight.w600,
                                   ),
                                   selected: true,
                                   side: BorderSide(
-                                    color: AppColorsConstants.primaryRedColor,
+                                    color: context.primaryRedColor,
                                   ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
                                       AppSizes.r8,
                                     ),
                                   ),
-                                  deleteIcon: const CommonIconWidget(
+                                  deleteIcon: CommonIconWidget(
                                     icon: Icons.close,
                                     size: AppSizes.icon20,
-                                    color: AppColorsConstants.primaryRedColor,
+                                    color: context.primaryRedColor,
                                   ),
 
                                   onDeleted: () {
                                     bloc.add(RemoveSelectedTagEvent(tag: tag));
                                   },
 
-                                  backgroundColor: AppColorsConstants.white,
-                                  selectedColor: AppColorsConstants
-                                      .primaryRedColor
+                                  backgroundColor: context.white,
+                                  selectedColor: context.primaryRedColor
                                       .withValues(alpha: 0.1),
                                   onSelected: (bool value) {},
                                 );
@@ -726,8 +726,8 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                         Expanded(
                           child: CommonOutlineButton(
                             title: AppStringsConstants.archive,
-                            borderColor: AppColorsConstants.primaryRedColor,
-                            textColor: AppColorsConstants.primaryRedColor,
+                            borderColor: context.primaryRedColor,
+                            textColor: context.primaryRedColor,
                             fontSize: AppSizes.f16,
                             fontWeight: FontWeight.w700,
                           ),

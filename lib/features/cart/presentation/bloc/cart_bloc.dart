@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/features/cart/domain/entities/update_cart_qty.dart';
 import 'package:yuri_sale/features/cart/domain/usecases/cart_us.dart';
 import 'package:yuri_sale/features/cart/domain/usecases/remove_cart_uc.dart';
 import 'package:yuri_sale/features/cart/domain/usecases/update_cart_qty_uc.dart';
@@ -20,6 +19,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<IncreaseQuantity>(_onIncreaseQuantity);
     on<DecreaseQuantity>(_onDecreaseQuantity);
     on<RemoveCart>(_onRemoveCart);
+    on<ResetCart>(_onResetCart);
+  }
+
+  Future<void> _onResetCart(ResetCart event, Emitter<CartState> emit) async {
+    emit(CartState());
   }
 
   Future<void> _onFetchCart(FetchCart event, Emitter<CartState> emit) async {

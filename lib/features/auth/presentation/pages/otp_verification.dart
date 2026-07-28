@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-import 'package:flutter/services.dart'; // For digits only
-import 'package:yuri_sale/core/constants/app_colors.dart';
+import 'package:flutter/services.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_back_button.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
@@ -30,6 +30,7 @@ class _OtpVerificationState extends State<OtpVerification> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
+        context.read<OtpBloc>().add(ResetOtp());
         context.read<OtpBloc>().add(StartOtpTimer());
       }
     });
@@ -39,9 +40,10 @@ class _OtpVerificationState extends State<OtpVerification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.white,
       body: BlocConsumer<OtpBloc, OtpState>(
         listener: (context, state) {
-          if (state.isSuccess) {
+          if (state.isOTPSubmit) {
             ToastHelper.success(AppStringsConstants.otpVerifiedMsg);
 
             AppRoutes.pushReplacementNamed(
@@ -71,7 +73,7 @@ class _OtpVerificationState extends State<OtpVerification> {
 
                 CommonTextWidget(
                   title: AppStringsConstants.otpVerificationTitle,
-                  color: AppColorsConstants.black,
+                  color: context.black,
                   fontSize: AppSizes.f24,
                   fontWeight: FontWeight.w700,
                 ),
@@ -79,7 +81,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                 CommonTextWidget(
                   title:
                       '${AppStringsConstants.otpDescription} ${widget.email}',
-                  color: AppColorsConstants.grey89,
+                  color: context.grey89,
                   fontSize: AppSizes.f12,
                   fontWeight: FontWeight.w400,
                 ),
@@ -95,8 +97,10 @@ class _OtpVerificationState extends State<OtpVerification> {
                       fieldWidth: AppSizes.hS52,
                       fieldHeight: AppSizes.hS52,
                       numberOfFields: 6,
-                      borderColor: AppColorsConstants.primaryRedColor,
-                      focusedBorderColor: AppColorsConstants.primaryRedColor,
+                      alignment: Alignment.center,
+                      contentPadding: EdgeInsets.zero,
+                      borderColor: context.primaryRedColor,
+                      focusedBorderColor: context.primaryRedColor,
                       borderRadius: BorderRadius.circular(AppSizes.r12),
                       showFieldAsBox: true,
                       onCodeChanged: (code) {
@@ -119,7 +123,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                         padding: const EdgeInsets.only(left: 4),
                         child: CommonTextWidget(
                           title: state.otpError!,
-                          color: AppColorsConstants.primaryRedColor,
+                          color: context.primaryRedColor,
                           fontSize: AppSizes.f12,
                         ),
                       );
@@ -141,7 +145,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                       title: state.canResend
                           ? AppStringsConstants.resendCode
                           : "00:${state.remainingSeconds.toString().padLeft(2, '0')} mins",
-                      color: AppColorsConstants.grey89,
+                      color: context.grey89,
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
                     ),

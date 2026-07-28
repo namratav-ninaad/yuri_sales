@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 
 class CommonBackButton extends StatelessWidget {
   const CommonBackButton({super.key});
@@ -15,7 +15,7 @@ class CommonBackButton extends StatelessWidget {
       child: Icon(
         Icons.arrow_back_ios_new,
         size: AppSizes.icon20,
-        color: AppColorsConstants.black,
+        color: context.black,
       ),
     );
   }

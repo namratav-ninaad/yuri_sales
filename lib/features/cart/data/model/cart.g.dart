@@ -7,12 +7,12 @@ part of 'cart.dart';
 // **************************************************************************
 
 CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel(
-  cart_id: json['cart_id'] as num,
-  cart_name: json['cart_name'] as String,
-  total_items: json['total_items'] as num,
-  amount_untaxed: json['amount_untaxed'] as num,
-  amount_tax: json['amount_tax'] as num,
-  amount_total: json['amount_total'] as num,
+  cartId: json['cart_id'] as num?,
+  cartName: json['cart_name'] as String?,
+  totalItems: json['total_items'] as num,
+  amountUntaxed: json['amount_untaxed'] as num,
+  amountTax: json['amount_tax'] as num,
+  amountTotal: json['amount_total'] as num,
   currency: json['currency'] as String,
   cartProducts: (json['lines'] as List<dynamic>)
       .map((e) => CartItem.fromJson(e as Map<String, dynamic>))
@@ -20,31 +20,31 @@ CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel(
 );
 
 Map<String, dynamic> _$CartModelToJson(CartModel instance) => <String, dynamic>{
-  'cart_id': instance.cart_id,
-  'cart_name': instance.cart_name,
-  'total_items': instance.total_items,
-  'amount_untaxed': instance.amount_untaxed,
-  'amount_tax': instance.amount_tax,
-  'amount_total': instance.amount_total,
+  'cart_id': instance.cartId,
+  'cart_name': instance.cartName,
+  'total_items': instance.totalItems,
+  'amount_untaxed': instance.amountUntaxed,
+  'amount_tax': instance.amountTax,
+  'amount_total': instance.amountTotal,
   'currency': instance.currency,
   'lines': instance.cartProducts,
 };
 
 CartItem _$CartItemFromJson(Map<String, dynamic> json) => CartItem(
-  product_image: json['product_image'] as String,
-  line_id: json['line_id'] as num,
-  product_id: json['product_id'] as num,
-  product_name: json['product_name'] as String,
+  lineId: json['line_id'] as num,
+  productId: json['product_id'] as num,
+  productName: json['product_name'] as String,
+  productImage: json['product_image'] as String,
   qty: json['qty'] as num,
   price: json['price'] as num,
   subtotal: json['subtotal'] as num,
 );
 
 Map<String, dynamic> _$CartItemToJson(CartItem instance) => <String, dynamic>{
-  'product_image': instance.product_image,
-  'line_id': instance.line_id,
-  'product_id': instance.product_id,
-  'product_name': instance.product_name,
+  'line_id': instance.lineId,
+  'product_id': instance.productId,
+  'product_name': instance.productName,
+  'product_image': instance.productImage,
   'qty': instance.qty,
   'price': instance.price,
   'subtotal': instance.subtotal,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/constants/app_validators.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
@@ -45,7 +45,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorsConstants.white,
+      backgroundColor: context.white,
       appBar: CommonAppbarWidget(title: ''),
       body: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
@@ -68,7 +68,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 AppSizes.h20,
                 CommonTextWidget(
                   title: AppStringsConstants.changePassword,
-                  color: AppColorsConstants.black,
+                  color: context.black,
                   fontSize: AppSizes.f24,
                   fontWeight: FontWeight.w700,
                 ),
@@ -76,7 +76,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 CommonTextWidget(
                   textAlign: TextAlign.center,
                   title: AppStringsConstants.changePasswordDescription,
-                  color: AppColorsConstants.grey89,
+                  color: context.grey89,
                   fontSize: AppSizes.f14,
                   fontWeight: FontWeight.w400,
                 ),
@@ -87,7 +87,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   title: AppStringsConstants.min8Characters,
                 ),
                 const IconAndTextWidget(
-                  title: AppStringsConstants.AtoZUpperCharacters,
+                  title: AppStringsConstants.atoZUpperCharacters,
                 ),
                 const IconAndTextWidget(
                   title: AppStringsConstants.aTozLowerCharacters,
@@ -111,7 +111,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             bloc.add(OldPasswordChanged(value)),
                         suffixIcon: CommonIconWidget(
                           onTap: () => bloc.add(ToggleOldPasswordVisibility()),
-                          color: AppColorsConstants.black,
+                          color: context.black,
                           icon: state.isOldPasswordVisible
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
@@ -130,7 +130,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             bloc.add(NewPasswordChanged(value)),
                         suffixIcon: CommonIconWidget(
                           onTap: () => bloc.add(ToggleNewPasswordVisibility()),
-                          color: AppColorsConstants.black,
+                          color: context.black,
                           icon: state.isNewPasswordVisible
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
@@ -153,7 +153,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         suffixIcon: CommonIconWidget(
                           onTap: () =>
                               bloc.add(ToggleConfirmPasswordVisibility()),
-                          color: AppColorsConstants.black,
+                          color: context.black,
                           icon: state.isConfirmPasswordVisible
                               ? Icons.visibility_outlined
                               : Icons.visibility_off_outlined,
@@ -177,8 +177,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 AppSizes.h12,
                 CommonOutlineButton(
                   title: AppStringsConstants.cancel,
-                  textColor: AppColorsConstants.primaryRedColor,
-                  borderColor: AppColorsConstants.primaryRedColor,
+                  textColor: context.primaryRedColor,
+                  borderColor: context.primaryRedColor,
                   fontSize: AppSizes.f14,
                   fontWeight: FontWeight.w700,
                   onTap: () => AppRoutes.pop(),

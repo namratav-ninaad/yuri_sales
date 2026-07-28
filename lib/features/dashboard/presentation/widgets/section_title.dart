@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
 class SectionTitle extends StatelessWidget {
@@ -17,7 +17,7 @@ class SectionTitle extends StatelessWidget {
       children: [
         CommonTextWidget(
           title: title,
-          color: AppColorsConstants.black,
+          color: context.black,
           fontSize: AppSizes.f16,
           fontWeight: FontWeight.w700,
         ),
@@ -26,7 +26,7 @@ class SectionTitle extends StatelessWidget {
           onTap: onTap,
           child: CommonTextWidget(
             title: AppStringsConstants.viewAll,
-            color: AppColorsConstants.primaryRedColor,
+            color: context.primaryRedColor,
             fontSize: AppSizes.f14,
             fontWeight: FontWeight.w500,
           ),

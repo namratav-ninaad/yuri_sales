@@ -6,10 +6,12 @@ import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/constants/app_validators.dart';
 import 'package:yuri_sale/core/enum/app_enum.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_field.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
+import 'package:yuri_sale/core/widgets/date_helper.dart';
 import 'package:yuri_sale/features/customer/data/model/note.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_bloc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_event.dart';
@@ -71,7 +73,7 @@ class _AddNoteBottomSheetState extends State<AddNoteBottomSheet> {
                       : AppStringsConstants.newNote,
                   fontSize: AppSizes.f16,
                   fontWeight: FontWeight.w700,
-                  color: AppColorsConstants.black,
+                  color: context.black,
                 ),
                 AppSizes.h24,
 
@@ -142,22 +144,18 @@ class _AddNoteBottomSheetState extends State<AddNoteBottomSheet> {
       child: Chip(
         avatar: CommonIconWidget(
           icon: type.icon,
-          color: isSelected
-              ? AppColorsConstants.white
-              : AppColorsConstants.black,
+          color: isSelected ? context.white : context.black,
           size: AppSizes.icon16,
         ),
         label: CommonTextWidget(
           title: type.label,
           fontWeight: isSelected ? FontWeight.w700 : FontWeight.w400,
           fontSize: AppSizes.f14,
-          color: isSelected
-              ? AppColorsConstants.white
-              : AppColorsConstants.black,
+          color: isSelected ? context.white : context.black,
         ),
         backgroundColor: isSelected
-            ? AppColorsConstants.primaryRedColor
-            : AppColorsConstants.greyC8.withValues(alpha: 0.1),
+            ? context.primaryRedColor
+            : context.greyC8.withValues(alpha: 0.1),
       ),
     );
   }
@@ -180,14 +178,14 @@ class _AddNoteBottomSheetState extends State<AddNoteBottomSheet> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: state.isRecording
-                    ? AppColorsConstants.primaryRedColor.withValues(alpha: 0.1)
+                    ? context.primaryRedColor.withValues(alpha: 0.1)
                     : AppColorsConstants.blue.withValues(alpha: 0.1),
               ),
               child: CommonIconWidget(
                 icon: state.isRecording ? Icons.stop : Icons.mic,
                 size: AppSizes.icon32,
                 color: state.isRecording
-                    ? AppColorsConstants.primaryRedColor
+                    ? context.primaryRedColor
                     : AppColorsConstants.blue,
               ),
             ),
@@ -199,7 +197,7 @@ class _AddNoteBottomSheetState extends State<AddNoteBottomSheet> {
                 : AppStringsConstants.tapToRecord,
             fontSize: AppSizes.f14,
             fontWeight: FontWeight.w700,
-            color: AppColorsConstants.black,
+            color: context.black,
           ),
           if (state.recordedDuration.isNotEmpty)
             CommonTextWidget(
@@ -207,7 +205,7 @@ class _AddNoteBottomSheetState extends State<AddNoteBottomSheet> {
                   '${AppStringsConstants.recorded} ${state.recordedDuration}',
               fontSize: AppSizes.f12,
               fontWeight: FontWeight.w400,
-              color: AppColorsConstants.grey89,
+              color: context.grey89,
             ),
         ],
       ),
@@ -220,23 +218,23 @@ class _AddNoteBottomSheetState extends State<AddNoteBottomSheet> {
     CreateCustomerBloc bloc,
   ) {
     return ListTile(
-      leading: const CommonIconWidget(
+      leading: CommonIconWidget(
         icon: Icons.calendar_today,
-        color: AppColorsConstants.black,
+        color: context.black,
       ),
-      title: const CommonTextWidget(
+      title: CommonTextWidget(
         title: AppStringsConstants.selectFollowUpDate,
         fontSize: AppSizes.f14,
         fontWeight: FontWeight.w500,
-        color: AppColorsConstants.black,
+        color: context.black,
       ),
       subtitle: CommonTextWidget(
         title: state.selectedNoteDate != null
-            ? DateFormat('dd MMM yyyy').format(state.selectedNoteDate!)
+            ? DateHelper.dMy(state.selectedNoteDate!.toIso8601String())
             : AppStringsConstants.noDataSelected,
         fontSize: AppSizes.f12,
         fontWeight: FontWeight.w400,
-        color: AppColorsConstants.grey89,
+        color: context.grey89,
       ),
       onTap: () async {
         final date = await showDatePicker(

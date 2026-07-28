@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 
 class CommonCircleAvatar extends StatelessWidget {
@@ -25,13 +25,13 @@ class CommonCircleAvatar extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: AppSizes.icon50,
-          backgroundColor: AppColorsConstants.greyF2,
+          backgroundColor: context.greyF2,
           backgroundImage: _getBackgroundImage(),
           child: !hasImage
               ? CommonIconWidget(
                   icon: Icons.person,
                   size: AppSizes.icon60,
-                  color: AppColorsConstants.black,
+                  color: context.black,
                 )
               : null,
         ),
@@ -43,14 +43,14 @@ class CommonCircleAvatar extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(AppSizes.p4),
               decoration: BoxDecoration(
-                color: AppColorsConstants.primaryRedColor,
+                color: context.primaryRedColor,
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColorsConstants.white),
+                border: Border.all(color: context.white),
               ),
-              child: const CommonIconWidget(
+              child: CommonIconWidget(
                 icon: Icons.edit,
                 size: AppSizes.icon14,
-                color: AppColorsConstants.white,
+                color: context.white,
               ),
             ),
           ),

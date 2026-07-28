@@ -5,12 +5,17 @@ import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_circular_progress_indicator.dart';
 import 'package:yuri_sale/core/widgets/common_empty_text.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_field.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
+import 'package:yuri_sale/features/cart/presentation/bloc/cart_bloc.dart';
+import 'package:yuri_sale/features/cart/presentation/bloc/cart_event.dart';
+import 'package:yuri_sale/features/cart/presentation/bloc/cart_state.dart';
+import 'package:yuri_sale/features/product/domain/entities/add_cart_data.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_bloc.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_event.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_state.dart';
@@ -31,13 +36,14 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
+    context.read<CartBloc>().add(FetchCart());
     context.read<ProductBloc>().add(FetchProductsEvent(''));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorsConstants.white,
+      backgroundColor: context.white,
       appBar: CommonAppbarWidget(
         leading: widget.backButtonShow ? null : AppSizes.h0,
         title: widget.backButtonShow ? AppStringsConstants.browseProduct : '',
@@ -62,16 +68,53 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                 ),
                 AppSizes.w12,
-                GestureDetector(
-                  onTap: () => AppRoutes.pushNamed(RouteNames.cartPage),
-                  child: Container(
-                    padding: EdgeInsets.all(AppSizes.p8),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColorsConstants.greyC8),
-                      borderRadius: BorderRadius.circular(AppSizes.r12),
-                    ),
-                    child: CommonIconWidget(icon: Icons.shopping_cart_outlined),
-                  ),
+                BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    return GestureDetector(
+                      onTap: () => AppRoutes.pushNamed(RouteNames.cartPage),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(AppSizes.p8),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: context.greyC8,
+                              ),
+                              borderRadius: BorderRadius.circular(AppSizes.r12),
+                            ),
+                            child: CommonIconWidget(
+                              icon: Icons.shopping_cart_outlined,
+                            ),
+                          ),
+
+                          // Red Circular Badge
+                          if (state.cartData != null &&
+                              state.cartData!.cartProducts.isNotEmpty)
+                            Positioned(
+                              top: -4,
+                              right: -4,
+                              child: Container(
+                                width: AppSizes.icon16,
+                                height: AppSizes.icon16,
+                                decoration: const BoxDecoration(
+                                  color: AppColorsConstants.red,
+                                  shape: BoxShape.circle,
+                                ),
+                                alignment: Alignment.center,
+                                child: CommonTextWidget(
+                                  title: state.cartData!.cartProducts.length
+                                      .toString(),
+                                  color: context.white,
+                                  fontSize: AppSizes.f12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -97,8 +140,22 @@ class _ProductPageState extends State<ProductPage> {
                   mainAxisSpacing: 16,
                 ),
                 itemCount: state.products.length,
-                itemBuilder: (context, index) =>
-                    ProductCard(product: state.products[index]),
+                itemBuilder: (context, index) {
+                  var product = state.products[index];
+                  return ProductCard(
+                    product: product,
+                    onTap: product.already_in_cart
+                        ? () => AppRoutes.pushNamed(RouteNames.cartPage)
+                        : () {
+                            context.read<ProductBloc>().add(
+                              AddCartEvent(
+                                AddCartData(productId: product.id.toInt()),
+                              ),
+                            );
+                            context.read<CartBloc>().add(FetchCart());
+                          },
+                  );
+                },
               ),
       ),
     );

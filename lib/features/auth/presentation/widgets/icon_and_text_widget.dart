@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_images.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 
@@ -24,7 +24,7 @@ class IconAndTextWidget extends StatelessWidget {
           AppSizes.w12,
           CommonTextWidget(
             title: title,
-            color: AppColorsConstants.grey89,
+            color: context.grey89,
             fontSize: AppSizes.f12,
             fontWeight: FontWeight.w400,
           ),

@@ -15,6 +15,7 @@ class AppStringsConstants {
   static const String logoutURl = 'auth/logout';
   static const String addCartURl = 'cart/add';
   static const String customersURl = 'contact/list';
+  static const String ordersURl = 'orders';
   static const String companyURl = 'company';
   static const String countryURl = 'country';
   static const String stateURl = 'state';
@@ -24,12 +25,33 @@ class AppStringsConstants {
   static const String cartURl = 'cart';
   static const String cartUpdateURl = 'cart/update';
   static const String cartRemoveURl = 'cart/remove';
+  static const String submitRfqURl = 'submit-rfq';
 
+  //Date Format
+  static const String ddMMMyyyy = 'dd MMM yyyy'; // 28 Jul 2026
+  static const String ddMMyyyySlash = 'dd/MM/yyyy'; // 28/07/2026
+  static const String ddMMyyyyDash = 'dd-MM-yyyy'; // 28-07-2026
+  static const String MMMddyyyy = 'MMM dd, yyyy'; // Jul 28, 2026
+  static const String yyyyMMdd = 'yyyy-MM-dd'; // 2026-07-28
+  static const String ddMMMyyyyTime =
+      'dd MMM yyyy, hh:mm a'; // 28 Jul 2026, 05:28 AM
+  static const String ddMMMyyyyHHmm = 'dd MMM yyyy HH:mm'; // 28 Jul 2026 05:28
+  static const String fullDate = 'EEEE, dd MMM yyyy'; // Tuesday, 28 Jul 2026
+  static const String MMMyyyy = 'MMM yyyy'; // Jul 2026
+  static const String time12 = 'hh:mm a'; // 05:28 AM
+  static const String time24 = 'HH:mm';
 
+  //font
+  static const String fontFamily = 'Poppins';
 
   //Share
   static const String accessToken = 'access_token';
   static const String sessionId = 'session_id';
+  static const String companyId = 'company_id';
+  static const String rememberMeKey = "rememberMe";
+  static const String rememberEmail = "rememberEmail";
+  static const String rememberPassword = "rememberPassword";
+  static const String themeModeKey = "theme_mode";
 
   //Module String
   static const String fullName = 'Full Name';
@@ -58,10 +80,9 @@ class AppStringsConstants {
   static const String otpDescription = 'Enter OTP (One time password) sent to';
   static const String phoneNumber = 'Phone Number';
   static const String min8Characters = 'Min. 8 characters';
-  static const String AtoZUpperCharacters = '1 uppercase letter (A–Z)';
+  static const String atoZUpperCharacters = '1 uppercase letter (A–Z)';
   static const String aTozLowerCharacters = '1 lowercase letter (a–z)';
   static const String specialCharacters = '1 number or special character';
-  static const String logo = 'Logo';
   static const String welcomeBackUser = 'Welcome back, John 👋';
   static const String businessDescription =
       "Here's what's happening with your business.";
@@ -86,6 +107,7 @@ class AppStringsConstants {
   static const String addToCart = 'Add to cart';
   static const String goToCart = 'Go to Cart';
   static const String searchCustomer = 'Search customer....';
+  static const String searchOrder = 'Search order....';
   static const String createCustomer = 'Create Customer';
   static const String customerName = 'Customer Name';
   static const String companyName = 'Company Name';
@@ -115,10 +137,11 @@ class AppStringsConstants {
   static const String browseFiles = 'Browse Files';
   static const String takePhoto = 'Take Photo';
   static const String add = 'Add';
-  static const String customerDetail = 'Customer Details';
+  static const String customerDetail = 'Customer Detail';
   static const String quotations = 'Quotations';
   static const String invoices = 'Invoices';
-  static const String payments = 'Payments';
+  static const String salesOrder = 'Sales Order';
+  static const String customerStatement = 'Customer Statement';
   static const String deliveryHistory = 'Delivery History';
   static const String notes = 'Notes';
   static const String note = 'Note';
@@ -165,8 +188,10 @@ class AppStringsConstants {
   static const String productCartMsg = 'Product added to cart';
   static const String routeNotFound = 'Route not found';
   static const String createCustomerMsg = 'Create customer successfully!';
+  static const String requestQuoteMsg = 'Request Quote successfully!';
   static const String profileDataMsg = 'Profile data not found';
   static const String noCustomerData = 'No Customer Data';
+  static const String noOrderData = 'No Order Data';
   static const String noProductData = 'No Product Data';
   static const String selectCompany = 'Select Company';
   static const String selectCompanyMsg = 'Please select company';
@@ -192,6 +217,37 @@ class AppStringsConstants {
   static const String submitRequest = 'Submit Request';
   static const String qtyUpdateMsg = 'Quantity updated successfully';
   static const String itemRemoveCartMsg = 'Item removed from cart';
+  static const String thankYou = 'Thank You!';
+  static const String goToHome = 'Go to Home';
+  static const String thankYouMsg =
+      'Your message has been sent.\nWe will get back to you shortly.';
+  static const String chooseTheme = 'Choose Theme';
+  static const String light = 'Light';
+  static const String dark = 'Dark';
+  static const String systemDefault = 'System Default';
+  static const String invoiced = 'Invoiced';
+  static const String fullInvoiced = 'Fully Invoiced';
+  static const String toInvoice = 'To Invoice';
+  static const String notInvoiced = 'Not Invoiced';
+  static const String invoicedL = 'invoiced';
+  static const String fullInvoicedL = 'fully Invoiced';
+  static const String toInvoiceL = 'to Invoice';
+  static const String no = 'no';
+  static const String orderItems = 'Order Items';
+  static const String orderSummary = 'Order Summary';
+  static const String deliveryDetail = 'Delivery Detail';
+  static const String paymentMethod = 'Payment Method';
+  static const String invoiceDetail = 'Invoice Detail';
+  static const String product = 'Product';
+  static const String price = 'Price';
+  static const String qty = 'Qty';
+  static const String untaxedAmount = 'Untaxed Amount';
+  static const String discount = 'Discount';
+  static const String deliveryDate = 'Delivery Name';
+  static const String deliveryAddress = 'Delivery Address';
+  static const String confirmed = 'Confirmed';
+  static const String formQuotation = 'Form Quotation';
+  static const String standardDelivery = 'Standard Delivery';
 
   //Bottom Navigation
   static const String dashboard = 'Dashboard';

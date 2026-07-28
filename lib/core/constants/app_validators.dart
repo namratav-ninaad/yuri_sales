@@ -36,23 +36,19 @@ class AppValidators {
     return null;
   }
 
-
   static String? phone(String? value) {
-    if (value == null || value.trim().isEmpty) {
+    if (value == null || value.isEmpty) {
       return '${AppStringsConstants.pleaseEnter} ${AppStringsConstants.phoneNumber}';
     }
 
-    if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+    // Optional: check valid prefix
+    if (!RegExp(r'^(50|52|53|54|55|56|57|58)').hasMatch(value)) {
       return AppStringsConstants.invalidPhone;
     }
-
     return null;
   }
 
-  static String? confirmPassword(
-      String? value,
-      String password,
-      ) {
+  static String? confirmPassword(String? value, String password) {
     if (value == null || value.isEmpty) {
       return AppStringsConstants.pleaseConfirmPassword;
     }

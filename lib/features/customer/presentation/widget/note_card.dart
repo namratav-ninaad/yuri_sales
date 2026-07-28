@@ -3,8 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
+import 'package:yuri_sale/core/widgets/date_helper.dart';
 import 'package:yuri_sale/features/customer/data/model/note.dart';
 import 'package:yuri_sale/features/customer/presentation/widget/tag_widget.dart';
 
@@ -19,7 +21,7 @@ class NoteCard extends StatelessWidget {
       padding: EdgeInsets.all(AppSizes.p8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: AppColorsConstants.greyC8),
+        border: Border.all(color: context.greyC8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,12 +30,10 @@ class NoteCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: AppSizes.icon14,
-                backgroundColor: AppColorsConstants.primaryRedColor.withValues(
-                  alpha: 0.1,
-                ),
+                backgroundColor: context.primaryRedColor.withValues(alpha: 0.1),
                 child: Icon(
                   Icons.person,
-                  color: AppColorsConstants.primaryRedColor,
+                  color: context.primaryRedColor,
                   size: AppSizes.icon14,
                 ),
               ),
@@ -44,13 +44,13 @@ class NoteCard extends StatelessWidget {
                   children: [
                     CommonTextWidget(
                       title: note.title,
-                      color: AppColorsConstants.black,
+                      color: context.black,
                       fontWeight: FontWeight.w700,
                       fontSize: AppSizes.f14,
                     ),
                     CommonTextWidget(
                       title: note.time,
-                      color: AppColorsConstants.grey89,
+                      color: context.grey89,
                       fontWeight: FontWeight.w500,
                       fontSize: AppSizes.f10,
                     ),
@@ -74,15 +74,15 @@ class NoteCard extends StatelessWidget {
               title: note.content,
               fontSize: AppSizes.f12,
               fontWeight: FontWeight.w400,
-              color: AppColorsConstants.grey89,
+              color: context.grey89,
             )
           else if (note.type.isVoice)
             Row(
               children: [
-                const CommonIconWidget(
+                CommonIconWidget(
                   icon: Icons.play_circle_fill_outlined,
                   size: AppSizes.icon24,
-                  color: AppColorsConstants.black,
+                  color: context.black,
                 ),
                 AppSizes.w12,
                 Expanded(
@@ -110,25 +110,25 @@ class NoteCard extends StatelessWidget {
                   title: AppStringsConstants.followUpDate,
                   fontSize: AppSizes.f12,
                   fontWeight: FontWeight.w400,
-                  color: AppColorsConstants.grey89,
+                  color: context.grey89,
                 ),
                 Row(
                   children: [
-                    const CommonIconWidget(
+                    CommonIconWidget(
                       icon: Icons.calendar_month_outlined,
-                      color: AppColorsConstants.black,
+                      color: context.black,
                       size: AppSizes.icon20,
                     ),
                     AppSizes.w12,
 
                     CommonTextWidget(
                       title: note.followUpDate != null
-                          ? DateFormat('dd MMM yyyy').format(note.followUpDate!)
-                          : DateFormat('dd MMM yyyy').format(DateTime.now()),
+                          ? DateHelper.dMy(note.followUpDate!.toIso8601String())
+                          : DateHelper.dMy(DateTime.now().toIso8601String()),
 
                       fontSize: AppSizes.f12,
                       fontWeight: FontWeight.w400,
-                      color: AppColorsConstants.black,
+                      color: context.black,
                     ),
                   ],
                 ),

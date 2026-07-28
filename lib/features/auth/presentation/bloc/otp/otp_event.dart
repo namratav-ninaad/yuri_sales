@@ -12,6 +12,7 @@ class StartOtpTimer extends OtpEvent {}
 class TickOtpTimer extends OtpEvent {}
 
 class ResendOtp extends OtpEvent {}
+class ResetOtp extends OtpEvent {}
 
 class OtpChanged extends OtpEvent {
   final String otp;

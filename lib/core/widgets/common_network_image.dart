@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 
 class CommonNetworkImage extends StatelessWidget {
@@ -16,7 +16,7 @@ class CommonNetworkImage extends StatelessWidget {
       return CommonIconWidget(
         icon: Icons.image_outlined,
         size: height ?? AppSizes.icon24,
-        color: AppColorsConstants.greyC8,
+        color: context.greyC8,
       );
     }
     return Image.network(

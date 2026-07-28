@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:yuri_sale/features/profile/domain/entities/update_profile_data.dart';
 
 abstract class ProfileEvent extends Equatable {
@@ -53,5 +54,14 @@ class UpdateProfileEvent extends ProfileEvent {
 
   const UpdateProfileEvent(this.data);
 }
+class ChangeThemeEvent extends ProfileEvent {
+  final ThemeMode themeMode;
+
+  const ChangeThemeEvent(this.themeMode);
+
+}
+
+class LoadThemeEvent extends ProfileEvent {}
+
 
 class LogoutEvent extends ProfileEvent {}

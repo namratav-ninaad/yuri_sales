@@ -28,13 +28,13 @@ class BuildAttachmentItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: AppSizes.p8),
         child: Row(
           children: [
-            CommonIconWidget(icon: icon, color: AppColorsConstants.grey89),
+            CommonIconWidget(icon: icon, color: context.grey89),
             AppSizes.w12,
             Expanded(
               child: CommonTextWidget(
                 title: title,
                 fontSize: AppSizes.f14,
-                color: AppColorsConstants.black,
+                color: context.black,
               ),
             ),
             if (fileCount > 0)
@@ -44,7 +44,7 @@ class BuildAttachmentItem extends StatelessWidget {
                   vertical: AppSizes.p8,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColorsConstants.primaryRedColor.withValues(
+                  color: context.primaryRedColor.withValues(
                     alpha: 0.1,
                   ),
                   borderRadius: BorderRadius.circular(AppSizes.r12),
@@ -52,7 +52,7 @@ class BuildAttachmentItem extends StatelessWidget {
                 child: CommonTextWidget(
                   title: '$fileCount',
                   fontSize: AppSizes.f12,
-                  color: AppColorsConstants.primaryRedColor,
+                  color: context.primaryRedColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -62,7 +62,7 @@ class BuildAttachmentItem extends StatelessWidget {
                   ? Icons.file_download_outlined
                   : Icons.arrow_forward_ios_outlined,
               size: AppSizes.icon20,
-              color: AppColorsConstants.grey89,
+              color: context.grey89,
             ),
           ],
         ),
@@ -77,6 +77,7 @@ import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/features/customer/domain/entities/create_customer_data.dart';
@@ -103,7 +104,7 @@ class BuildAttachmentItem extends StatelessWidget {
       padding: EdgeInsets.all(AppSizes.p12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: AppColorsConstants.greyC8),
+        border: Border.all(color: context.greyC8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,13 +112,13 @@ class BuildAttachmentItem extends StatelessWidget {
           // Header with Add Button
           Row(
             children: [
-              CommonIconWidget(icon: icon, color: AppColorsConstants.grey89),
+              CommonIconWidget(icon: icon, color: context.grey89),
               AppSizes.w12,
               Expanded(
                 child: CommonTextWidget(
                   title: title,
                   fontSize: AppSizes.f14,
-                  color: AppColorsConstants.black,
+                  color: context.black,
                 ),
               ),
 
@@ -130,7 +131,7 @@ class BuildAttachmentItem extends StatelessWidget {
                       vertical: AppSizes.p4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColorsConstants.primaryRedColor.withValues(
+                      color: context.primaryRedColor.withValues(
                         alpha: 0.1,
                       ),
                       borderRadius: BorderRadius.circular(AppSizes.r20),
@@ -140,12 +141,12 @@ class BuildAttachmentItem extends StatelessWidget {
                         CommonIconWidget(
                           icon: Icons.add,
                           size: AppSizes.icon14,
-                          color: AppColorsConstants.primaryRedColor,
+                          color: context.primaryRedColor,
                         ),
                         AppSizes.w4,
                         CommonTextWidget(
                           title: AppStringsConstants.add,
-                          color: AppColorsConstants.primaryRedColor,
+                          color: context.primaryRedColor,
                           fontSize: AppSizes.f12,
                           fontWeight: FontWeight.w600,
                         ),
@@ -220,7 +221,7 @@ class BuildAttachmentItem extends StatelessWidget {
                                   ? "${attachment.filename.substring(0, 12)}..."
                                   : attachment.filename,
                               fontSize: AppSizes.f12,
-                              color: AppColorsConstants.black,
+                              color: context.black,
                               textAlign: TextAlign.center,
                               overFlow: TextOverflow.ellipsis,
                             ),
@@ -234,14 +235,14 @@ class BuildAttachmentItem extends StatelessWidget {
                             onTap: () => onRemove?.call(attachment),
                             child: Container(
                               padding: const EdgeInsets.all(AppSizes.p4),
-                              decoration: const BoxDecoration(
-                                color: AppColorsConstants.white,
+                              decoration: BoxDecoration(
+                                color: context.white,
                                 shape: BoxShape.circle,
                               ),
-                              child: const CommonIconWidget(
+                              child:  CommonIconWidget(
                                 icon: Icons.close,
                                 size: AppSizes.icon16,
-                                color: AppColorsConstants.primaryRedColor,
+                                color: context.primaryRedColor,
                               ),
                             ),
                           ),
@@ -257,7 +258,7 @@ class BuildAttachmentItem extends StatelessWidget {
               padding: const EdgeInsets.only(top: AppSizes.p12),
               child: CommonTextWidget(
                 title: AppStringsConstants.attachmentAddMsg,
-                color: AppColorsConstants.grey89,
+                color: context.grey89,
                 fontSize: AppSizes.f14,
               ),
             ),

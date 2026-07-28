@@ -4,58 +4,120 @@ part 'customer.g.dart';
 
 @JsonSerializable()
 class CustomerModel {
-  num contact_id;
-  String full_name;
-  num company_id;
-  String company_name;
-  String email;
-  String phone;
-  String mobile;
-  String vat;
-  String notes;
-  num user_id;
-  String user_name;
-  String address;
-  String invoice_address;
-  String delivery_address;
-  num sale_payment_term_id;
-  String sale_payment_term_name;
-  num purchase_payment_term_id;
-  String purchase_payment_term_name;
-  num credit_limit;
-  List<num> tag_ids;
-  List<String> tag_names;
-  String image;
-  List<AttachmentModel> attachments;
-  String create_date;
-  String write_date;
+  @JsonKey(name: 'contact_id')
+  final num contactId;
 
-  CustomerModel({
-    required this.contact_id,
-    required this.full_name,
-    required this.company_id,
-    required this.company_name,
+  @JsonKey(name: 'full_name')
+  final String fullName;
+
+  @JsonKey(name: 'company_id')
+  final num companyId;
+
+  @JsonKey(name: 'company_name')
+  final String companyName;
+
+  final String email;
+  final String phone;
+  final String mobile;
+
+  @JsonKey(name: 'quotations_count')
+  final num quotationsCount;
+
+  @JsonKey(name: 'sales_count')
+  final num salesCount;
+
+  @JsonKey(name: 'invoice_count')
+  final num invoiceCount;
+
+  @JsonKey(name: 'delivery_count')
+  final num deliveryCount;
+
+  @JsonKey(name: 'payment_count')
+  final num paymentCount;
+
+  @JsonKey(name: 'activity_count')
+  final num activityCount;
+
+  final String vat;
+  final String notes;
+
+  @JsonKey(name: 'user_id')
+  final num userId;
+
+  @JsonKey(name: 'user_name')
+  final String userName;
+
+  final String address;
+
+  @JsonKey(name: 'invoice_address')
+  final String invoiceAddress;
+
+  @JsonKey(name: 'delivery_address')
+  final String deliveryAddress;
+
+  @JsonKey(name: 'sale_payment_term_id')
+  final num salePaymentTermId;
+
+  @JsonKey(name: 'sale_payment_term_name')
+  final String salePaymentTermName;
+
+  @JsonKey(name: 'purchase_payment_term_id')
+  final num purchasePaymentTermId;
+
+  @JsonKey(name: 'purchase_payment_term_name')
+  final String purchasePaymentTermName;
+
+  @JsonKey(name: 'credit_limit')
+  final double creditLimit;
+
+  @JsonKey(name: 'tag_ids')
+  final List<num> tagIds;
+
+  @JsonKey(name: 'tag_names')
+  final List<String> tagNames;
+
+  final String image;
+
+  final List<AttachmentModel> attachments;
+
+  @JsonKey(name: 'create_date')
+  final String createDate;
+
+  @JsonKey(name: 'write_date')
+  final String writeDate;
+
+  const CustomerModel({
+    required this.contactId,
+    required this.fullName,
+    required this.companyId,
+    required this.companyName,
     required this.email,
     required this.phone,
     required this.mobile,
+    required this.quotationsCount,
+    required this.salesCount,
+    required this.invoiceCount,
+    required this.deliveryCount,
+    required this.paymentCount,
+    required this.activityCount,
     required this.vat,
     required this.notes,
-    required this.user_id,
-    required this.user_name,
+    required this.userId,
+    required this.userName,
     required this.address,
-    required this.invoice_address,
-    required this.delivery_address,
-    required this.sale_payment_term_id,
-    required this.sale_payment_term_name,
-    required this.purchase_payment_term_id,
-    required this.purchase_payment_term_name,
-    required this.credit_limit,
-    required this.tag_ids,
-    required this.tag_names,
+    required this.invoiceAddress,
+    required this.deliveryAddress,
+    required this.salePaymentTermId,
+    required this.salePaymentTermName,
+    required this.purchasePaymentTermId,
+    required this.purchasePaymentTermName,
+    required this.creditLimit,
+    required this.tagIds,
+    required this.tagNames,
     required this.image,
     required this.attachments,
-    required this.create_date,
-    required this.write_date,
+    required this.createDate,
+    required this.writeDate,
   });
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) =>
@@ -66,20 +128,26 @@ class CustomerModel {
 
 @JsonSerializable()
 class AttachmentModel {
-  num id;
-  String name;
-  String mimetype;
-  num file_size;
-  String create_date;
-  String download_url;
+  final num id;
+  final String name;
+  final String mimetype;
 
-  AttachmentModel({
+  @JsonKey(name: 'file_size')
+  final num fileSize;
+
+  @JsonKey(name: 'create_date')
+  final String createDate;
+
+  @JsonKey(name: 'download_url')
+  final String downloadUrl;
+
+  const AttachmentModel({
     required this.id,
     required this.name,
     required this.mimetype,
-    required this.file_size,
-    required this.create_date,
-    required this.download_url,
+    required this.fileSize,
+    required this.createDate,
+    required this.downloadUrl,
   });
 
   factory AttachmentModel.fromJson(Map<String, dynamic> json) =>

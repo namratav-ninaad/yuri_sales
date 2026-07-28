@@ -6,6 +6,7 @@ import 'package:yuri_sale/core/share_preference/share_pref_helper.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/features/home/presentation/bloc/home_bloc.dart';
 import 'package:yuri_sale/features/home/presentation/bloc/home_event.dart';
+import 'package:yuri_sale/features/profile/data/repository/theme_repository.dart';
 import 'package:yuri_sale/features/profile/domain/entities/change_password_data.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/change_password_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/get_profile_uc.dart';
@@ -20,6 +21,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final UpdateProfileUseCase updateProfileUseCase;
   final LogoutUseCase logoutUseCase;
   final HomeBloc homeBloc;
+  final ThemeRepository repository;
 
   ProfileBloc({
     required this.changePasswordUseCase,
@@ -27,6 +29,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     required this.updateProfileUseCase,
     required this.logoutUseCase,
     required this.homeBloc,
+    required this.repository,
   }) : super(const ProfileState()) {
     on<OldPasswordChanged>(_onOldPasswordChanged);
     on<NewPasswordChanged>(_onNewPasswordChanged);
@@ -40,6 +43,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UpdateProfileEvent>(_onUpdateProfile);
     on<PickProfileImageEvent>(_onPickProfileImage);
     on<LogoutEvent>(_onLogout);
+    on<LoadThemeEvent>(_load);
+    on<ChangeThemeEvent>(_change);
+  }
+
+  Future<void> _load(LoadThemeEvent event, Emitter<ProfileState> emit) async {
+    final theme = await repository.loadTheme();
+    emit(state.copyWith(themeMode: theme));
+  }
+
+  Future<void> _change(
+    ChangeThemeEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    await repository.saveTheme(event.themeMode);
+
+    emit(state.copyWith(themeMode: event.themeMode));
   }
 
   void _onInitChangePassword(
@@ -228,7 +247,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         (message) async {
           emit(state.copyWith(isLoading: false));
           homeBloc.add(ResetBottomNavEvent());
-          await SharedPrefHelper.clearAll();
+          await SharedPrefHelper.remove(AppStringsConstants.accessToken);
+          await SharedPrefHelper.remove(AppStringsConstants.sessionId);
+
           AppRoutes.pushReplacementNamed(RouteNames.login);
           ToastHelper.success(AppStringsConstants.logoutMsg);
         },

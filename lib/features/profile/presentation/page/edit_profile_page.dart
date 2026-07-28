@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
 import 'package:yuri_sale/core/widgets/common_circular_progress_indicator.dart';
@@ -69,6 +69,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       imageQuality: 80,
     );
     if (image != null) {
+      // ignore: use_build_context_synchronously
       context.read<ProfileBloc>().add(PickProfileImageEvent(File(image.path)));
     }
   }
@@ -101,7 +102,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColorsConstants.white,
+      backgroundColor: context.white,
       appBar: CommonAppbarWidget(title: AppStringsConstants.editProfile),
 
       body: BlocBuilder<ProfileBloc, ProfileState>(
@@ -146,9 +147,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                         AppSizes.h12,
                         CommonTextFormField(
-                          borderColor: AppColorsConstants.greyF2,
-                          fillColor: AppColorsConstants.greyF2,
-                          textColor: AppColorsConstants.grey89,
+                          borderColor: context.greyF2,
+                          fillColor: context.greyF2,
+                          textColor: context.grey89,
                           controller: emailController,
                           labelText: AppStringsConstants.email,
                           prefixIcon: Icons.email_outlined,
@@ -161,7 +162,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         CommonTextFormField(
                           controller: mobileController,
                           labelText: AppStringsConstants.mobileNumber,
-                          maxLength: 10,
+                          maxLength: 9,
                           prefixIcon: Icons.phone,
                           keyboardType: TextInputType.phone,
                           inputFormatters: [
