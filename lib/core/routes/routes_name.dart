@@ -18,4 +18,9 @@ class RouteNames {
   static const thankYouPage = '/thank_you_page';
   static const orderDetailPage = '/order_detail';
   static const orderPage = '/order_page';
+  static const invoicePage = '/invoice_page';
+  static const deliveryPage = '/delivery_page';
+  static const deliveryDetailPage = '/delivery_detail';
+  static const invoiceDetailPage = '/invoice_detail';
+  static const customerStatementPage = '/customer_statement_page';
 }

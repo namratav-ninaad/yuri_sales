@@ -26,14 +26,14 @@ class CustomerModel {
   @JsonKey(name: 'sales_count')
   final num salesCount;
 
-  @JsonKey(name: 'invoice_count')
-  final num invoiceCount;
+  @JsonKey(name: 'total_invoice')
+  final num totalInvoice;
+
+  @JsonKey(name: 'customer_statement')
+  final num customerStatement;
 
   @JsonKey(name: 'delivery_count')
   final num deliveryCount;
-
-  @JsonKey(name: 'payment_count')
-  final num paymentCount;
 
   @JsonKey(name: 'activity_count')
   final num activityCount;
@@ -96,9 +96,8 @@ class CustomerModel {
     required this.mobile,
     required this.quotationsCount,
     required this.salesCount,
-    required this.invoiceCount,
+    required this.totalInvoice,
     required this.deliveryCount,
-    required this.paymentCount,
     required this.activityCount,
     required this.vat,
     required this.notes,
@@ -117,7 +116,7 @@ class CustomerModel {
     required this.image,
     required this.attachments,
     required this.createDate,
-    required this.writeDate,
+    required this.writeDate, required this.customerStatement,
   });
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) =>

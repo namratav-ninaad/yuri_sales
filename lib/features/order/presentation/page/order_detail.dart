@@ -57,6 +57,7 @@ class OrderDetail extends StatelessWidget {
                   ),
                   AppSizes.h12,
                   OrderSummary(
+                    title: AppStringsConstants.orderSummary,
                     currency: orderModel.currency,
                     total: orderModel.totalAmount,
                     untaxedAmount: orderModel.untaxedAmount,

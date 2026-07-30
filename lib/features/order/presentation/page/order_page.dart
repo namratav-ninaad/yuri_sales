@@ -11,6 +11,7 @@ import 'package:yuri_sale/core/widgets/common_empty_text.dart';
 import 'package:yuri_sale/core/widgets/common_text_field.dart';
 import 'package:yuri_sale/features/customer/presentation/widget/customer_card.dart';
 import 'package:yuri_sale/features/order/domain/entities/order_data.dart';
+import 'package:yuri_sale/features/order/domain/entities/search_order_data.dart';
 import 'package:yuri_sale/features/order/presentation/bloc/order_bloc.dart';
 import 'package:yuri_sale/features/order/presentation/bloc/order_event.dart';
 import 'package:yuri_sale/features/order/presentation/bloc/order_state.dart';
@@ -32,7 +33,15 @@ class _OrderPageState extends State<OrderPage> {
   void initState() {
     super.initState();
     context.read<OrderBloc>().add(ResetOrdersEvent());
-    context.read<OrderBloc>().add(FetchOrdersEvent(status: widget.data.status));
+    context.read<OrderBloc>().add(
+      FetchOrdersEvent(
+        data: SearchOrderData(
+          partnerId: widget.data.partnerId,
+          name: '',
+          status: widget.data.status,
+        ),
+      ),
+    );
   }
 
   @override
@@ -50,7 +59,17 @@ class _OrderPageState extends State<OrderPage> {
             margin: EdgeInsets.symmetric(vertical: AppSizes.p24),
             padding: const EdgeInsets.symmetric(horizontal: AppSizes.p24),
             child: CommonTextFormField(
-              onFieldSubmitted: (value) {},
+              onFieldSubmitted: (value) {
+                context.read<OrderBloc>().add(
+                  FetchOrdersEvent(
+                    data: SearchOrderData(
+                      partnerId: widget.data.partnerId,
+                      name: value,
+                      status: widget.data.status,
+                    ),
+                  ),
+                );
+              },
               prefixIcon: Icons.search_outlined,
               controller: searchController,
               labelText: AppStringsConstants.searchOrder,
@@ -79,7 +98,7 @@ class _OrderPageState extends State<OrderPage> {
                     AppSizes.p24,
                     0,
                     AppSizes.p24,
-                    AppSizes.p12,
+                    AppSizes.p24,
                   ),
                 );
         },

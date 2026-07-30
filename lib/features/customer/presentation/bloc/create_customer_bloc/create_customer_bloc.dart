@@ -318,7 +318,7 @@ class CreateCustomerBloc
     if (state.selectedNoteType.isText) {
       newNote = Note(
         type: NoteType.text,
-        title: AppStringsConstants.customer,
+        title: AppStringsConstants.customers,
         time: '${AppStringsConstants.today}, $timeString',
         content: state.noteText.trim(),
         label: state.selectedNoteType.label,
@@ -327,7 +327,7 @@ class CreateCustomerBloc
     } else if (state.selectedNoteType.isVoice) {
       newNote = Note(
         type: NoteType.voice,
-        title: AppStringsConstants.customer,
+        title: AppStringsConstants.customers,
         time: '${AppStringsConstants.today}, $timeString',
         content: '',
         label: state.selectedNoteType.label,
@@ -337,7 +337,7 @@ class CreateCustomerBloc
     } else {
       newNote = Note(
         type: NoteType.followup,
-        title: AppStringsConstants.customer,
+        title: AppStringsConstants.customers,
         time: '${AppStringsConstants.today}, $timeString',
         content: AppStringsConstants.followUpDate,
         label: state.selectedNoteType.label,

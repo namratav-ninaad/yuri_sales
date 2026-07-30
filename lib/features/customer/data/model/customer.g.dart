@@ -17,9 +17,8 @@ CustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
       mobile: json['mobile'] as String,
       quotationsCount: json['quotations_count'] as num,
       salesCount: json['sales_count'] as num,
-      invoiceCount: json['invoice_count'] as num,
+      totalInvoice: json['total_invoice'] as num,
       deliveryCount: json['delivery_count'] as num,
-      paymentCount: json['payment_count'] as num,
       activityCount: json['activity_count'] as num,
       vat: json['vat'] as String,
       notes: json['notes'] as String,
@@ -43,6 +42,7 @@ CustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       createDate: json['create_date'] as String,
       writeDate: json['write_date'] as String,
+      customerStatement: json['customer_statement'] as num,
     );
 
 Map<String, dynamic> _$CustomerModelToJson(CustomerModel instance) =>
@@ -56,9 +56,9 @@ Map<String, dynamic> _$CustomerModelToJson(CustomerModel instance) =>
       'mobile': instance.mobile,
       'quotations_count': instance.quotationsCount,
       'sales_count': instance.salesCount,
-      'invoice_count': instance.invoiceCount,
+      'total_invoice': instance.totalInvoice,
+      'customer_statement': instance.customerStatement,
       'delivery_count': instance.deliveryCount,
-      'payment_count': instance.paymentCount,
       'activity_count': instance.activityCount,
       'vat': instance.vat,
       'notes': instance.notes,

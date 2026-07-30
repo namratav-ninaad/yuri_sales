@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                     ? context.primaryRedColor
                     : context.greyA3,
               ),
-              label: AppStringsConstants.customer,
+              label: AppStringsConstants.customers,
             ),
             BottomNavigationBarItem(
               icon: CommonAssetsImageWidget(

@@ -4,9 +4,10 @@ import 'package:yuri_sale/core/error/exeptions.dart';
 import 'package:yuri_sale/core/error/failures.dart';
 import 'package:yuri_sale/core/model/common_response.dart';
 import 'package:yuri_sale/features/order/data/model/order.dart';
+import 'package:yuri_sale/features/order/domain/entities/search_order_data.dart';
 
 abstract class OrderRemoteDataSource {
-  Future<List<OrderModel>> fetchOrders({required String status});
+  Future<List<OrderModel>> fetchOrders({required SearchOrderData data});
 }
 
 class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
@@ -15,11 +16,11 @@ class OrderRemoteDataSourceImpl implements OrderRemoteDataSource {
   OrderRemoteDataSourceImpl(this.dio);
 
   @override
-  Future<List<OrderModel>> fetchOrders({required String status}) async {
+  Future<List<OrderModel>> fetchOrders({required SearchOrderData data}) async {
     try {
       final res = await dio.get(
         AppStringsConstants.ordersURl,
-        queryParameters: status.isNotEmpty ? {'status': status} : null,
+        queryParameters: data.toMap(),
       );
 
       return CommonResponse<List<OrderModel>>.fromJson(res.data, (json) {

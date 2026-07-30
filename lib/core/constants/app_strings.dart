@@ -16,6 +16,8 @@ class AppStringsConstants {
   static const String addCartURl = 'cart/add';
   static const String customersURl = 'contact/list';
   static const String ordersURl = 'orders';
+  static const String invoicesURl = 'invoices';
+  static const String deliveriesURl = 'contact/deliveries';
   static const String companyURl = 'company';
   static const String countryURl = 'country';
   static const String stateURl = 'state';
@@ -108,6 +110,8 @@ class AppStringsConstants {
   static const String goToCart = 'Go to Cart';
   static const String searchCustomer = 'Search customer....';
   static const String searchOrder = 'Search order....';
+  static const String searchDelivery = 'Search Delivery....';
+  static const String searchInvoice = 'Search invoice....';
   static const String createCustomer = 'Create Customer';
   static const String customerName = 'Customer Name';
   static const String companyName = 'Company Name';
@@ -138,6 +142,7 @@ class AppStringsConstants {
   static const String takePhoto = 'Take Photo';
   static const String add = 'Add';
   static const String customerDetail = 'Customer Detail';
+  static const String deliveryDetail = 'Delivery Detail';
   static const String quotations = 'Quotations';
   static const String invoices = 'Invoices';
   static const String salesOrder = 'Sales Order';
@@ -192,6 +197,8 @@ class AppStringsConstants {
   static const String profileDataMsg = 'Profile data not found';
   static const String noCustomerData = 'No Customer Data';
   static const String noOrderData = 'No Order Data';
+  static const String noDeliveryData = 'No Delivery Data';
+  static const String noInvoiceData = 'No Invoice Data';
   static const String noProductData = 'No Product Data';
   static const String selectCompany = 'Select Company';
   static const String selectCompanyMsg = 'Please select company';
@@ -234,26 +241,52 @@ class AppStringsConstants {
   static const String toInvoiceL = 'to Invoice';
   static const String no = 'no';
   static const String orderItems = 'Order Items';
+  static const String invoiceItems = 'Invoice Items';
   static const String orderSummary = 'Order Summary';
-  static const String deliveryDetail = 'Delivery Detail';
+  static const String invoiceSummary = 'Invoice Summary';
   static const String paymentMethod = 'Payment Method';
   static const String invoiceDetail = 'Invoice Detail';
   static const String product = 'Product';
   static const String price = 'Price';
   static const String qty = 'Qty';
+  static const String demand = 'Demand';
+  static const String unit = 'Unit';
   static const String untaxedAmount = 'Untaxed Amount';
   static const String discount = 'Discount';
   static const String deliveryDate = 'Delivery Name';
   static const String deliveryAddress = 'Delivery Address';
+  static const String delivery = 'Delivery';
   static const String confirmed = 'Confirmed';
   static const String formQuotation = 'Form Quotation';
   static const String standardDelivery = 'Standard Delivery';
+
+  static const String waiting = "Waiting";
+  static const String ready = "Ready";
+  static const String cancelled = "Cancelled";
+  static const String done = "Done";
+
+  static const String waitingL = "waiting";
+  static const String readyL = "ready";
+  static const String cancelledL = "cancelled";
+  static const String cancelL = "cancel";
+  static const String doneL = "done";
+
+  static const String draft = "Draft";
+  static const String notPaid = "Not Paid";
+  static const String paid = "Paid";
+
+
+  static const String notUPaid = "not_paid";
+  static const String unpaid = "unpaid";
+  static const String draftL = "draft";
+  static const String notPaidL = "not paid";
+  static const String paidL = "paid";
 
   //Bottom Navigation
   static const String dashboard = 'Dashboard';
   static const String orders = 'Orders';
   static const String products = 'Products';
-  static const String customer = 'Customer';
+  static const String customers = 'Customers';
   static const String profile = 'Profile';
 
   // Validation Messages

@@ -39,7 +39,7 @@ class _CustomerPageState extends State<CustomerPage> {
       backgroundColor: context.white,
       appBar: CommonAppbarWidget(
         leading: widget.backButtonShow ? null : AppSizes.h0,
-        title: widget.backButtonShow ? AppStringsConstants.customer : '',
+        title: widget.backButtonShow ? AppStringsConstants.customers : '',
 
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(AppSizes.hS100),
@@ -58,7 +58,7 @@ class _CustomerPageState extends State<CustomerPage> {
                     },
                     prefixIcon: Icons.search_outlined,
                     controller: searchController,
-                    labelText: AppStringsConstants.searchOrder,
+                    labelText: AppStringsConstants.searchCustomer,
                   ),
                 ),
                 AppSizes.w12,

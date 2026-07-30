@@ -107,3 +107,123 @@ enum InvoiceStatus {
     }
   }
 }
+
+enum DeliveryStatus {
+  waiting,
+  ready,
+  cancelled,
+  done;
+
+  String get label {
+    switch (this) {
+      case DeliveryStatus.waiting:
+        return AppStringsConstants.waiting;
+
+      case DeliveryStatus.ready:
+        return AppStringsConstants.ready;
+
+      case DeliveryStatus.cancelled:
+        return AppStringsConstants.cancelled;
+
+      case DeliveryStatus.done:
+        return AppStringsConstants.done;
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case DeliveryStatus.waiting:
+        return AppColorsConstants.orange;
+
+      case DeliveryStatus.ready:
+        return AppColorsConstants.blue;
+
+      case DeliveryStatus.cancelled:
+        return AppColorsConstants.red;
+
+      case DeliveryStatus.done:
+        return AppColorsConstants.green;
+    }
+  }
+
+  static DeliveryStatus fromString(String value) {
+    switch (value.toLowerCase().trim()) {
+      case AppStringsConstants.waitingL:
+        return DeliveryStatus.waiting;
+
+      case AppStringsConstants.readyL:
+        return DeliveryStatus.ready;
+
+      case AppStringsConstants.cancelledL:
+      case AppStringsConstants.cancelL:
+        return DeliveryStatus.cancelled;
+
+      case AppStringsConstants.doneL:
+        return DeliveryStatus.done;
+
+      default:
+        return DeliveryStatus.waiting;
+    }
+  }
+}
+
+enum InvoicePaymentStatus {
+  draft,
+  notPaid,
+  paid,
+  cancelled;
+
+  String get label {
+    switch (this) {
+      case InvoicePaymentStatus.draft:
+        return AppStringsConstants.draft;
+
+      case InvoicePaymentStatus.notPaid:
+        return AppStringsConstants.notPaid;
+
+      case InvoicePaymentStatus.paid:
+        return AppStringsConstants.paid;
+
+      case InvoicePaymentStatus.cancelled:
+        return AppStringsConstants.cancelled;
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case InvoicePaymentStatus.draft:
+        return AppColorsConstants.orange;
+
+      case InvoicePaymentStatus.notPaid:
+        return AppColorsConstants.red;
+
+      case InvoicePaymentStatus.paid:
+        return AppColorsConstants.green;
+
+      case InvoicePaymentStatus.cancelled:
+        return AppColorsConstants.grey89;
+    }
+  }
+
+  static InvoicePaymentStatus fromString(String value) {
+    switch (value.toLowerCase().trim()) {
+      case AppStringsConstants.draftL:
+        return InvoicePaymentStatus.draft;
+
+      case AppStringsConstants.notPaidL:
+      case AppStringsConstants.notUPaid:
+      case AppStringsConstants.unpaid:
+        return InvoicePaymentStatus.notPaid;
+
+      case AppStringsConstants.paidL:
+        return InvoicePaymentStatus.paid;
+
+      case AppStringsConstants.cancelledL:
+      case AppStringsConstants.cancel:
+        return InvoicePaymentStatus.cancelled;
+
+      default:
+        return InvoicePaymentStatus.draft;
+    }
+  }
+}

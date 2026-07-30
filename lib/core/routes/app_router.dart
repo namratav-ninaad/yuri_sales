@@ -12,7 +12,14 @@ import 'package:yuri_sale/features/customer/data/model/customer.dart'
 import 'package:yuri_sale/features/customer/presentation/page/create_customer.dart';
 import 'package:yuri_sale/features/customer/presentation/page/customer_details.dart';
 import 'package:yuri_sale/features/customer/presentation/page/customer_page.dart';
+import 'package:yuri_sale/features/customer/presentation/page/customer_statement.dart';
+import 'package:yuri_sale/features/delivery/data/model/delivery.dart';
+import 'package:yuri_sale/features/delivery/presentation/page/delivery_detail.dart';
+import 'package:yuri_sale/features/delivery/presentation/page/delivery_page.dart';
 import 'package:yuri_sale/features/home/presentation/page/home_page.dart';
+import 'package:yuri_sale/features/invoice/data/model/invoice.dart';
+import 'package:yuri_sale/features/invoice/presentation/page/invoice_details.dart';
+import 'package:yuri_sale/features/invoice/presentation/page/invoice_page.dart';
 import 'package:yuri_sale/features/order/data/model/order.dart';
 import 'package:yuri_sale/features/order/domain/entities/order_data.dart';
 import 'package:yuri_sale/features/order/presentation/page/order_detail.dart';
@@ -75,6 +82,21 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case RouteNames.thankYouPage:
       return MaterialPageRoute(builder: (_) => ThankYouPage());
 
+    case RouteNames.invoicePage:
+      final partnerId = settings.arguments as int;
+      return MaterialPageRoute(
+        builder: (_) => InvoicePage(partnerId: partnerId),
+      );
+
+    case RouteNames.deliveryPage:
+      final partnerId = settings.arguments as int;
+      return MaterialPageRoute(
+        builder: (_) => DeliveryPage(partnerId: partnerId),
+      );
+
+    case RouteNames.customerStatementPage:
+      return MaterialPageRoute(builder: (_) => CustomerStatementPage());
+
     case RouteNames.orderPage:
       final orderData = settings.arguments as OrderData;
       return MaterialPageRoute(builder: (_) => OrderPage(data: orderData));
@@ -83,6 +105,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final orderModel = settings.arguments as OrderModel;
       return MaterialPageRoute(
         builder: (_) => OrderDetail(orderModel: orderModel),
+      );
+
+    case RouteNames.invoiceDetailPage:
+      final invoiceModel = settings.arguments as InvoiceModel;
+      return MaterialPageRoute(
+        builder: (_) => InvoiceDetail(invoiceModel: invoiceModel),
+      );
+
+    case RouteNames.deliveryDetailPage:
+      final deliveryModel = settings.arguments as DeliveryModel;
+      return MaterialPageRoute(
+        builder: (_) => DeliveryDetail(deliveryModel: deliveryModel),
       );
 
     case RouteNames.customerDetail:

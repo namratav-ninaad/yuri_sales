@@ -7,12 +7,13 @@ import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
+import 'package:yuri_sale/core/widgets/common_back_button.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
 import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_outline_button.dart';
 import 'package:yuri_sale/core/widgets/common_text_field.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
-import 'package:yuri_sale/features/auth/presentation/widgets/common_logo_image.dart';
+import 'package:yuri_sale/core/widgets/common_logo_image.dart';
 import 'package:yuri_sale/features/auth/presentation/widgets/icon_and_text_widget.dart';
 import 'package:yuri_sale/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yuri_sale/features/profile/presentation/bloc/profile_event.dart';
@@ -46,7 +47,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.white,
-      appBar: CommonAppbarWidget(title: ''),
       body: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state.isSuccess) {
@@ -64,6 +64,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                AppSizes.h40,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: CommonBackButton(),
+                ),
                 const CommonLogoImage(),
                 AppSizes.h20,
                 CommonTextWidget(

@@ -15,7 +15,7 @@ import 'package:yuri_sale/core/widgets/common_text_field.dart';
 import 'package:yuri_sale/features/auth/presentation/bloc/login/login_bloc.dart';
 import 'package:yuri_sale/features/auth/presentation/bloc/login/login_event.dart';
 import 'package:yuri_sale/features/auth/presentation/bloc/login/login_state.dart';
-import 'package:yuri_sale/features/auth/presentation/widgets/common_logo_image.dart';
+import 'package:yuri_sale/core/widgets/common_logo_image.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

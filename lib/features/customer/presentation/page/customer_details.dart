@@ -45,7 +45,11 @@ class _CustomerDetailsState extends State<CustomerDetails> {
             CustomerTile(
               onTap: () => AppRoutes.pushNamed(
                 RouteNames.orderPage,
-                arguments: OrderData(backButtonShow: true, status: 'draft'),
+                arguments: OrderData(
+                  backButtonShow: true,
+                  status: 'draft',
+                  partnerId: widget.customer.contactId.toInt(),
+                ),
               ),
               title: AppStringsConstants.quotations,
               icon: Icons.shopping_cart_outlined,
@@ -57,38 +61,52 @@ class _CustomerDetailsState extends State<CustomerDetails> {
             CustomerTile(
               onTap: () => AppRoutes.pushNamed(
                 RouteNames.orderPage,
-                arguments: OrderData(backButtonShow: true, status: 'sale'),
+                arguments: OrderData(
+                  backButtonShow: true,
+                  status: 'sale',
+                  partnerId: widget.customer.contactId.toInt(),
+                ),
               ),
               title: AppStringsConstants.salesOrder,
               icon: Icons.currency_exchange_rounded,
-              value: widget.customer.invoiceCount.toString(),
+              value: widget.customer.salesCount.toString(),
             ),
             AppSizes.h12,
             CommonDivider(),
             AppSizes.h12,
             CustomerTile(
+              onTap: () => AppRoutes.pushNamed(
+                RouteNames.invoicePage,
+                arguments: widget.customer.contactId.toInt(),
+              ),
               title: AppStringsConstants.invoices,
               icon: Icons.edit_note,
-              value: 'AED 20.00',
+              value: 'AED ${widget.customer.totalInvoice}',
             ),
             AppSizes.h12,
             CommonDivider(),
             AppSizes.h12,
             CustomerTile(
+              /* onTap: () =>
+                  AppRoutes.pushNamed(RouteNames.customerStatementPage),*/
               title: AppStringsConstants.customerStatement,
               icon: Icons.payment_outlined,
-              value: 'AED 20.00',
+              value: 'AED ${widget.customer.customerStatement}',
             ),
             AppSizes.h12,
             CommonDivider(),
             AppSizes.h12,
             CustomerTile(
+              onTap: () => AppRoutes.pushNamed(
+                RouteNames.deliveryPage,
+                arguments: widget.customer.contactId.toInt(),
+              ),
               title: AppStringsConstants.deliveryHistory,
               icon: Icons.local_shipping_outlined,
               value: widget.customer.deliveryCount.toString(),
             ),
             AppSizes.h12,
-            CommonDivider(),
+            /*  CommonDivider(),
             AppSizes.h12,
             CustomerTile(
               title: AppStringsConstants.notes,
@@ -96,8 +114,8 @@ class _CustomerDetailsState extends State<CustomerDetails> {
               value: widget.customer.notes.isNotEmpty ? '1' : '0',
             ),
             AppSizes.h12,
-            // CommonDivider(),
-           /* AppSizes.h12,
+             CommonDivider(),
+             AppSizes.h12,
             CustomerTile(
               title: AppStringsConstants.activities,
               icon: Icons.calendar_month,

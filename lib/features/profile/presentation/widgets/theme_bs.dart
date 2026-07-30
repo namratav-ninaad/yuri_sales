@@ -12,6 +12,7 @@ import 'package:yuri_sale/features/profile/presentation/bloc/profile_state.dart'
 void showThemeBottomSheet(BuildContext context) {
   showModalBottomSheet(
     context: context,
+    // backgroundColor: context.white,
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizes.r24)),
     ),

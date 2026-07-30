@@ -14,12 +14,14 @@ class OrderSummary extends StatelessWidget {
     required this.untaxedAmount,
     required this.vat,
     required this.total,
+    required this.title,
   });
 
   final String currency;
   final double untaxedAmount;
   final double vat;
   final double total;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class OrderSummary extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CommonTextWidget(
-          title: AppStringsConstants.orderSummary,
+          title: title,
           fontSize: AppSizes.f16,
           fontWeight: FontWeight.w700,
         ),

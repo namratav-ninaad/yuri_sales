@@ -25,7 +25,15 @@ import 'package:yuri_sale/features/customer/domain/usecases/state_uc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_bloc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/customer/customer_bloc.dart';
 import 'package:yuri_sale/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:yuri_sale/features/delivery/data/datasource/delivery_remote_data_source.dart';
+import 'package:yuri_sale/features/delivery/data/repository/delivery_repository.dart';
+import 'package:yuri_sale/features/delivery/domain/usecases/fetch_deliveries_uc.dart';
+import 'package:yuri_sale/features/delivery/presentation/bloc/delivery_bloc.dart';
 import 'package:yuri_sale/features/home/presentation/bloc/home_bloc.dart';
+import 'package:yuri_sale/features/invoice/data/datasource/invoice_remote_datasource.dart';
+import 'package:yuri_sale/features/invoice/data/repository/invoice_repository.dart';
+import 'package:yuri_sale/features/invoice/domain/usecases/fetach_invoice_uc.dart';
+import 'package:yuri_sale/features/invoice/presentation/bloc/invoice_bloc.dart';
 import 'package:yuri_sale/features/order/data/datasource/order_remote_datasource.dart';
 import 'package:yuri_sale/features/order/data/repository/order_repository.dart';
 import 'package:yuri_sale/features/order/domain/usecases/fetch_order_uc.dart';
@@ -70,7 +78,8 @@ Future<void> configureDependencies() async {
     () => ProductBloc(productUseCase: sl(), addCartUseCase: sl()),
   );
   sl.registerFactory(() => QuoteBloc(submitRfqUseCase: sl()));
-
+  sl.registerFactory(() => InvoiceBloc(fetchInvoiceUseCase: sl()));
+  sl.registerFactory(() => DeliveryBloc(fetchDeliveriesUseCase: sl()));
   sl.registerFactory(() => OrderBloc(fetchOrdersUseCase: sl()));
 
   sl.registerFactory(
@@ -167,4 +176,22 @@ Future<void> configureDependencies() async {
   );
   sl.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl(sl()));
   sl.registerLazySingleton(() => FetchOrdersUseCase(sl()));
+
+  //Invoice
+  sl.registerLazySingleton<InvoiceRemoteDataSource>(
+    () => InvoiceRemoteDataSourceImpl(sl<DioClient>().dio),
+  );
+  sl.registerLazySingleton<InvoiceRepository>(
+    () => InvoiceRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => FetchInvoicesUseCase(sl()));
+
+  //Delivery
+  sl.registerLazySingleton<DeliveryRemoteDataSource>(
+    () => DeliveryRemoteDataSourceImpl(sl<DioClient>().dio),
+  );
+  sl.registerLazySingleton<DeliveryRepository>(
+    () => DeliveryRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => FetchDeliveriesUseCase(sl()));
 }

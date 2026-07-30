@@ -7,7 +7,9 @@ import 'package:yuri_sale/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_bloc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/customer/customer_bloc.dart';
 import 'package:yuri_sale/features/dashboard/presentation/bloc/dashboard_bloc.dart';
+import 'package:yuri_sale/features/delivery/presentation/bloc/delivery_bloc.dart';
 import 'package:yuri_sale/features/home/presentation/bloc/home_bloc.dart';
+import 'package:yuri_sale/features/invoice/presentation/bloc/invoice_bloc.dart';
 import 'package:yuri_sale/features/order/presentation/bloc/order_bloc.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_bloc.dart';
 import 'package:yuri_sale/features/profile/presentation/bloc/profile_bloc.dart';
@@ -35,5 +37,7 @@ List<BlocProvider> authBlocProviders() {
     blocProvider<ProfileBloc>(),
     blocProvider<QuoteBloc>(),
     blocProvider<OrderBloc>(),
+    blocProvider<InvoiceBloc>(),
+    blocProvider<DeliveryBloc>(),
   ];
 }

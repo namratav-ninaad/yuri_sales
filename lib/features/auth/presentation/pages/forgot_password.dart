@@ -14,7 +14,7 @@ import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/features/auth/presentation/bloc/forgot_password/forgot_password_bloc.dart';
 import 'package:yuri_sale/features/auth/presentation/bloc/forgot_password/forgot_password_event.dart';
 import 'package:yuri_sale/features/auth/presentation/bloc/forgot_password/forgot_password_state.dart';
-import 'package:yuri_sale/features/auth/presentation/widgets/common_logo_image.dart';
+import 'package:yuri_sale/core/widgets/common_logo_image.dart';
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({super.key});

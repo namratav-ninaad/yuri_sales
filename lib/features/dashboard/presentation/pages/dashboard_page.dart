@@ -8,7 +8,7 @@ import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
-import 'package:yuri_sale/features/auth/presentation/widgets/common_logo_image.dart';
+import 'package:yuri_sale/core/widgets/common_logo_image.dart';
 import 'package:yuri_sale/features/dashboard/presentation/widgets/achievement_card.dart';
 import 'package:yuri_sale/features/dashboard/presentation/widgets/customer_tile.dart';
 import 'package:yuri_sale/features/dashboard/presentation/widgets/product_tile.dart';
