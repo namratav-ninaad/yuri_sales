@@ -77,10 +77,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void _showImagePicker() {
     showModalBottomSheet(
       context: context,
+      useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizes.r24)),
       ),
-      builder: (_) => ProfileEditIconBs(onTap: _pickImage),
+      builder: (_) =>
+          SafeArea(top: false, child: ProfileEditIconBs(onTap: _pickImage)),
     );
   }
 
@@ -91,7 +93,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       final state = context.read<ProfileBloc>().state;
 
       if (state.profile != null) {
-        fullNameController.text = state.profile!.full_name;
+        fullNameController.text = state.profile!.fullName;
         companyController.text = state.profile!.company.name;
         emailController.text = state.profile!.email;
         mobileController.text = state.profile!.phone;
@@ -129,7 +131,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         // Profile Picture
                         CommonCircleAvatar(
                           imageFile: state.selectedProfileImage,
-                          imageUrl: profileData.profile_image,
+                          imageUrl: profileData.profileImage,
                           onEditTap: _showImagePicker,
                         ),
 

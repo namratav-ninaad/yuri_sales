@@ -13,6 +13,10 @@ extension ThemeColors on BuildContext {
   Color get greyC8 =>
       isDark ? AppColorsConstants.grey61 : AppColorsConstants.greyC8;
 
+
+  Color get greyFA =>
+      isDark ? AppColorsConstants.greyF5 : AppColorsConstants.greyFA;
+
   Color get grey89 =>
       isDark ? AppColorsConstants.greyBD : AppColorsConstants.grey89;
 

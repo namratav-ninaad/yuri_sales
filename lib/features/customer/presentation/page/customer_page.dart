@@ -42,9 +42,11 @@ class _CustomerPageState extends State<CustomerPage> {
         title: widget.backButtonShow ? AppStringsConstants.customers : '',
 
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(AppSizes.hS100),
+          preferredSize: Size.fromHeight(
+            widget.backButtonShow ? AppSizes.s80 : AppSizes.s100,
+          ),
           child: Container(
-            height: AppSizes.hS45,
+            height: AppSizes.s45,
             margin: EdgeInsets.symmetric(vertical: AppSizes.p24),
             padding: const EdgeInsets.symmetric(horizontal: AppSizes.p24),
             child: Row(
@@ -67,7 +69,8 @@ class _CustomerPageState extends State<CustomerPage> {
                   child: Container(
                     padding: EdgeInsets.all(AppSizes.p8),
                     decoration: BoxDecoration(
-                      border: Border.all(color: context.greyC8),
+                      // border: Border.all(color: context.greyC8),
+                      color: context.greyFA,
                       borderRadius: BorderRadius.circular(AppSizes.r12),
                     ),
                     child: CommonIconWidget(
@@ -84,28 +87,33 @@ class _CustomerPageState extends State<CustomerPage> {
       ),
       body: BlocBuilder<CustomerBloc, CustomerState>(
         builder: (context, state) {
-          return state.isLoading
-              ? const Center(child: CommonCircularProgressIndicator())
-              : state.customers.isEmpty
-              ? CommonEmptyText(title: AppStringsConstants.noCustomerData)
-              : ListView.separated(
-                  separatorBuilder: (context, index) => AppSizes.h12,
-                  shrinkWrap: true,
-                  itemCount: state.customers.length,
-                  itemBuilder: (context, index) => CustomerCard(
-                    customer: state.customers[index],
-                    onTap: () => AppRoutes.pushNamed(
-                      RouteNames.customerDetail,
-                      arguments: state.customers[index],
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<CustomerBloc>().add(FetchCustomerEvent(''));
+            },
+            child: state.isLoading
+                ? const Center(child: CommonCircularProgressIndicator())
+                : state.customers.isEmpty
+                ? CommonEmptyText(title: AppStringsConstants.noCustomerData)
+                : ListView.separated(
+                    separatorBuilder: (context, index) => AppSizes.h12,
+                    shrinkWrap: true,
+                    itemCount: state.customers.length,
+                    itemBuilder: (context, index) => CustomerCard(
+                      customer: state.customers[index],
+                      onTap: () => AppRoutes.pushNamed(
+                        RouteNames.customerDetail,
+                        arguments: state.customers[index],
+                      ),
+                    ),
+                    padding: EdgeInsets.fromLTRB(
+                      AppSizes.p24,
+                      0,
+                      AppSizes.p24,
+                      AppSizes.p12,
                     ),
                   ),
-                  padding: EdgeInsets.fromLTRB(
-                    AppSizes.p24,
-                    0,
-                    AppSizes.p24,
-                    AppSizes.p12,
-                  ),
-                );
+          );
         },
       ),
     );

@@ -17,12 +17,12 @@ class DeliveryStatusChip extends StatelessWidget {
         vertical: AppSizes.p4,
       ),
       decoration: BoxDecoration(
-        color: deliveryStatus.color,
+        color: deliveryStatus.color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppSizes.r8),
       ),
       child: CommonTextWidget(
         title: deliveryStatus.label,
-        color: Colors.white,
+        color: deliveryStatus.color,
         fontSize: AppSizes.f10,
         fontWeight: FontWeight.w500,
       ),

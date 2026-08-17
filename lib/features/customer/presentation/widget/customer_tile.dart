@@ -27,6 +27,7 @@ class CustomerTile extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
+            flex: 3,
             child: CommonBgIconAndText(
               icon: icon,
               title: title,
@@ -35,13 +36,16 @@ class CustomerTile extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          CommonTextWidget(
-            title: value,
-            color: context.black,
-            fontWeight: FontWeight.w600,
-            fontSize: AppSizes.f14,
+          Expanded(
+            child: CommonTextWidget(
+              title: value,
+              color: context.black,
+              textAlign: TextAlign.right,
+              fontWeight: FontWeight.w600,
+              fontSize: AppSizes.f12,
+            ),
           ),
-          AppSizes.w12,
+          AppSizes.w4,
           CommonIconWidget(
             icon: Icons.arrow_forward_ios_outlined,
             color: context.grey89,

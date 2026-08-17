@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
-import 'package:yuri_sale/core/error/exeptions.dart';
+import 'package:yuri_sale/core/error/exception.dart';
 import 'package:yuri_sale/core/error/failures.dart';
 import 'package:yuri_sale/core/model/common_response.dart';
-import 'package:yuri_sale/features/customer/data/model/company_model.dart';
+import 'package:yuri_sale/features/customer/data/model/company.dart';
 import 'package:yuri_sale/features/customer/data/model/contact_tag.dart';
 import 'package:yuri_sale/features/customer/data/model/country.dart';
 import 'package:yuri_sale/features/customer/data/model/customer.dart';

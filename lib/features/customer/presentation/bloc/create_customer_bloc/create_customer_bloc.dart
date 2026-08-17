@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/enum/app_enum.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/date_helper.dart';
-import 'package:yuri_sale/features/customer/data/model/company_model.dart';
+import 'package:yuri_sale/features/customer/data/model/company.dart';
 import 'package:yuri_sale/features/customer/data/model/contact_tag.dart';
 import 'package:yuri_sale/features/customer/data/model/country.dart';
 import 'package:yuri_sale/features/customer/data/model/note.dart';
@@ -288,7 +287,7 @@ class CreateCustomerBloc
     SelectFollowUpDate event,
     Emitter<CreateCustomerState> emit,
   ) {
-    emit(state.copyWith(selectedDate: event.date));
+    emit(state.copyWith(selectedNoteDate: event.date));
   }
 
   void _onSaveNote(SaveNote event, Emitter<CreateCustomerState> emit) async {
@@ -297,11 +296,11 @@ class CreateCustomerBloc
       return;
     }
 
-    if (state.selectedNoteType.isVoice &&
+    /*if (state.selectedNoteType.isVoice &&
         state.recordedDuration.trim().isEmpty) {
       ToastHelper.error(AppStringsConstants.voiceNoteMsg);
       return;
-    }
+    }*/
 
     if (state.selectedNoteType.isFollowUp && state.selectedNoteDate == null) {
       ToastHelper.error(AppStringsConstants.dateNoteMsg);
@@ -324,7 +323,7 @@ class CreateCustomerBloc
         label: state.selectedNoteType.label,
         labelColor: AppColorsConstants.green,
       );
-    } else if (state.selectedNoteType.isVoice) {
+    }/* else if (state.selectedNoteType.isVoice) {
       newNote = Note(
         type: NoteType.voice,
         title: AppStringsConstants.customers,
@@ -334,7 +333,7 @@ class CreateCustomerBloc
         labelColor: AppColorsConstants.blue,
         duration: state.recordedDuration,
       );
-    } else {
+    }*/ else {
       newNote = Note(
         type: NoteType.followup,
         title: AppStringsConstants.customers,

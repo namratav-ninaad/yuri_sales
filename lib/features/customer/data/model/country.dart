@@ -2,21 +2,28 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'country.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class CountryModel {
-  num id;
-  String name;
-  String code;
-  num phone_code;
-  String address_format;
-  CurrencyBean currency;
+  final num id;
+
+  final String name;
+
+  final String code;
+
+  @JsonKey(name: 'phone_code')
+  final num phoneCode;
+
+  @JsonKey(name: 'address_format')
+  final String addressFormat;
+
+  final CurrencyBean currency;
 
   CountryModel({
     required this.id,
     required this.name,
     required this.code,
-    required this.phone_code,
-    required this.address_format,
+    required this.phoneCode,
+    required this.addressFormat,
     required this.currency,
   });
 
@@ -28,11 +35,17 @@ class CountryModel {
 
 @JsonSerializable()
 class CurrencyBean {
-  num id;
-  String name;
-  String symbol;
+  final num id;
 
-  CurrencyBean({required this.id, required this.name, required this.symbol});
+  final String name;
+
+  final String symbol;
+
+  CurrencyBean({
+    required this.id,
+    required this.name,
+    required this.symbol,
+  });
 
   factory CurrencyBean.fromJson(Map<String, dynamic> json) =>
       _$CurrencyBeanFromJson(json);

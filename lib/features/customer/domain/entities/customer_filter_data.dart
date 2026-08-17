@@ -1,17 +1,18 @@
 class CustomerFilterData {
-  final String? name;
+  final String? search;
   final int? companyId;
   final bool? active;
 
+
   const CustomerFilterData({
-    this.name,
+    this.search,
     this.companyId,
     this.active,
   });
 
   Map<String, dynamic> toQuery() {
     return {
-      if (name != null && name!.isNotEmpty) "name": name,
+      if (search != null && search!.isNotEmpty) "search": search,
       if (companyId != null) "company_id": companyId,
       if (active != null) "active": active,
     };

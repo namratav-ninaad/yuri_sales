@@ -9,6 +9,14 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc({required this.fetchOrdersUseCase}) : super(OrderState()) {
     on<FetchOrdersEvent>(_onFetchOrders);
     on<ResetOrdersEvent>(_onResetOrders);
+    on<OrderStatusFilterChanged>(_onOrderStatusFilterChanged);
+  }
+
+  Future<void> _onOrderStatusFilterChanged(
+    OrderStatusFilterChanged event,
+    Emitter<OrderState> emit,
+  ) async {
+    emit(state.copyWith(selectedStatus: event.status));
   }
 
   Future<void> _onResetOrders(

@@ -60,13 +60,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CommonCircleAvatar(
-                            imageUrl: profileData.profile_image,
+                            imageUrl: profileData.profileImage,
                             onEditTap: () =>
                                 AppRoutes.pushNamed(RouteNames.editProfile),
                           ),
                           AppSizes.h24,
                           CommonTextWidget(
-                            title: profileData.full_name,
+                            title: profileData.fullName,
                             color: context.black,
                             fontWeight: FontWeight.w700,
                             fontSize: AppSizes.f20,

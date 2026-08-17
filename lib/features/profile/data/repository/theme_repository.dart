@@ -11,11 +11,10 @@ class ThemeRepository {
     final value = await SharedPrefHelper.getString(
       AppStringsConstants.themeModeKey,
     );
-
     switch (value) {
-      case AppStringsConstants.light:
+      case AppStringsConstants.lightL:
         return ThemeMode.light;
-      case AppStringsConstants.dark:
+      case AppStringsConstants.darkL:
         return ThemeMode.dark;
       default:
         return ThemeMode.system;

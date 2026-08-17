@@ -58,7 +58,7 @@ class SharedPrefHelper {
   /// User Login
   static Future<bool> isLoggedIn() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey(AppStringsConstants.accessToken);
+    return prefs.containsKey(AppStringsConstants.loginResponse);
   }
 
   static Future<void> remove(String key) async {

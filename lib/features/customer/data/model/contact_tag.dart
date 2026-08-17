@@ -7,15 +7,17 @@ class ContactTagModel {
   num id;
   String name;
   bool active;
-  String create_date;
-  String write_date;
+  @JsonKey(name: 'create_date')
+  String createDate;
+  @JsonKey(name: 'write_date')
+  String writeDate;
 
   ContactTagModel({
     required this.id,
     required this.name,
     required this.active,
-    required this.create_date,
-    required this.write_date,
+    required this.createDate,
+    required this.writeDate,
   });
 
   factory ContactTagModel.fromJson(Map<String, dynamic> json) =>

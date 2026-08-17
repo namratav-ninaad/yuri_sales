@@ -20,22 +20,20 @@ class OrderProductItem extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 5,
             child: CommonTextWidget(
               title: orderLine.productName,
               fontSize: AppSizes.f14,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: CommonTextWidget(
               title: '$currency ${orderLine.unitPrice}',
               fontSize: AppSizes.f12,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
@@ -48,23 +46,21 @@ class OrderProductItem extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: CommonTextWidget(
               title: '${orderLine.discount}',
               fontSize: AppSizes.f12,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: CommonTextWidget(
               title: '$currency ${orderLine.subtotal}',
               fontSize: AppSizes.f12,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
         ],

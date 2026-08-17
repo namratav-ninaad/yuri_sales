@@ -85,10 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: AppStringsConstants.email,
                           keyboardType: TextInputType.name,
                           prefixIcon: Icons.email_outlined,
-                          validator: (value) => AppValidators.requiredField(
-                            value,
-                            AppStringsConstants.email,
-                          ),
+                          validator: (value) => AppValidators.email(value),
                         ),
                         AppSizes.h12,
 
@@ -120,8 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Row(
                               children: [
                                 Checkbox(
-                                  activeColor:
-                                      context.primaryRedColor,
+                                  activeColor: context.primaryRedColor,
                                   value: state.rememberMe,
                                   onChanged: (value) async {
                                     context.read<LoginBloc>().add(
@@ -197,10 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   /*  Row(
                   children: [
                     Expanded(
-                      child: Container(
-                        color: context.greyC8,
-                        height: 1,
-                      ),
+                      child:   CommonDivider(),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -214,10 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        color: context.greyC8,
-                        height: 1,
-                      ),
+                      child: CommonDivider(),
                     ),
                   ],
                 ),

@@ -27,20 +27,48 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   Future<void> _onFetchCart(FetchCart event, Emitter<CartState> emit) async {
-    emit(state.copyWith(isLoading: event.isFirstTimeLoading ?? true));
+    emit(
+      state.copyWith(
+        isLoading: event.isFirstTimeLoading ?? true,
+        isQuantityUpdated: false,
+        isItemRemoved: false,
+      ),
+    );
     try {
       final result = await cartUseCases.call();
 
       result.fold(
         (failure) {
-          emit(state.copyWith(isLoading: false, errorMessage: failure.message));
+          emit(
+            state.copyWith(
+              isLoading: false,
+              isQuantityUpdated: false,
+              isItemRemoved: false,
+              errorMessage: failure.message,
+            ),
+          );
         },
         (cartData) {
-          emit(state.copyWith(isLoading: false, cartData: cartData));
+          emit(
+            state.copyWith(
+              isLoading: false,
+              isQuantityUpdated: false,
+              isItemRemoved: false,
+              cartData: cartData,
+              cartItemCount: cartData.cartProducts.length,
+            ),
+          );
         },
       );
     } catch (e) {
-      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+      emit(
+        state.copyWith(
+          isLoading: false,
+          isQuantityUpdated: false,
+          isItemRemoved: false,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 
@@ -48,7 +76,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     IncreaseQuantity event,
     Emitter<CartState> emit,
   ) async {
-    emit(state.copyWith(isQuantityUpdated: false));
+    emit(state.copyWith(isQuantityUpdated: false, isItemRemoved: false));
     try {
       final result = await updateCartQtyUseCase.call(data: event.data);
 
@@ -57,18 +85,23 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           emit(
             state.copyWith(
               errorMessage: failure.message,
+              isItemRemoved: false,
               isQuantityUpdated: false,
             ),
           );
         },
         (cartData) {
-          emit(state.copyWith(isQuantityUpdated: true));
+          emit(state.copyWith(isQuantityUpdated: true, isItemRemoved: false));
         },
       );
       add(FetchCart(isFirstTimeLoading: false));
     } catch (e) {
       emit(
-        state.copyWith(isQuantityUpdated: false, errorMessage: e.toString()),
+        state.copyWith(
+          isQuantityUpdated: false,
+          isItemRemoved: false,
+          errorMessage: e.toString(),
+        ),
       );
     }
   }
@@ -77,7 +110,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     DecreaseQuantity event,
     Emitter<CartState> emit,
   ) async {
-    emit(state.copyWith(isQuantityUpdated: false));
+    emit(state.copyWith(isQuantityUpdated: false, isItemRemoved: false));
     try {
       final result = await updateCartQtyUseCase.call(data: event.data);
 
@@ -86,42 +119,56 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           emit(
             state.copyWith(
               errorMessage: failure.message,
+              isItemRemoved: false,
               isQuantityUpdated: false,
             ),
           );
         },
         (cartData) {
-          emit(state.copyWith(isQuantityUpdated: true));
+          emit(state.copyWith(isQuantityUpdated: true, isItemRemoved: false));
         },
       );
 
       add(FetchCart(isFirstTimeLoading: false));
     } catch (e) {
       emit(
-        state.copyWith(isQuantityUpdated: false, errorMessage: e.toString()),
+        state.copyWith(
+          isQuantityUpdated: false,
+          isItemRemoved: false,
+          errorMessage: e.toString(),
+        ),
       );
     }
   }
 
   Future<void> _onRemoveCart(RemoveCart event, Emitter<CartState> emit) async {
-    emit(state.copyWith(isItemRemoved: false));
+    emit(state.copyWith(isItemRemoved: false, isQuantityUpdated: false));
     try {
       var result = await removeCartUseCase.call(lineId: event.lineId);
 
       result.fold(
         (failure) {
           emit(
-            state.copyWith(isItemRemoved: false, errorMessage: failure.message),
+            state.copyWith(
+              isItemRemoved: false,
+              isQuantityUpdated: false,
+              errorMessage: failure.message,
+            ),
           );
         },
         (cartData) {
-          emit(state.copyWith(isItemRemoved: true));
+          add(FetchCart(isFirstTimeLoading: false));
+          emit(state.copyWith(isItemRemoved: true, isQuantityUpdated: false));
         },
       );
-
-      add(FetchCart(isFirstTimeLoading: false));
     } catch (e) {
-      emit(state.copyWith(isItemRemoved: false, errorMessage: e.toString()));
+      emit(
+        state.copyWith(
+          isItemRemoved: false,
+          isQuantityUpdated: false,
+          errorMessage: e.toString(),
+        ),
+      );
     }
   }
 }

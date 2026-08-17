@@ -1,9 +1,9 @@
 abstract class CustomerEvent {}
 
 class FetchCustomerEvent extends CustomerEvent {
-  final String query;
+  final String search;
 
-  FetchCustomerEvent(this.query);
+  FetchCustomerEvent(this.search);
 
-  List<Object?> get props => [query];
+  List<Object?> get props => [search];
 }

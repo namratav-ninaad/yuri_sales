@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/features/delivery/data/model/delivery.dart';
-import 'package:yuri_sale/features/invoice/data/model/invoice.dart';
-import 'package:yuri_sale/features/order/data/model/order.dart';
 
 class DeliveryProductRowData extends StatelessWidget {
   const DeliveryProductRowData({
@@ -20,23 +18,21 @@ class DeliveryProductRowData extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 3,
+            flex: 5,
             child: CommonTextWidget(
               textAlign: TextAlign.center,
               title: deliveryProduct.productName,
               fontSize: AppSizes.f14,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: CommonTextWidget(
               title: deliveryProduct.orderedQty.toInt().toString(),
               fontSize: AppSizes.f12,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
@@ -49,13 +45,12 @@ class DeliveryProductRowData extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: CommonTextWidget(
               title: deliveryProduct.uom,
               fontSize: AppSizes.f12,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
         ],

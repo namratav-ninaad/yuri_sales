@@ -45,7 +45,7 @@ class CommonTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.errorText,
     this.fillColor,
-    this.filled = false,
+    this.filled = true,
     this.textColor,
     this.borderColor,
     this.maxLength,
@@ -74,10 +74,12 @@ class CommonTextFormField extends StatelessWidget {
       ),
       inputFormatters: inputFormatters,
       onTap: onTap,
+      textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
         counterText: '',
-        fillColor: fillColor,
+        fillColor: fillColor ?? context.greyFA,
         filled: filled,
+        isDense: true,
         errorText: errorText,
         labelText: labelText,
         contentPadding: const EdgeInsets.symmetric(
@@ -98,27 +100,28 @@ class CommonTextFormField extends StatelessWidget {
             : null,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
-          borderSide: BorderSide(
+          borderSide: BorderSide.none,
+
+          /*borderSide: BorderSide(
             color: borderColor ?? context.greyC8,
-          ),
+          ),*/
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
-          borderSide: BorderSide(
+          borderSide: BorderSide.none,
+          /*  borderSide: BorderSide(
             color: borderColor ?? context.greyC8,
-          ),
+          ),*/
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
-          borderSide: BorderSide(
-            color: borderColor ?? context.greyC8,
-          ),
+          borderSide: BorderSide.none,
+          /* borderSide: BorderSide(color: borderColor ?? context.greyC8),*/
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
-          borderSide: BorderSide(
-            color: borderColor ?? context.greyC8,
-          ),
+          borderSide: BorderSide.none,
+          /*  borderSide: BorderSide(color: borderColor ?? context.greyC8),*/
         ),
       ),
     );

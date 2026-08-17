@@ -1,5 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:yuri_sale/core/network/dio_client.dart';
+import 'package:yuri_sale/features/activity/data/datasource/activity_remote_datasource.dart';
+import 'package:yuri_sale/features/activity/data/repository/activity_repository.dart';
+import 'package:yuri_sale/features/activity/domain/usecases/activities_uc.dart';
+import 'package:yuri_sale/features/activity/presentation/bloc/activity_bloc.dart';
 import 'package:yuri_sale/features/auth/data/datasource/auth_remote_datasource.dart';
 import 'package:yuri_sale/features/auth/data/repository/auth_repository.dart';
 import 'package:yuri_sale/features/auth/domain/usecases/auth_usecase.dart';
@@ -34,14 +38,19 @@ import 'package:yuri_sale/features/invoice/data/datasource/invoice_remote_dataso
 import 'package:yuri_sale/features/invoice/data/repository/invoice_repository.dart';
 import 'package:yuri_sale/features/invoice/domain/usecases/fetach_invoice_uc.dart';
 import 'package:yuri_sale/features/invoice/presentation/bloc/invoice_bloc.dart';
+import 'package:yuri_sale/features/log_note/data/datasource/log_note_remote_data_source.dart';
+import 'package:yuri_sale/features/log_note/data/repository/log_note_repository.dart';
+import 'package:yuri_sale/features/log_note/domain/usecases/log_note_uc.dart';
+import 'package:yuri_sale/features/log_note/presentation/bloc/log_note_bloc.dart';
 import 'package:yuri_sale/features/order/data/datasource/order_remote_datasource.dart';
 import 'package:yuri_sale/features/order/data/repository/order_repository.dart';
 import 'package:yuri_sale/features/order/domain/usecases/fetch_order_uc.dart';
 import 'package:yuri_sale/features/order/presentation/bloc/order_bloc.dart';
 import 'package:yuri_sale/features/product/data/datasource/product_remote_data_source.dart';
 import 'package:yuri_sale/features/product/data/repository/product_repository.dart';
-import 'package:yuri_sale/features/product/domain/usecases/add_cart_us.dart';
-import 'package:yuri_sale/features/product/domain/usecases/product_usecase.dart';
+import 'package:yuri_sale/features/product/domain/usecases/add_cart_uc.dart';
+import 'package:yuri_sale/features/product/domain/usecases/category_uc.dart';
+import 'package:yuri_sale/features/product/domain/usecases/product_uc.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_bloc.dart';
 import 'package:yuri_sale/features/profile/data/datasource/profile_remote_data_source.dart';
 import 'package:yuri_sale/features/profile/data/repository/profile_repository.dart';
@@ -51,10 +60,15 @@ import 'package:yuri_sale/features/profile/domain/usecases/get_profile_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/logout_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/update_profile_uc.dart';
 import 'package:yuri_sale/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:yuri_sale/features/profile/presentation/bloc/profile_event.dart';
 import 'package:yuri_sale/features/quote/data/datasource/quote_remote_data_source.dart';
 import 'package:yuri_sale/features/quote/data/repository/quote_repository.dart';
 import 'package:yuri_sale/features/quote/domain/usecase/submit_rfq_usecase.dart';
 import 'package:yuri_sale/features/quote/presentation/bloc/quote_bloc.dart';
+import 'package:yuri_sale/features/send_message/data/datasource/send_message_remote_data_source.dart';
+import 'package:yuri_sale/features/send_message/data/repository/send_message_repository.dart';
+import 'package:yuri_sale/features/send_message/domain/usecases/send_message_uc.dart';
+import 'package:yuri_sale/features/send_message/presentation/bloc/send_message_bloc.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -75,9 +89,35 @@ Future<void> configureDependencies() async {
     ),
   );
   sl.registerFactory(
-    () => ProductBloc(productUseCase: sl(), addCartUseCase: sl()),
+    () => ProductBloc(productUseCase: sl(), addCartUseCase: sl(), categoryUseCase: sl()),
+  );
+  sl.registerFactory(
+    () => LogNoteBloc(
+      fetchLogNotesUseCase: sl(),
+      createLogNotesUseCase: sl(),
+      updateLogNotesUseCase: sl(),
+      deleteLogNotesUseCase: sl(),
+    ),
+  );
+  sl.registerFactory(
+    () => SendMessageBloc(
+      fetchSendMessagesUseCase: sl(),
+      createSendMessageUseCase: sl(),
+      updateSendMessageUseCase: sl(),
+      deleteSendMessageUseCase: sl(),
+    ),
   );
   sl.registerFactory(() => QuoteBloc(submitRfqUseCase: sl()));
+  sl.registerFactory(
+    () => ActivityBloc(
+      activityUseCase: sl(),
+      createActivityUseCase: sl(),
+      updateActivityUseCase: sl(),
+      deleteActivityUseCase: sl(),
+      markDoneActivityUseCase: sl(),
+      fetchUsersUseCase: sl(),
+    ),
+  );
   sl.registerFactory(() => InvoiceBloc(fetchInvoiceUseCase: sl()));
   sl.registerFactory(() => DeliveryBloc(fetchDeliveriesUseCase: sl()));
   sl.registerFactory(() => OrderBloc(fetchOrdersUseCase: sl()));
@@ -101,7 +141,7 @@ Future<void> configureDependencies() async {
       getProfileUseCase: sl(),
       updateProfileUseCase: sl(),
       logoutUseCase: sl(),
-    ),
+    )..add(LoadThemeEvent()),
   );
 
   sl.registerLazySingleton<DioClient>(() => DioClient());
@@ -125,6 +165,7 @@ Future<void> configureDependencies() async {
   );
   sl.registerLazySingleton(() => ProductUseCase(sl()));
   sl.registerLazySingleton(() => AddCartUseCase(sl()));
+  sl.registerLazySingleton(() => CategoryUseCase(sl()));
 
   //Profile
   sl.registerLazySingleton<ProfileRemoteDataSource>(
@@ -194,4 +235,42 @@ Future<void> configureDependencies() async {
     () => DeliveryRepositoryImpl(sl()),
   );
   sl.registerLazySingleton(() => FetchDeliveriesUseCase(sl()));
+
+  //Activity
+  sl.registerLazySingleton<ActivityRemoteDataSource>(
+    () => ActivityRemoteDataSourceImpl(sl<DioClient>().dio),
+  );
+  sl.registerLazySingleton<ActivityRepository>(
+    () => ActivityRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => FetchActivitiesUseCase(sl()));
+  sl.registerLazySingleton(() => CreateActivityUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateActivityUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteActivityUseCase(sl()));
+  sl.registerLazySingleton(() => MarkDoneActivityUseCase(sl()));
+  sl.registerLazySingleton(() => FetchUsersUseCase(sl()));
+
+  //Log Note
+  sl.registerLazySingleton<LogNoteRemoteDataSource>(
+    () => LogNoteRemoteDataSourceImpl(sl<DioClient>().dio),
+  );
+  sl.registerLazySingleton<LogNoteRepository>(
+    () => LogNoteRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => FetchLogNotesUseCase(sl()));
+  sl.registerLazySingleton(() => CreateLogNoteUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateLogNoteUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteLogNoteUseCase(sl()));
+
+  //Send Message
+  sl.registerLazySingleton<SendMessageRemoteDataSource>(
+    () => SendMessageRemoteDataSourceImpl(sl<DioClient>().dio),
+  );
+  sl.registerLazySingleton<SendMessageRepository>(
+    () => SendMessageRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => FetchSendMessagesUseCase(sl()));
+  sl.registerLazySingleton(() => CreateSendMessageUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateSendMessageUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteSendMessageUseCase(sl()));
 }

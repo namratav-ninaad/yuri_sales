@@ -11,6 +11,7 @@ class CommonDropdown<T> extends StatelessWidget {
   final ValueChanged<T?>? onChanged;
   final bool enabled;
   final String? Function(T?)? validator;
+  final Color? fillColor;
 
   const CommonDropdown({
     super.key,
@@ -21,6 +22,7 @@ class CommonDropdown<T> extends StatelessWidget {
     this.onChanged,
     this.validator,
     this.enabled = true,
+    this.fillColor,
   });
 
   @override
@@ -28,7 +30,8 @@ class CommonDropdown<T> extends StatelessWidget {
     return DropdownButtonFormField<T>(
       isExpanded: true,
       initialValue: initialValue,
-      borderRadius: BorderRadius.circular(AppSizes.p12),
+      dropdownColor: context.white,
+      borderRadius: BorderRadius.circular(AppSizes.r12),
       hint: CommonTextWidget(
         title: hintText,
         fontSize: AppSizes.f14,
@@ -38,30 +41,38 @@ class CommonDropdown<T> extends StatelessWidget {
       decoration: InputDecoration(
         enabled: enabled,
         filled: true,
-        fillColor: enabled ? context.white : context.greyF2,
+        fillColor: enabled
+            ? /*context.white*/ fillColor ?? context.greyFA
+            : context.greyF2,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(AppSizes.p12),
-          borderSide: BorderSide(
+          borderRadius: BorderRadius.circular(AppSizes.r12),
+
+          borderSide: BorderSide.none,
+
+          /* BorderSide(
             color: enabled ? context.greyC8 : context.greyF2,
-          ),
+          ),*/
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
-          borderSide: BorderSide(
+          borderSide: BorderSide.none,
+          /* BorderSide(
             color: enabled ? context.greyC8 : context.greyF2,
-          ),
+          ),*/
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
-          borderSide: BorderSide(
+          borderSide: BorderSide.none,
+          /*BorderSide(
             color: enabled ? context.greyC8 : context.greyF2,
-          ),
+          ),*/
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppSizes.r12),
-          borderSide: BorderSide(
+          borderSide: BorderSide.none,
+          /*BorderSide(
             color: enabled ? context.greyC8 : context.greyF2,
-          ),
+          ),*/
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppSizes.p16,

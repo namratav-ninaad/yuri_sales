@@ -12,9 +12,16 @@ class AchievementCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSizes.p8),
       decoration: BoxDecoration(
-        color: context.white,
+        color: context.greyFA,
+        boxShadow: [
+          BoxShadow(
+            color: context.black.withValues(alpha: 0.1),
+            offset: Offset(0, 2),
+            blurRadius: 2,
+          ),
+        ],
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

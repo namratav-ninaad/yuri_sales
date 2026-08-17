@@ -104,7 +104,8 @@ class BuildAttachmentItem extends StatelessWidget {
       padding: EdgeInsets.all(AppSizes.p12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
+        color: context.greyFA,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,9 +132,7 @@ class BuildAttachmentItem extends StatelessWidget {
                       vertical: AppSizes.p4,
                     ),
                     decoration: BoxDecoration(
-                      color: context.primaryRedColor.withValues(
-                        alpha: 0.1,
-                      ),
+                      color: context.primaryRedColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(AppSizes.r20),
                     ),
                     child: Row(
@@ -170,8 +169,11 @@ class BuildAttachmentItem extends StatelessWidget {
                 itemCount: attachments.length,
                 itemBuilder: (context, index) {
                   final attachment = attachments[index];
-                  final isImage = attachment.mimetype.startsWith('image/');
-                  final isPdf = attachment.mimetype == 'application/pdf';
+                  final isImage = attachment.mimetype.startsWith(
+                    AppStringsConstants.imageMimeType,
+                  );
+                  final isPdf =
+                      attachment.mimetype == AppStringsConstants.pdfMimeType;
 
                   return Padding(
                     padding: const EdgeInsets.only(right: AppSizes.p12),
@@ -239,7 +241,7 @@ class BuildAttachmentItem extends StatelessWidget {
                                 color: context.white,
                                 shape: BoxShape.circle,
                               ),
-                              child:  CommonIconWidget(
+                              child: CommonIconWidget(
                                 icon: Icons.close,
                                 size: AppSizes.icon16,
                                 color: context.primaryRedColor,

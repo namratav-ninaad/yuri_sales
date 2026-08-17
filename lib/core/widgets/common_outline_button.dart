@@ -19,6 +19,11 @@ class CommonOutlineButton extends StatelessWidget {
     this.padding,
     this.onTap,
     this.isLoading = false,
+    this.imageHeight,
+    this.imageWidth,
+    this.sizedBoxWidth,
+    this.circularSize,
+    this.strokeWidth,
   });
 
   final String title;
@@ -29,27 +34,35 @@ class CommonOutlineButton extends StatelessWidget {
   final Color? textColor;
   final FontWeight? fontWeight;
   final double? fontSize;
+  final double? imageHeight;
+  final double? imageWidth;
   final EdgeInsetsGeometry? padding;
   final Function()? onTap;
   final bool isLoading;
+  final Widget? sizedBoxWidth;
+  final double? circularSize;
+  final double? strokeWidth;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: isLoading ? null : onTap,
       child: Container(
-        height: height ?? AppSizes.hS45,
+        height: height ?? AppSizes.s45,
         padding: padding,
         decoration: BoxDecoration(
-          border: Border.all(color: borderColor ?? context.greyC8),
+          // border: Border.all(color: borderColor ?? context.greyC8),
+          color: context.greyC8.withValues(alpha: 0.4),
           borderRadius: BorderRadius.circular(borderRadius ?? AppSizes.r12),
         ),
         alignment: Alignment.center,
         child: isLoading
             ? SizedBox(
-                width: 20,
-                height: 20,
-                child: CommonCircularProgressIndicator(),
+                width: circularSize ?? AppSizes.s20,
+                height: circularSize ?? AppSizes.s20,
+                child: CommonCircularProgressIndicator(
+                  strokeWidth: strokeWidth,
+                ),
               )
             : Row(
                 mainAxisSize: MainAxisSize.min,
@@ -58,13 +71,15 @@ class CommonOutlineButton extends StatelessWidget {
                   if (imagePath != null) ...[
                     CommonAssetsImageWidget(
                       imagePath: imagePath!,
-                      imageHeight: AppSizes.icon20,
-                      imageWidth: AppSizes.icon20,
+                      imageHeight: imageHeight ?? AppSizes.icon20,
+                      imageWidth: imageWidth ?? AppSizes.icon20,
                     ),
-                    AppSizes.w12,
+                    sizedBoxWidth ?? AppSizes.w12,
                   ],
                   CommonTextWidget(
                     title: title,
+                    textAlign: TextAlign.center,
+                    overFlow: TextOverflow.ellipsis,
                     color: textColor ?? context.black,
                     fontSize: fontSize ?? AppSizes.f16,
                     fontWeight: fontWeight ?? FontWeight.w400,

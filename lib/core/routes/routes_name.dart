@@ -8,6 +8,7 @@ class RouteNames {
   static const otpVerification = '/otp_verification';
   static const home = '/home';
   static const product = '/product';
+  static const productDetail = 'product_detail_page';
   static const editProfile = '/edit_profile';
   static const customer = '/customer';
   static const createCustomer = '/create_customer';
@@ -22,5 +23,8 @@ class RouteNames {
   static const deliveryPage = '/delivery_page';
   static const deliveryDetailPage = '/delivery_detail';
   static const invoiceDetailPage = '/invoice_detail';
-  static const customerStatementPage = '/customer_statement_page';
+  static const activityPage = '/activity_page';
+  static const scheduleActivityPage = '/schedule_activity_page';
+  static const logNotePage = '/log_note_page';
+  static const sendMessagePage = '/send_message_page';
 }

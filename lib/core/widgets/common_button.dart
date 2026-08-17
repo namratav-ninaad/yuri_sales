@@ -22,7 +22,7 @@ class CommonButton extends StatelessWidget {
     return GestureDetector(
       onTap: isLoading ? null : onTap,
       child: Container(
-        height: AppSizes.hS45,
+        height: AppSizes.s45,
         width: double.infinity,
         decoration: BoxDecoration(
           color: context.primaryRedColor,

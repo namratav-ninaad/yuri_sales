@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
 import 'package:yuri_sale/core/share_preference/share_pref_helper.dart';
+import 'package:yuri_sale/features/auth/data/model/login_response_model.dart';
 
 class DioClient {
   late final Dio dio;
@@ -45,21 +48,33 @@ class SessionInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    final result = await Connectivity().checkConnectivity();
+    final loginJson = await SharedPrefHelper.getString(
+      AppStringsConstants.loginResponse,
+    );
     final sessionId = await SharedPrefHelper.getString(
       AppStringsConstants.sessionId,
     );
+    if (loginJson != null && loginJson.isNotEmpty) {
+      final loginData = LoginModel.fromJson(jsonDecode(loginJson));
 
-    final token = await SharedPrefHelper.getString(
-      AppStringsConstants.accessToken,
-    );
-
-    if (sessionId != null && sessionId.isNotEmpty) {
-      options.headers['Cookie'] = sessionId;
+      if (sessionId != null && sessionId.isNotEmpty) {
+        options.headers['Cookie'] = sessionId;
+      }
+      if (loginData.accessToken.isNotEmpty) {
+        options.headers['api-key'] = loginData.accessToken;
+      }
     }
-    if (token != null && token.isNotEmpty) {
-      options.headers['api-key'] = token;
-    }
 
+    if (result.contains(ConnectivityResult.none)) {
+      return handler.reject(
+        DioException(
+          requestOptions: options,
+          type: DioExceptionType.connectionError,
+          error: 'No internet connection',
+        ),
+      );
+    }
     handler.next(options);
   }
 

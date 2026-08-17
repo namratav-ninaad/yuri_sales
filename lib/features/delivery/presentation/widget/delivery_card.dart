@@ -16,7 +16,15 @@ class DeliveryCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
+        color: context.greyFA,
+        boxShadow: [
+          BoxShadow(
+            color: context.black.withValues(alpha: 0.1),
+            offset: Offset(0, 2),
+            blurRadius: 2,
+          ),
+        ],
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppSizes.r12),

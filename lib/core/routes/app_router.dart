@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
+import 'package:yuri_sale/features/activity/domain/entities/edit_activity_data.dart';
+import 'package:yuri_sale/features/activity/presentation/page/activity_page.dart';
+import 'package:yuri_sale/features/activity/presentation/page/schedule_activity_page.dart';
 import 'package:yuri_sale/features/auth/presentation/pages/forgot_password.dart';
 import 'package:yuri_sale/features/auth/presentation/pages/login_page.dart';
 import 'package:yuri_sale/features/auth/presentation/pages/otp_verification.dart';
@@ -12,23 +15,28 @@ import 'package:yuri_sale/features/customer/data/model/customer.dart'
 import 'package:yuri_sale/features/customer/presentation/page/create_customer.dart';
 import 'package:yuri_sale/features/customer/presentation/page/customer_details.dart';
 import 'package:yuri_sale/features/customer/presentation/page/customer_page.dart';
-import 'package:yuri_sale/features/customer/presentation/page/customer_statement.dart';
 import 'package:yuri_sale/features/delivery/data/model/delivery.dart';
 import 'package:yuri_sale/features/delivery/presentation/page/delivery_detail.dart';
 import 'package:yuri_sale/features/delivery/presentation/page/delivery_page.dart';
 import 'package:yuri_sale/features/home/presentation/page/home_page.dart';
-import 'package:yuri_sale/features/invoice/data/model/invoice.dart';
+import 'package:yuri_sale/features/invoice/domain/entities/invoice_data.dart';
+import 'package:yuri_sale/features/invoice/domain/entities/invoice_detail_data.dart';
 import 'package:yuri_sale/features/invoice/presentation/page/invoice_details.dart';
 import 'package:yuri_sale/features/invoice/presentation/page/invoice_page.dart';
+import 'package:yuri_sale/features/log_note/presentation/page/log_note_page.dart';
 import 'package:yuri_sale/features/order/data/model/order.dart';
 import 'package:yuri_sale/features/order/domain/entities/order_data.dart';
 import 'package:yuri_sale/features/order/presentation/page/order_detail.dart';
 import 'package:yuri_sale/features/order/presentation/page/order_page.dart';
+import 'package:yuri_sale/features/product/data/model/product.dart';
+import 'package:yuri_sale/features/product/presentation/page/product_details.dart';
 import 'package:yuri_sale/features/product/presentation/page/product_page.dart';
 import 'package:yuri_sale/features/profile/presentation/page/change_password_page.dart';
 import 'package:yuri_sale/features/profile/presentation/page/edit_profile_page.dart';
 import 'package:yuri_sale/features/quote/presentation/page/request_to_quote_page.dart';
 import 'package:yuri_sale/features/quote/presentation/page/thank_you_screen.dart';
+import 'package:yuri_sale/features/send_message/domain/entities/send_message_data.dart';
+import 'package:yuri_sale/features/send_message/presentation/page/send_message_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -55,6 +63,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (_) => ProductPage(backButtonShow: backButtonShow),
       );
 
+    case RouteNames.productDetail:
+      final product = settings.arguments as ProductModel;
+      return MaterialPageRoute(
+        builder: (_) => ProductDetailPage(product: product),
+      );
+
     case RouteNames.cartPage:
       return MaterialPageRoute(builder: (_) => CartPage());
 
@@ -63,6 +77,28 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case RouteNames.editProfile:
       return MaterialPageRoute(builder: (_) => EditProfilePage());
+
+    case RouteNames.activityPage:
+      final partnerId = settings.arguments as int;
+      return MaterialPageRoute(
+        builder: (_) => ActivityPage(partnerId: partnerId),
+      );
+
+    case RouteNames.logNotePage:
+      final partnerId = settings.arguments as int;
+      return MaterialPageRoute(
+        builder: (_) => LogNotePage(partnerId: partnerId),
+      );
+
+    case RouteNames.sendMessagePage:
+      final data = settings.arguments as SendMessageData;
+      return MaterialPageRoute(builder: (_) => SendMessagePage(data: data));
+
+    case RouteNames.scheduleActivityPage:
+      final data = settings.arguments as EditActivityData;
+      return MaterialPageRoute(
+        builder: (_) => ScheduleActivityPage(data: data),
+      );
 
     case RouteNames.customer:
       final backButtonShow = settings.arguments as bool;
@@ -83,9 +119,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => ThankYouPage());
 
     case RouteNames.invoicePage:
-      final partnerId = settings.arguments as int;
+      final data = settings.arguments as InvoiceData;
       return MaterialPageRoute(
-        builder: (_) => InvoicePage(partnerId: partnerId),
+        builder: (_) => InvoicePage(data: data),
       );
 
     case RouteNames.deliveryPage:
@@ -93,9 +129,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => DeliveryPage(partnerId: partnerId),
       );
-
-    case RouteNames.customerStatementPage:
-      return MaterialPageRoute(builder: (_) => CustomerStatementPage());
 
     case RouteNames.orderPage:
       final orderData = settings.arguments as OrderData;
@@ -108,9 +141,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
 
     case RouteNames.invoiceDetailPage:
-      final invoiceModel = settings.arguments as InvoiceModel;
+      final data = settings.arguments as InvoiceDetailData;
       return MaterialPageRoute(
-        builder: (_) => InvoiceDetail(invoiceModel: invoiceModel),
+        builder: (_) => InvoiceDetail(data: data),
       );
 
     case RouteNames.deliveryDetailPage:

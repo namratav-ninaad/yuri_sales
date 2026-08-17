@@ -1,7 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:yuri_sale/features/delivery/data/model/delivery.dart';
-import 'package:yuri_sale/features/invoice/data/model/invoice.dart';
-import 'package:yuri_sale/features/order/data/model/order.dart';
 
 class DeliveryState extends Equatable {
   final bool isLoading;

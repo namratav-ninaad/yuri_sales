@@ -10,8 +10,8 @@ CountryModel _$CountryModelFromJson(Map<String, dynamic> json) => CountryModel(
   id: json['id'] as num,
   name: json['name'] as String,
   code: json['code'] as String,
-  phone_code: json['phone_code'] as num,
-  address_format: json['address_format'] as String,
+  phoneCode: json['phone_code'] as num,
+  addressFormat: json['address_format'] as String,
   currency: CurrencyBean.fromJson(json['currency'] as Map<String, dynamic>),
 );
 
@@ -20,9 +20,9 @@ Map<String, dynamic> _$CountryModelToJson(CountryModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'code': instance.code,
-      'phone_code': instance.phone_code,
-      'address_format': instance.address_format,
-      'currency': instance.currency,
+      'phone_code': instance.phoneCode,
+      'address_format': instance.addressFormat,
+      'currency': instance.currency.toJson(),
     };
 
 CurrencyBean _$CurrencyBeanFromJson(Map<String, dynamic> json) => CurrencyBean(

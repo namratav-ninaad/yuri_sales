@@ -6,8 +6,7 @@ import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/core/widgets/date_helper.dart';
 import 'package:yuri_sale/features/invoice/data/model/invoice.dart';
-import 'package:yuri_sale/features/invoice/presentation/widget/invoice_payment_status.dart';
-import 'package:yuri_sale/features/order/presentation/widget/invoice_chip.dart';
+import 'package:yuri_sale/features/invoice/presentation/widget/invoice_status.dart';
 
 class InvoiceCard extends StatelessWidget {
   const InvoiceCard({super.key, required this.invoice, this.onTap});
@@ -20,7 +19,15 @@ class InvoiceCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
+        color: context.greyFA,
+        boxShadow: [
+          BoxShadow(
+            color: context.black.withValues(alpha: 0.1),
+            offset: Offset(0, 2),
+            blurRadius: 2,
+          ),
+        ],
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppSizes.r12),
@@ -40,7 +47,7 @@ class InvoiceCard extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  InvoicePaymentStatusChip(status: invoice.paymentState),
+                  InvoiceStatusChip(status: invoice.state),
                 ],
               ),
 

@@ -28,7 +28,8 @@ class DeliveryDetailCard extends StatelessWidget {
       padding: EdgeInsets.all(AppSizes.p12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
+        color: context.greyFA,
       ),
       child: Column(
         children: [

@@ -61,6 +61,11 @@ class DateHelper {
 
   // → Jul 2026
 
+  static String monthDay(String dateStr) =>
+      format(dateStr, pattern: AppStringsConstants.MMMd);
+
+  // → Jul 6
+
   static String time(String dateStr) =>
       format(dateStr, pattern: AppStringsConstants.time12);
   // → 05:28 AM

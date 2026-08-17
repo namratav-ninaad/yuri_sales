@@ -43,6 +43,9 @@ CustomerModel _$CustomerModelFromJson(Map<String, dynamic> json) =>
       createDate: json['create_date'] as String,
       writeDate: json['write_date'] as String,
       customerStatement: json['customer_statement'] as num,
+      commentCount: json['comment_count'] as num,
+      emailCount: json['email_count'] as num,
+      currencySymbol: json['currency_symbol'] as String,
     );
 
 Map<String, dynamic> _$CustomerModelToJson(CustomerModel instance) =>
@@ -58,7 +61,10 @@ Map<String, dynamic> _$CustomerModelToJson(CustomerModel instance) =>
       'sales_count': instance.salesCount,
       'total_invoice': instance.totalInvoice,
       'customer_statement': instance.customerStatement,
+      'currency_symbol': instance.currencySymbol,
       'delivery_count': instance.deliveryCount,
+      'comment_count': instance.commentCount,
+      'email_count': instance.emailCount,
       'activity_count': instance.activityCount,
       'vat': instance.vat,
       'notes': instance.notes,

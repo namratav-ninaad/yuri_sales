@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/features/invoice/data/model/invoice.dart';
-import 'package:yuri_sale/features/order/data/model/order.dart';
 
 class InvoiceProductRowData extends StatelessWidget {
   const InvoiceProductRowData({
@@ -21,22 +20,20 @@ class InvoiceProductRowData extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            flex: 2,
+            flex: 5,
             child: CommonTextWidget(
               title: invoiceLine.productName,
               fontSize: AppSizes.f14,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: CommonTextWidget(
               title: '$currency ${invoiceLine.unitPrice}',
               fontSize: AppSizes.f12,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
@@ -49,23 +46,21 @@ class InvoiceProductRowData extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: CommonTextWidget(
               title: '${invoiceLine.discount}',
               fontSize: AppSizes.f12,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
           Expanded(
-            flex: 2,
+            flex: 3,
             child: CommonTextWidget(
               title: '$currency ${invoiceLine.subtotal}',
               fontSize: AppSizes.f12,
               textAlign: TextAlign.center,
               fontWeight: FontWeight.w500,
-              overFlow: TextOverflow.ellipsis,
             ),
           ),
         ],

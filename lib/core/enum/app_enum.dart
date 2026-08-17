@@ -4,12 +4,12 @@ import 'package:yuri_sale/core/constants/app_strings.dart';
 
 enum NoteType {
   text,
-  voice,
+  // voice,
   followup;
 
   bool get isText => this == NoteType.text;
 
-  bool get isVoice => this == NoteType.voice;
+  // bool get isVoice => this == NoteType.voice;
 
   bool get isFollowUp => this == NoteType.followup;
 
@@ -18,8 +18,8 @@ enum NoteType {
     switch (this) {
       case NoteType.text:
         return AppStringsConstants.text;
-      case NoteType.voice:
-        return AppStringsConstants.voice;
+      // case NoteType.voice:
+      //   return AppStringsConstants.voice;
       case NoteType.followup:
         return AppStringsConstants.followUp;
     }
@@ -30,8 +30,8 @@ enum NoteType {
     switch (this) {
       case NoteType.text:
         return Icons.text_fields_outlined;
-      case NoteType.voice:
-        return Icons.mic_none_outlined;
+      // case NoteType.voice:
+      //   return Icons.mic_none_outlined;
       case NoteType.followup:
         return Icons.calendar_today_outlined;
     }
@@ -61,169 +61,185 @@ enum AddressType {
   }
 }
 
-enum InvoiceStatus {
-  invoiced,
-  fullyInvoiced,
-  toInvoice,
-  no;
+enum OrderStatus {
+  draft,
+  sent,
+  sale,
+  cancel;
 
-  String get label {
-    switch (this) {
-      case InvoiceStatus.invoiced:
-        return AppStringsConstants.invoiced;
-      case InvoiceStatus.fullyInvoiced:
-        return AppStringsConstants.fullInvoiced;
-      case InvoiceStatus.toInvoice:
-        return AppStringsConstants.toInvoice;
-      case InvoiceStatus.no:
-        return AppStringsConstants.notInvoiced;
-    }
-  }
+  String get label => switch (this) {
+    OrderStatus.draft => AppStringsConstants.quotation,
+    OrderStatus.sent => AppStringsConstants.quotationSent,
+    OrderStatus.sale => AppStringsConstants.saleOrder,
+    OrderStatus.cancel => AppStringsConstants.cancelled,
+  };
 
-  Color get color {
-    switch (this) {
-      case InvoiceStatus.invoiced:
-      case InvoiceStatus.fullyInvoiced:
-        return AppColorsConstants.green;
-      case InvoiceStatus.toInvoice:
-        return AppColorsConstants.blue;
-      case InvoiceStatus.no:
-        return AppColorsConstants.red;
-    }
-  }
+  Color get color => switch (this) {
+    OrderStatus.draft => AppColorsConstants.grey89,
+    OrderStatus.sent => AppColorsConstants.blue,
+    OrderStatus.sale => AppColorsConstants.green,
+    OrderStatus.cancel => AppColorsConstants.red,
+  };
 
-  static InvoiceStatus fromString(String value) {
-    switch (value.toLowerCase().trim()) {
-      case AppStringsConstants.invoicedL:
-        return InvoiceStatus.invoiced;
-      case AppStringsConstants.fullInvoicedL:
-        return InvoiceStatus.fullyInvoiced;
-      case AppStringsConstants.toInvoiceL:
-        return InvoiceStatus.toInvoice;
-      case AppStringsConstants.no:
-        return InvoiceStatus.no;
-      default:
-        return InvoiceStatus.no;
-    }
+  String get apiValue => switch (this) {
+    OrderStatus.draft => AppStringsConstants.draftL,
+    OrderStatus.sent => AppStringsConstants.sentL,
+    OrderStatus.sale => AppStringsConstants.saleL,
+    OrderStatus.cancel => AppStringsConstants.cancelL,
+  };
+
+  static OrderStatus? fromString(String value) {
+    final status = value.toLowerCase().trim();
+
+    return switch (status) {
+      AppStringsConstants.draftL => OrderStatus.draft,
+      AppStringsConstants.sentL => OrderStatus.sent,
+      AppStringsConstants.saleL => OrderStatus.sale,
+      AppStringsConstants.cancelL => OrderStatus.cancel,
+      _ => null,
+    };
   }
 }
 
 enum DeliveryStatus {
+  draft,
   waiting,
-  ready,
-  cancelled,
-  done;
+  confirmed,
+  assigned,
+  done,
+  cancel;
 
-  String get label {
-    switch (this) {
-      case DeliveryStatus.waiting:
-        return AppStringsConstants.waiting;
+  String get label => switch (this) {
+    DeliveryStatus.draft => AppStringsConstants.draft,
+    DeliveryStatus.waiting => AppStringsConstants.waitingAnother,
+    DeliveryStatus.confirmed => AppStringsConstants.waiting,
+    DeliveryStatus.assigned => AppStringsConstants.ready,
+    DeliveryStatus.done => AppStringsConstants.done,
+    DeliveryStatus.cancel => AppStringsConstants.cancelled,
+  };
 
-      case DeliveryStatus.ready:
-        return AppStringsConstants.ready;
+  String get apiValue => switch (this) {
+    DeliveryStatus.draft => AppStringsConstants.draftL,
+    DeliveryStatus.waiting => AppStringsConstants.waitingL,
+    DeliveryStatus.confirmed => AppStringsConstants.confirmedL,
+    DeliveryStatus.assigned => AppStringsConstants.assignedL,
+    DeliveryStatus.done => AppStringsConstants.doneL,
+    DeliveryStatus.cancel => AppStringsConstants.cancelL,
+  };
 
-      case DeliveryStatus.cancelled:
-        return AppStringsConstants.cancelled;
-
-      case DeliveryStatus.done:
-        return AppStringsConstants.done;
-    }
-  }
-
-  Color get color {
-    switch (this) {
-      case DeliveryStatus.waiting:
-        return AppColorsConstants.orange;
-
-      case DeliveryStatus.ready:
-        return AppColorsConstants.blue;
-
-      case DeliveryStatus.cancelled:
-        return AppColorsConstants.red;
-
-      case DeliveryStatus.done:
-        return AppColorsConstants.green;
-    }
-  }
+  Color get color => switch (this) {
+    DeliveryStatus.draft => AppColorsConstants.grey89,
+    DeliveryStatus.waiting => AppColorsConstants.orange,
+    DeliveryStatus.confirmed => AppColorsConstants.blue,
+    DeliveryStatus.assigned => AppColorsConstants.blue,
+    DeliveryStatus.done => AppColorsConstants.green,
+    DeliveryStatus.cancel => AppColorsConstants.red,
+  };
 
   static DeliveryStatus fromString(String value) {
-    switch (value.toLowerCase().trim()) {
-      case AppStringsConstants.waitingL:
-        return DeliveryStatus.waiting;
+    final status = value.toLowerCase().trim();
 
-      case AppStringsConstants.readyL:
-        return DeliveryStatus.ready;
-
-      case AppStringsConstants.cancelledL:
-      case AppStringsConstants.cancelL:
-        return DeliveryStatus.cancelled;
-
-      case AppStringsConstants.doneL:
-        return DeliveryStatus.done;
-
-      default:
-        return DeliveryStatus.waiting;
-    }
+    return switch (status) {
+      AppStringsConstants.draftL => DeliveryStatus.draft,
+      AppStringsConstants.waitingL => DeliveryStatus.waiting,
+      AppStringsConstants.confirmedL => DeliveryStatus.confirmed,
+      AppStringsConstants.assignedL => DeliveryStatus.assigned,
+      AppStringsConstants.doneL => DeliveryStatus.done,
+      AppStringsConstants.cancelL => DeliveryStatus.cancel,
+      _ => DeliveryStatus.draft,
+    };
   }
 }
 
-enum InvoicePaymentStatus {
+enum InvoiceStatus {
   draft,
-  notPaid,
-  paid,
-  cancelled;
+  posted,
+  cancel;
 
+  String get label => switch (this) {
+    InvoiceStatus.draft => AppStringsConstants.draft,
+    InvoiceStatus.posted => AppStringsConstants.posted,
+    InvoiceStatus.cancel => AppStringsConstants.cancelled,
+  };
+
+  String get apiValue => switch (this) {
+    InvoiceStatus.draft => AppStringsConstants.draftL,
+    InvoiceStatus.posted => AppStringsConstants.postedL,
+    InvoiceStatus.cancel => AppStringsConstants.cancelL,
+  };
+
+  Color get color => switch (this) {
+    InvoiceStatus.draft => AppColorsConstants.grey89,
+    InvoiceStatus.posted => AppColorsConstants.green,
+    InvoiceStatus.cancel => AppColorsConstants.red,
+  };
+
+  static InvoiceStatus fromString(String value) {
+    final status = value.toLowerCase().trim();
+
+    return switch (status) {
+      AppStringsConstants.draftL => InvoiceStatus.draft,
+      AppStringsConstants.postedL => InvoiceStatus.posted,
+      AppStringsConstants.cancelL => InvoiceStatus.cancel,
+      _ => InvoiceStatus.draft,
+    };
+  }
+}
+
+enum ActivityType {
+  todo,
+  call,
+  email;
+
+  /// UI Label
   String get label {
     switch (this) {
-      case InvoicePaymentStatus.draft:
-        return AppStringsConstants.draft;
-
-      case InvoicePaymentStatus.notPaid:
-        return AppStringsConstants.notPaid;
-
-      case InvoicePaymentStatus.paid:
-        return AppStringsConstants.paid;
-
-      case InvoicePaymentStatus.cancelled:
-        return AppStringsConstants.cancelled;
+      case ActivityType.todo:
+        return AppStringsConstants.todo;
+      case ActivityType.call:
+        return AppStringsConstants.call;
+      case ActivityType.email:
+        return AppStringsConstants.email;
     }
   }
 
-  Color get color {
+  /// API Value
+  String get apiValue {
     switch (this) {
-      case InvoicePaymentStatus.draft:
-        return AppColorsConstants.orange;
-
-      case InvoicePaymentStatus.notPaid:
-        return AppColorsConstants.red;
-
-      case InvoicePaymentStatus.paid:
-        return AppColorsConstants.green;
-
-      case InvoicePaymentStatus.cancelled:
-        return AppColorsConstants.grey89;
+      case ActivityType.todo:
+        return AppStringsConstants.todoL;
+      case ActivityType.call:
+        return AppStringsConstants.callL;
+      case ActivityType.email:
+        return AppStringsConstants.emailL;
     }
   }
 
-  static InvoicePaymentStatus fromString(String value) {
-    switch (value.toLowerCase().trim()) {
-      case AppStringsConstants.draftL:
-        return InvoicePaymentStatus.draft;
-
-      case AppStringsConstants.notPaidL:
-      case AppStringsConstants.notUPaid:
-      case AppStringsConstants.unpaid:
-        return InvoicePaymentStatus.notPaid;
-
-      case AppStringsConstants.paidL:
-        return InvoicePaymentStatus.paid;
-
-      case AppStringsConstants.cancelledL:
-      case AppStringsConstants.cancel:
-        return InvoicePaymentStatus.cancelled;
-
+  /// Convert API value to enum
+  static ActivityType fromApi(String value) {
+    switch (value.toLowerCase()) {
+      case AppStringsConstants.todoL:
+        return ActivityType.todo;
+      case AppStringsConstants.callL:
+        return ActivityType.call;
+      case AppStringsConstants.emailL:
+        return ActivityType.email;
       default:
-        return InvoicePaymentStatus.draft;
+        return ActivityType.todo;
+    }
+  }
+
+  /// Convert label to enum
+  static ActivityType fromLabel(String value) {
+    switch (value) {
+      case AppStringsConstants.todo:
+        return ActivityType.todo;
+      case AppStringsConstants.call:
+        return ActivityType.call;
+      case AppStringsConstants.email:
+        return ActivityType.email;
+      default:
+        return ActivityType.todo;
     }
   }
 }

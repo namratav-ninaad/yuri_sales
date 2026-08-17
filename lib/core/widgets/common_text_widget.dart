@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
-import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 
 class CommonTextWidget extends StatelessWidget {
   final String title;
@@ -9,6 +8,7 @@ class CommonTextWidget extends StatelessWidget {
   final Color? color;
   final TextOverflow? overFlow;
   final TextAlign? textAlign;
+  final int? maxLines;
 
   const CommonTextWidget({
     super.key,
@@ -18,6 +18,7 @@ class CommonTextWidget extends StatelessWidget {
     this.color,
     this.overFlow,
     this.textAlign,
+    this.maxLines,
   });
 
   @override
@@ -25,6 +26,7 @@ class CommonTextWidget extends StatelessWidget {
     return Text(
       title,
       textAlign: textAlign,
+      maxLines: maxLines,
       style: TextStyle(
         overflow: overFlow,
         fontSize: fontSize ?? AppSizes.f28,

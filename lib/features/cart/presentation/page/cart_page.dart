@@ -7,6 +7,7 @@ import 'package:yuri_sale/core/routes/routes_name.dart';
 import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
+import 'package:yuri_sale/core/widgets/common_back_button.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
 import 'package:yuri_sale/core/widgets/common_divider.dart';
 import 'package:yuri_sale/core/widgets/common_empty_text.dart';
@@ -37,39 +38,65 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     var bloc = context.read<CartBloc>();
-    return Scaffold(
-      backgroundColor: context.white,
-      appBar: CommonAppbarWidget(title: AppStringsConstants.myCart),
-      body: BlocConsumer<CartBloc, CartState>(
-        listener: (context, state) {
-          // ========== SUCCESS MESSAGES ==========
-          if (state.isQuantityUpdated) {
-            ToastHelper.success(AppStringsConstants.qtyUpdateMsg);
-          }
+    return Material(
+      color: context.white,
+      child: SafeArea(
+        top: false,
+        child: Scaffold(
+          backgroundColor: context.white,
+          appBar: CommonAppbarWidget(
+            title: AppStringsConstants.myCart,
+            leading: CommonBackButton(
+              onTap: () {
+                AppRoutes.pop(context);
+                context.read<ProductBloc>().add(
+                  FetchProductsEvent(
+                    query: '',
+                    categoryId:
+                        context
+                            .read<ProductBloc>()
+                            .state
+                            .selectedCategory
+                            ?.id ??
+                        0,
+                  ),
+                );
+              },
+            ),
+          ),
+          body: BlocConsumer<CartBloc, CartState>(
+            listener: (context, state) {
+              // ========== SUCCESS MESSAGES ==========
+              if (state.isQuantityUpdated) {
+                ToastHelper.success(AppStringsConstants.qtyUpdateMsg);
+              }
 
-          if (state.isItemRemoved) {
-            ToastHelper.success(AppStringsConstants.itemRemoveCartMsg);
-          }
+              if (state.isItemRemoved) {
+                ToastHelper.success(AppStringsConstants.itemRemoveCartMsg);
+              }
 
-          // ========== ERROR MESSAGES ==========
-          if (state.errorMessage != null && state.errorMessage!.isNotEmpty) {
-            ToastHelper.error(state.errorMessage!);
-          }
-        },
-        builder: (context, state) {
-          return state.isLoading
-              ? Center(child: CircularProgressIndicator())
-              : Column(
-                  children: [
-                    Expanded(
-                      child:
-                          state.cartData == null ||
-                              (state.cartData != null &&
-                                  state.cartData!.cartProducts.isEmpty)
-                          ? CommonEmptyText(
-                              title: AppStringsConstants.cartEmpty,
-                            )
-                          : ListView.separated(
+              // ========== ERROR MESSAGES ==========
+              if (state.errorMessage != null &&
+                  state.errorMessage!.isNotEmpty) {
+                ToastHelper.error(state.errorMessage!);
+              }
+            },
+            builder: (context, state) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context.read<CartBloc>().add(ResetCart());
+                  context.read<CartBloc>().add(FetchCart());
+                },
+                child: state.isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : state.cartData == null ||
+                          (state.cartData != null &&
+                              state.cartData!.cartProducts.isEmpty)
+                    ? CommonEmptyText(title: AppStringsConstants.cartEmpty)
+                    : Column(
+                        children: [
+                          Expanded(
+                            child: ListView.separated(
                               padding: EdgeInsets.all(AppSizes.p24),
                               itemCount: state.cartData!.cartProducts.length,
                               separatorBuilder: (_, _) => Padding(
@@ -105,59 +132,69 @@ class _CartPageState extends State<CartPage> {
                                   ),
                                   onRemove: () {
                                     bloc.add(
-                                      RemoveCart(
-                                        lineId: cartData.lineId.toInt(),
-                                      ),
+                                      RemoveCart(lineId: cartData.lineId.toInt()),
                                     );
                                     context.read<ProductBloc>().add(
-                                      FetchProductsEvent(''),
+                                      FetchProductsEvent(
+                                        query: '',
+                                        categoryId:
+                                            context
+                                                .read<ProductBloc>()
+                                                .state
+                                                .selectedCategory
+                                                ?.id ??
+                                            0,
+                                      ),
                                     );
                                   },
                                 );
                               },
                             ),
-                    ),
+                          ),
 
-                    // Summary + Button
-                    Container(
-                      decoration: BoxDecoration(
-                        color: context.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: context.black,
-                            blurRadius: 10,
-                            spreadRadius: 0,
-                            offset: const Offset(0, 4),
+                          // Summary + Button
+                          Container(
+                            decoration: BoxDecoration(
+                              color: context.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: context.black.withValues(alpha: 0.1),
+                                  blurRadius: 10,
+                                  spreadRadius: 0,
+                                  offset: const Offset(0, -4),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(AppSizes.p24),
+                              child: Column(
+                                children: [
+                                  if (state.cartData != null)
+                                    CartSummary(
+                                      subtotal:
+                                          '${state.cartData!.currency} ${state.cartData!.amountUntaxed}',
+                                      vat:
+                                          '${state.cartData!.currency} ${state.cartData!.amountTax}',
+                                      total:
+                                          '${state.cartData!.currency} ${state.cartData!.amountTotal}',
+                                    ),
+                                  AppSizes.h24,
+                                  CommonButton(
+                                    onTap: () => AppRoutes.pushNamed(
+                                      RouteNames.requestToQuotePage,
+                                    ),
+                                    title: AppStringsConstants.requestToQuote,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppSizes.p24),
-                        child: Column(
-                          children: [
-                            if (state.cartData != null)
-                              CartSummary(
-                                subtotal:
-                                    '${state.cartData!.currency} ${state.cartData!.amountUntaxed}',
-                                vat:
-                                    '${state.cartData!.currency} ${state.cartData!.amountTax}',
-                                total:
-                                    '${state.cartData!.currency} ${state.cartData!.amountTotal}',
-                              ),
-                            AppSizes.h24,
-                            CommonButton(
-                              onTap: () => AppRoutes.pushNamed(
-                                RouteNames.requestToQuotePage,
-                              ),
-                              title: AppStringsConstants.requestToQuote,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-        },
+              );
+            },
+          ),
+        ),
       ),
     );
   }

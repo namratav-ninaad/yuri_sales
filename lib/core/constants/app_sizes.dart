@@ -15,27 +15,30 @@ class AppSizes {
   static const double f28 = 28.0;
   static const double f32 = 32.0;
 
-  //Height Sizes
-  static const double hS0 = 0.0;
-  static const double hS4 = 4.0;
-  static const double hs8 = 8.0;
-  static const double hS12 = 12.0;
-  static const double hS14 = 14.0;
-  static const double hS16 = 16.0;
-  static const double hS20 = 20.0;
-  static const double hS24 = 24.0;
-  static const double hS28 = 28.0;
-  static const double hS32 = 32.0;
-  static const double hS35 = 35.0;
-  static const double hS38 = 38.0;
-  static const double hS40 = 40.0;
-  static const double hS45 = 45.0;
-  static const double hS50 = 50.0;
-  static const double hS52 = 52.0;
-  static const double hS60 = 60.0;
-  static const double hS80 = 80.0;
-  static const double hS100 = 100.0;
-  static const double hS150 = 150.0;
+  //Height OR Width Sizes
+  static const double s0 = 0.0;
+  static const double s2 = 2.0;
+  static const double s4 = 4.0;
+  static const double s8 = 8.0;
+  static const double s10 = 10.0;
+  static const double s12 = 12.0;
+  static const double s14 = 14.0;
+  static const double s16 = 16.0;
+  static const double s20 = 20.0;
+  static const double s24 = 24.0;
+  static const double s28 = 28.0;
+  static const double s32 = 32.0;
+  static const double s35 = 35.0;
+  static const double s38 = 38.0;
+  static const double s40 = 40.0;
+  static const double s45 = 45.0;
+  static const double s50 = 50.0;
+  static const double s52 = 52.0;
+  static const double s60 = 60.0;
+  static const double s80 = 80.0;
+  static const double s82 = 82.0;
+  static const double s100 = 100.0;
+  static const double s150 = 150.0;
 
   // Padding
   static const double p2 = 2.0;
@@ -59,6 +62,7 @@ class AppSizes {
   static const double r24 = 24.0;
 
   // Icon Sizes
+  static const double icon10 = 10.0;
   static const double icon14 = 14.0;
   static const double icon16 = 16.0;
   static const double icon20 = 20.0;
@@ -80,6 +84,10 @@ class AppSizes {
   static const double chart70 = 70.0;
 
   // Image Sizes
+  static const double image5 = 5.0;
+  static const double image10 = 10.0;
+  static const double image12 = 12.0;
+  static const double image16 = 16.0;
   static const double image50 = 50.0;
   static const double image80 = 80.0;
   static const double image100 = 100.0;

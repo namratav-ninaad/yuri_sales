@@ -28,8 +28,8 @@ class ProfileTile extends StatelessWidget {
       children: [
         ListTile(
           contentPadding: EdgeInsets.zero,
-          horizontalTitleGap: AppSizes.hS12,
-          minLeadingWidth: AppSizes.hS0,
+          horizontalTitleGap: AppSizes.s12,
+          minLeadingWidth: AppSizes.s0,
           leading: CommonIconWidget(
             icon: icon,
             size: AppSizes.icon24,

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:yuri_sale/core/enum/app_enum.dart';
-import 'package:yuri_sale/features/customer/data/model/company_model.dart';
+import 'package:yuri_sale/features/customer/data/model/company.dart';
 import 'package:yuri_sale/features/customer/data/model/contact_tag.dart';
 import 'package:yuri_sale/features/customer/data/model/country.dart';
 import 'package:yuri_sale/features/customer/data/model/customer.dart';
@@ -74,7 +74,7 @@ class CreateCustomerState extends Equatable {
     bool? isSuccess,
     int? recordingSeconds,
     String? recordedDuration,
-    DateTime? selectedDate,
+    DateTime? selectedNoteDate,
     bool? isSaving,
     List<ContactTagModel>? selectedContactTags,
     bool? isLoading,
@@ -113,7 +113,7 @@ class CreateCustomerState extends Equatable {
       isRecording: isRecording ?? this.isRecording,
       recordingSeconds: recordingSeconds ?? this.recordingSeconds,
       recordedDuration: recordedDuration ?? this.recordedDuration,
-      selectedNoteDate: selectedDate ?? selectedNoteDate,
+      selectedNoteDate: selectedNoteDate ?? selectedNoteDate,
       isSaving: isSaving ?? this.isSaving,
       selectedContactTags: selectedContactTags ?? this.selectedContactTags,
       attachments: attachments ?? this.attachments,

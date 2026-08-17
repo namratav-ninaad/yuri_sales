@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter/services.dart';
+import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
@@ -94,12 +95,17 @@ class _OtpVerificationState extends State<OtpVerification> {
                       autoFocus: true,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      fieldWidth: AppSizes.hS52,
-                      fieldHeight: AppSizes.hS52,
+                      fieldWidth: AppSizes.s52,
+                      fieldHeight: AppSizes.s52,
                       numberOfFields: 6,
                       alignment: Alignment.center,
                       contentPadding: EdgeInsets.zero,
-                      borderColor: context.primaryRedColor,
+                      fillColor: context.greyFA,
+                      filled: true,
+                      borderColor: AppColorsConstants.transparent,
+                      disabledBorderColor: AppColorsConstants.transparent,
+                      enabledBorderColor: AppColorsConstants.transparent,
+                      // borderColor: context.primaryRedColor,
                       focusedBorderColor: context.primaryRedColor,
                       borderRadius: BorderRadius.circular(AppSizes.r12),
                       showFieldAsBox: true,

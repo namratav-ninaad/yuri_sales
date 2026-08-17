@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/share_preference/share_pref_helper.dart';
@@ -39,22 +41,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             loginData: loginData,
           ),
         );
-        // Save Access Token
+        // Save login data
+
         await SharedPrefHelper.setString(
-          AppStringsConstants.accessToken,
-          loginData.accessToken,
+          AppStringsConstants.loginResponse,
+          jsonEncode(loginData.toJson()),
         );
 
         // Save Remember Me Status
         await SharedPrefHelper.setBool(
           AppStringsConstants.rememberMeKey,
           event.rememberMe,
-        );
-
-        // Save Company Id
-        await SharedPrefHelper.setInt(
-          AppStringsConstants.companyId,
-          loginData.companyId,
         );
 
         if (event.rememberMe) {

@@ -30,11 +30,18 @@ class OrderItems extends StatelessWidget {
         AppSizes.h12,
         Container(
           decoration: BoxDecoration(
-            color: context.white,
-            border: Border.all(color: context.greyC8),
+            color: context.greyFA,
+            // color: context.white,
+            // border: Border.all(color: context.greyC8),
             borderRadius: BorderRadius.circular(AppSizes.r12),
           ),
-          child: Column(
+          child: /*ClipRRect(
+            borderRadius: BorderRadius.circular(AppSizes.r12),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child:*/ Column(
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(
@@ -42,7 +49,7 @@ class OrderItems extends StatelessWidget {
                   vertical: AppSizes.p12,
                 ),
                 decoration: BoxDecoration(
-                  color: context.greyF2,
+                  color: context.greyC8,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(AppSizes.r12),
                     topRight: Radius.circular(AppSizes.r12),
@@ -51,7 +58,7 @@ class OrderItems extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: 5,
                       child: CommonTextWidget(
                         textAlign: TextAlign.center,
                         title: AppStringsConstants.product,
@@ -60,7 +67,7 @@ class OrderItems extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: CommonTextWidget(
                         textAlign: TextAlign.center,
                         title: AppStringsConstants.price,
@@ -78,7 +85,7 @@ class OrderItems extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: CommonTextWidget(
                         textAlign: TextAlign.center,
                         title: AppStringsConstants.discount,
@@ -87,7 +94,7 @@ class OrderItems extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      flex: 2,
+                      flex: 3,
                       child: CommonTextWidget(
                         textAlign: TextAlign.center,
                         title: AppStringsConstants.total,
@@ -106,11 +113,15 @@ class OrderItems extends StatelessWidget {
                   orderLine: orderLines[index],
                   currency: currency,
                 ),
-                separatorBuilder: (context, index) => const CommonDivider(),
+                separatorBuilder: (context, index) =>
+                    CommonDivider(color: context.white),
                 itemCount: orderLines.length,
               ),
             ],
           ),
+          /*  ),
+            ),
+          ),*/
         ),
       ],
     );

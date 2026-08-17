@@ -23,9 +23,10 @@ class AddressDetails extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AppSizes.p12),
       decoration: BoxDecoration(
-        color: context.white,
+        // color: context.white,
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
+        color: context.greyFA,
       ),
       child: Column(
         children: [
@@ -37,7 +38,7 @@ class AddressDetails extends StatelessWidget {
           SummaryRow(
             textColor: context.grey89,
             valueColor: context.black,
-            label: AppStringsConstants.deliveryDate,
+            label: AppStringsConstants.deliveryName,
             value: addressModel.name,
           ),
           if (addressModel.fullAddress.isNotEmpty)

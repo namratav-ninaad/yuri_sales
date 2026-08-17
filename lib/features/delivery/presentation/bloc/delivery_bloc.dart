@@ -2,12 +2,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yuri_sale/features/delivery/domain/usecases/fetch_deliveries_uc.dart';
 import 'package:yuri_sale/features/delivery/presentation/bloc/delivery_event.dart';
 import 'package:yuri_sale/features/delivery/presentation/bloc/delivery_state.dart';
-import 'package:yuri_sale/features/invoice/domain/usecases/fetach_invoice_uc.dart';
-import 'package:yuri_sale/features/invoice/presentation/bloc/invoice_event.dart';
-import 'package:yuri_sale/features/invoice/presentation/bloc/invoice_state.dart';
-import 'package:yuri_sale/features/order/domain/usecases/fetch_order_uc.dart';
-import 'package:yuri_sale/features/order/presentation/bloc/order_event.dart';
-import 'package:yuri_sale/features/order/presentation/bloc/order_state.dart';
 
 class DeliveryBloc extends Bloc<DeliveryEvent, DeliveryState> {
   final FetchDeliveriesUseCase fetchDeliveriesUseCase;

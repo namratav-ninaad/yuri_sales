@@ -29,8 +29,24 @@ class AppValidators {
       return AppStringsConstants.pleaseEnterPassword;
     }
 
-    if (value.length < 6) {
-      return AppStringsConstants.passwordMinLength;
+    // Minimum 8 characters
+    if (value.length < 8) {
+      return AppStringsConstants.min8Characters;
+    }
+
+    // At least 1 uppercase letter
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return AppStringsConstants.atoZUpperCharacters;
+    }
+
+    // At least 1 lowercase letter
+    if (!RegExp(r'[a-z]').hasMatch(value)) {
+      return AppStringsConstants.aTozLowerCharacters;
+    }
+
+    // At least 1 number OR special character
+    if (!RegExp(r'[0-9!@#$%^&*(),.?":{}|<>_\-+=/\\[\]]').hasMatch(value)) {
+      return AppStringsConstants.specialCharacters;
     }
 
     return null;

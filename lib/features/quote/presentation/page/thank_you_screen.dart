@@ -63,7 +63,7 @@ class ThankYouPage extends StatelessWidget {
               CommonButton(
                 title: AppStringsConstants.goToHome,
                 onTap: () {
-                  AppRoutes.pushNamed(RouteNames.home);
+                  AppRoutes.pushNamedAndRemoveUntil(RouteNames.home);
                   context.read<HomeBloc>().add(ChangeBottomNavEvent(0));
                 },
               ),

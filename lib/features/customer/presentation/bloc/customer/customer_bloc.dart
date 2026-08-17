@@ -20,7 +20,7 @@ class CustomerBloc extends Bloc<CustomerEvent, CustomerState> {
     emit(state.copyWith(isLoading: true, errorMessage: null));
 
     final result = await customerUseCase.call(
-      data: CustomerFilterData(name: event.query.toLowerCase().trim()),
+      data: CustomerFilterData(search: event.search.toLowerCase().trim()),
     );
 
     result.fold(

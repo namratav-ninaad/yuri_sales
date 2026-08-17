@@ -6,7 +6,6 @@ import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
 import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
-import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/core/widgets/common_logo_image.dart';
 import 'package:yuri_sale/features/dashboard/presentation/widgets/achievement_card.dart';
@@ -55,14 +54,14 @@ class DashboardPage extends StatelessWidget {
           imageWidth: AppSizes.image120,
           imageHeight: AppSizes.image80,
         ),
-        action: [
+      /*  action: [
           CommonAssetsImageWidget(
             imagePath: AppImagesConstants.notificationIcon,
             imageWidth: AppSizes.icon24,
             imageHeight: AppSizes.icon24,
           ),
           AppSizes.w24,
-        ],
+        ],*/
       ),
       backgroundColor: context.white,
       body: SingleChildScrollView(
@@ -90,7 +89,7 @@ class DashboardPage extends StatelessWidget {
               children: [
                 // Top Row - 3 Cards
                 SizedBox(
-                  height: AppSizes.hS80,
+                  height: AppSizes.s80,
                   child: Row(
                     children: [
                       Expanded(
@@ -123,7 +122,7 @@ class DashboardPage extends StatelessWidget {
 
                 // Bottom Row 1
                 SizedBox(
-                  height: AppSizes.hS150,
+                  height: AppSizes.s150,
                   child: Row(
                     children: [
                       Expanded(child: AchievementCard()),
@@ -143,7 +142,7 @@ class DashboardPage extends StatelessWidget {
                           children: [
                             Expanded(
                               child: SizedBox(
-                                height: AppSizes.hS80,
+                                height: AppSizes.s80,
                                 child: TitleIconCard(
                                   title: AppStringsConstants.conversionRatio,
                                   value: '32.4%',
@@ -152,10 +151,10 @@ class DashboardPage extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            AppSizes.h12,
+                            AppSizes.h10,
                             Expanded(
                               child: SizedBox(
-                                height: AppSizes.hS80,
+                                height: AppSizes.s80,
                                 child: TitleIconCard(
                                   title: AppStringsConstants.monthlyTarget,
                                   value: '₹60,000',

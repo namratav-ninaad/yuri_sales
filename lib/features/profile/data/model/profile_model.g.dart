@@ -7,24 +7,24 @@ part of 'profile_model.dart';
 // **************************************************************************
 
 ProfileModel _$ProfileModelFromJson(Map<String, dynamic> json) => ProfileModel(
-  user_id: json['user_id'] as num,
-  full_name: json['full_name'] as String,
+  userId: json['user_id'] as num,
+  fullName: json['full_name'] as String,
   email: json['email'] as String,
   phone: json['phone'] as String,
   company: CompanyBean.fromJson(json['company'] as Map<String, dynamic>),
-  device_type: json['device_type'] as String,
-  profile_image: json['profile_image'] as String,
+  deviceType: json['device_type'] as String,
+  profileImage: json['profile_image'] as String,
 );
 
 Map<String, dynamic> _$ProfileModelToJson(ProfileModel instance) =>
     <String, dynamic>{
-      'user_id': instance.user_id,
-      'full_name': instance.full_name,
+      'user_id': instance.userId,
+      'full_name': instance.fullName,
       'email': instance.email,
       'phone': instance.phone,
       'company': instance.company,
-      'device_type': instance.device_type,
-      'profile_image': instance.profile_image,
+      'device_type': instance.deviceType,
+      'profile_image': instance.profileImage,
     };
 
 CompanyBean _$CompanyBeanFromJson(Map<String, dynamic> json) =>

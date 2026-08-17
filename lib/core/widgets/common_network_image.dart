@@ -23,9 +23,12 @@ class CommonNetworkImage extends StatelessWidget {
       imageUrl!,
       height: height,
       width: width,
-      fit: BoxFit.cover,
-      errorBuilder: (context, error, stackTrace) =>
-          const CommonIconWidget(icon: Icons.broken_image),
+      fit: BoxFit.contain,
+      errorBuilder: (context, error, stackTrace) => CommonIconWidget(
+        icon: Icons.broken_image,
+        size: height ?? AppSizes.icon24,
+        color: context.greyC8,
+      ),
     );
   }
 }

@@ -5,10 +5,12 @@ class AppColorsConstants {
 
   //Grey
   static const Color greyC8 = Color(0xFFC6C6C8);
+  static const Color greyFA = Color(0xFFFAFAFA);
   static const Color grey89 = Color(0xFF8E8989);
   static const Color greyA3 = Color(0xFFA3A2A3);
   static const Color greyF2 = Color(0xFFF3F2F2);
   static const Color grey61 = Color(0xFF616161);
+  static const Color greyF5 = Color(0xFFF5F5F5);
   static const Color greyBD = Color(0xFFBDBDBD);
   static const Color grey9E = Color(0xFF9E9E9E);
   static const Color grey2C = Color(0xFF2C2C2C);

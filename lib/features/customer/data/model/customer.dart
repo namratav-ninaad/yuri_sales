@@ -32,8 +32,17 @@ class CustomerModel {
   @JsonKey(name: 'customer_statement')
   final num customerStatement;
 
+  @JsonKey(name: 'currency_symbol')
+  final String currencySymbol;
+
   @JsonKey(name: 'delivery_count')
   final num deliveryCount;
+
+  @JsonKey(name: 'comment_count')
+  final num commentCount;
+
+  @JsonKey(name: 'email_count')
+  final num emailCount;
 
   @JsonKey(name: 'activity_count')
   final num activityCount;
@@ -116,7 +125,11 @@ class CustomerModel {
     required this.image,
     required this.attachments,
     required this.createDate,
-    required this.writeDate, required this.customerStatement,
+    required this.writeDate,
+    required this.customerStatement,
+    required this.commentCount,
+    required this.emailCount,
+    required this.currencySymbol,
   });
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) =>

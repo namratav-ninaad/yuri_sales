@@ -14,8 +14,6 @@ import 'package:yuri_sale/features/delivery/presentation/bloc/delivery_bloc.dart
 import 'package:yuri_sale/features/delivery/presentation/bloc/delivery_event.dart';
 import 'package:yuri_sale/features/delivery/presentation/bloc/delivery_state.dart';
 import 'package:yuri_sale/features/delivery/presentation/widget/delivery_card.dart';
-import 'package:yuri_sale/features/order/domain/entities/search_order_data.dart';
-import 'package:yuri_sale/features/order/presentation/widget/order_card.dart';
 
 class DeliveryPage extends StatefulWidget {
   const DeliveryPage({super.key, required this.partnerId});
@@ -48,9 +46,9 @@ class _DeliveryPageState extends State<DeliveryPage> {
         title: AppStringsConstants.delivery,
 
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(AppSizes.hS100),
+          preferredSize: const Size.fromHeight(AppSizes.s80),
           child: Container(
-            height: AppSizes.hS45,
+            height: AppSizes.s45,
             margin: EdgeInsets.symmetric(vertical: AppSizes.p24),
             padding: const EdgeInsets.symmetric(horizontal: AppSizes.p24),
             child: CommonTextFormField(

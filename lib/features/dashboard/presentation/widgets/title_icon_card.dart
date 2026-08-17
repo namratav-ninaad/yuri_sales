@@ -14,7 +14,8 @@ class TitleIconCard extends StatelessWidget {
     super.key,
     required this.title,
     required this.value,
-    this.isTopImageShow = false, required this.imagePath,
+    this.isTopImageShow = false,
+    required this.imagePath,
   });
 
   @override
@@ -22,9 +23,16 @@ class TitleIconCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSizes.p8),
       decoration: BoxDecoration(
-        color: context.white,
+        color: context.greyFA,
+        boxShadow: [
+          BoxShadow(
+            color: context.black.withValues(alpha: 0.1),
+            offset: Offset(0, 2),
+            blurRadius: 2,
+          ),
+        ],
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,9 +47,7 @@ class TitleIconCard extends StatelessWidget {
                 padding: const EdgeInsets.all(AppSizes.p8),
                 margin: EdgeInsets.only(bottom: AppSizes.p12),
                 decoration: BoxDecoration(
-                  color: context.primaryRedColor.withValues(
-                    alpha: 0.1,
-                  ),
+                  color: context.primaryRedColor.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
                 child: CommonAssetsImageWidget(
@@ -53,13 +59,15 @@ class TitleIconCard extends StatelessWidget {
               ),
             ),
 
-          CommonTextWidget(
-            title: title,
-            color: context.black,
-            fontSize: AppSizes.f10,
-            fontWeight: FontWeight.w500,
+          Expanded(
+            child: CommonTextWidget(
+              title: title,
+              color: context.black,
+              fontSize: AppSizes.f10,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-          AppSizes.h8,
+          AppSizes.h4,
           Align(
             alignment: Alignment.bottomCenter,
             child: Row(
@@ -73,21 +81,21 @@ class TitleIconCard extends StatelessWidget {
                 ),
                 AppSizes.w4,
                 if (!isTopImageShow)
-                  Container(
-                    width: AppSizes.icon22,
-                    height: AppSizes.icon22,
-                    padding: const EdgeInsets.all(AppSizes.p4),
-                    decoration: BoxDecoration(
-                      color: context.primaryRedColor.withValues(
-                        alpha: 0.1,
+                  Expanded(
+                    child: Container(
+                      width: AppSizes.icon22,
+                      height: AppSizes.icon22,
+                      padding: const EdgeInsets.all(AppSizes.p4),
+                      decoration: BoxDecoration(
+                        color: context.primaryRedColor.withValues(alpha: 0.1),
+                        shape: BoxShape.circle,
                       ),
-                      shape: BoxShape.circle,
-                    ),
-                    child: CommonAssetsImageWidget(
-                      imagePath: imagePath,
-                      color: context.primaryRedColor,
-                      imageHeight: AppSizes.icon16,
-                      imageWidth: AppSizes.icon16,
+                      child: CommonAssetsImageWidget(
+                        imagePath: imagePath,
+                        color: context.primaryRedColor,
+                        imageHeight: AppSizes.icon16,
+                        imageWidth: AppSizes.icon16,
+                      ),
                     ),
                   ),
               ],

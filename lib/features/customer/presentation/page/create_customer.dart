@@ -16,7 +16,7 @@ import 'package:yuri_sale/core/widgets/common_icon_widget.dart';
 import 'package:yuri_sale/core/widgets/common_outline_button.dart';
 import 'package:yuri_sale/core/widgets/common_text_field.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
-import 'package:yuri_sale/features/customer/data/model/company_model.dart';
+import 'package:yuri_sale/features/customer/data/model/company.dart';
 import 'package:yuri_sale/features/customer/data/model/contact_tag.dart';
 import 'package:yuri_sale/features/customer/data/model/country.dart';
 import 'package:yuri_sale/features/customer/data/model/note.dart';
@@ -73,13 +73,13 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizes.r24)),
       ),
       builder: (context) => AddAttachmentBottomSheet(
-        title: "Attachment",
+        title: AppStringsConstants.attachment,
         onFilesSelected: (files) async {
           for (var path in files) {
             final file = File(path);
             final bytes = await file.readAsBytes();
             final base64Content = base64Encode(bytes);
-            final mimeType = _getMimeType(path);
+            final mimeType = getMimeType(path);
 
             final attachment = AttachmentData(
               filename: path.split('/').last,
@@ -97,22 +97,28 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
     );
   }
 
-  String _getMimeType(String path) {
-    final ext = path.split('.').last.toLowerCase();
-    switch (ext) {
-      case 'pdf':
-        return 'application/pdf';
-      case 'jpg':
-      case 'jpeg':
-        return 'image/jpeg';
-      case 'png':
-        return 'image/png';
-      case 'doc':
-        return 'application/msword';
-      case 'docx':
-        return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  String getMimeType(String path) {
+    final extension = path.split('.').last.toLowerCase();
+
+    switch (extension) {
+      case AppStringsConstants.pdfExtension:
+        return AppStringsConstants.pdfMimeType;
+
+      case AppStringsConstants.jpgExtension:
+      case AppStringsConstants.jpegExtension:
+        return AppStringsConstants.jpegMimeType;
+
+      case AppStringsConstants.pngExtension:
+        return AppStringsConstants.pngMimeType;
+
+      case AppStringsConstants.docExtension:
+        return AppStringsConstants.docMimeType;
+
+      case AppStringsConstants.docxExtension:
+        return AppStringsConstants.docxMimeType;
+
       default:
-        return 'application/octet-stream';
+        return AppStringsConstants.defaultMimeType;
     }
   }
 
@@ -121,11 +127,13 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
 
     showModalBottomSheet(
       context: context,
+      useSafeArea: true,
       isScrollControlled: true,
+      backgroundColor: context.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppSizes.r24)),
       ),
-      builder: (context) => AddNoteBottomSheet(onNoteAdded: _addNewNote),
+      builder: (context) => SafeArea(top: false,child: AddNoteBottomSheet(onNoteAdded: _addNewNote)),
     );
   }
 
@@ -291,7 +299,8 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                       padding: EdgeInsets.all(AppSizes.p12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppSizes.r12),
-                        border: Border.all(color: context.greyC8),
+                        // border: Border.all(color: context.greyC8),
+                        color: context.greyFA,
                       ),
                       child: Column(
                         children: [
@@ -311,6 +320,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                             children: [
                               Expanded(
                                 child: CommonDropdown<CountryModel>(
+                                  fillColor: context.white,
                                   enabled: state.countries.isEmpty
                                       ? false
                                       : true,
@@ -335,6 +345,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                               AppSizes.w12,
                               Expanded(
                                 child: CommonDropdown<StateModel>(
+                                  fillColor: context.white,
                                   enabled:
                                       state.selectedCountry == null &&
                                           state.states.isEmpty
@@ -429,7 +440,8 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                       padding: EdgeInsets.all(AppSizes.p12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppSizes.r12),
-                        border: Border.all(color: context.greyC8),
+                        // border: Border.all(color: context.greyC8),
+                        color: context.greyFA,
                       ),
                       child: Column(
                         children: [
@@ -455,7 +467,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                                 borderColor: context.primaryRedColor,
                                 fontWeight: FontWeight.w400,
                                 fontSize: AppSizes.f10,
-                                height: AppSizes.hS24,
+                                height: AppSizes.s24,
                                 borderRadius: AppSizes.r8,
                               ),
                             ],
@@ -473,7 +485,8 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                       padding: EdgeInsets.all(AppSizes.p12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(AppSizes.r12),
-                        border: Border.all(color: context.greyC8),
+                        // border: Border.all(color: context.greyC8),
+                        color: context.greyFA,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -529,6 +542,7 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                                     vertical: 4,
                                   ),
                                   child: CommonDropdown<ContactTagModel>(
+                                    fillColor: context.white,
                                     enabled: state.contactTags.isEmpty
                                         ? false
                                         : true,
@@ -725,7 +739,8 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
                         AppSizes.w12,
                         Expanded(
                           child: CommonOutlineButton(
-                            title: AppStringsConstants.archive,
+                            onTap: () => AppRoutes.pop,
+                            title: AppStringsConstants.cancel,
                             borderColor: context.primaryRedColor,
                             textColor: context.primaryRedColor,
                             fontSize: AppSizes.f16,

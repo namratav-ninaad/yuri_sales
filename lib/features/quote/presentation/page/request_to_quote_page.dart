@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,10 +9,12 @@ import 'package:yuri_sale/core/constants/app_validators.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
 import 'package:yuri_sale/core/share_preference/share_pref_helper.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_button.dart';
 import 'package:yuri_sale/core/widgets/common_text_field.dart';
+import 'package:yuri_sale/features/auth/data/model/login_response_model.dart';
 import 'package:yuri_sale/features/quote/domain/entity/submit_rfq_data.dart';
 import 'package:yuri_sale/features/quote/presentation/bloc/quote_bloc.dart';
 import 'package:yuri_sale/features/quote/presentation/bloc/quote_event.dart';
@@ -53,7 +57,7 @@ class _RequestToQuotePageState extends State<RequestToQuotePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.white,
       appBar: CommonAppbarWidget(title: AppStringsConstants.requestToQuote),
 
       body: BlocConsumer<QuoteBloc, QuoteState>(
@@ -142,12 +146,18 @@ class _RequestToQuotePageState extends State<RequestToQuotePage> {
                     title: AppStringsConstants.submitRequest,
                     onTap: () async {
                       if (formKey.currentState!.validate()) {
-                        int companyId =
-                            await SharedPrefHelper.getInt(
-                              AppStringsConstants.companyId,
-                            ) ??
-                            0;
+                        final loginResponse = await SharedPrefHelper.getString(
+                          AppStringsConstants.loginResponse,
+                        );
+                        int companyId = 0;
+                        if (loginResponse != null) {
+                          final loginData = LoginModel.fromJson(
+                            jsonDecode(loginResponse),
+                          );
+                          companyId = loginData.companyId;
+                        }
 
+                        // ignore: use_build_context_synchronously
                         context.read<QuoteBloc>().add(
                           SubmitRfqEvent(
                             SubmitRfqData(

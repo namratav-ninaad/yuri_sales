@@ -1,5 +1,5 @@
 import 'package:yuri_sale/core/enum/app_enum.dart';
-import 'package:yuri_sale/features/customer/data/model/company_model.dart';
+import 'package:yuri_sale/features/customer/data/model/company.dart';
 import 'package:yuri_sale/features/customer/data/model/contact_tag.dart';
 import 'package:yuri_sale/features/customer/data/model/country.dart';
 import 'package:yuri_sale/features/customer/data/model/note.dart';

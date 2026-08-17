@@ -5,7 +5,6 @@ import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
-import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/features/customer/presentation/page/customer_page.dart';
 import 'package:yuri_sale/features/dashboard/presentation/pages/dashboard_page.dart';
 import 'package:yuri_sale/features/home/presentation/bloc/home_bloc.dart';
@@ -52,81 +51,94 @@ class _HomePageState extends State<HomePage> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) => Scaffold(
         backgroundColor: context.white,
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: context.white,
-          elevation: 1,
-          selectedLabelStyle: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: AppSizes.f12,
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: context.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                offset: const Offset(0, 2),
+                blurRadius: 5,
+                spreadRadius: 0,
+              ),
+            ],
           ),
-          unselectedLabelStyle: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: AppSizes.f12,
+          child: BottomNavigationBar(
+            backgroundColor: context.white,
+            elevation: 1,
+            selectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: AppSizes.f12,
+            ),
+            unselectedLabelStyle: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: AppSizes.f12,
+            ),
+            currentIndex: state.selectedIndex,
+            selectedItemColor: context.primaryRedColor,
+            unselectedItemColor: context.greyA3,
+            type: BottomNavigationBarType.fixed,
+            onTap: (index) {
+              context.read<HomeBloc>().add(ChangeBottomNavEvent(index));
+            },
+            items: [
+              BottomNavigationBarItem(
+                icon: CommonAssetsImageWidget(
+                  imagePath: AppImagesConstants.homeIcon,
+                  imageHeight: AppSizes.icon24,
+                  imageWidth: AppSizes.icon24,
+                  color: state.selectedIndex == 0
+                      ? context.primaryRedColor
+                      : context.greyA3,
+                ),
+                label: AppStringsConstants.dashboard,
+              ),
+              BottomNavigationBarItem(
+                icon: CommonAssetsImageWidget(
+                  imagePath: AppImagesConstants.ordersIcon,
+                  imageHeight: AppSizes.icon24,
+                  imageWidth: AppSizes.icon24,
+                  color: state.selectedIndex == 1
+                      ? context.primaryRedColor
+                      : context.greyA3,
+                ),
+                label: AppStringsConstants.orders,
+              ),
+              BottomNavigationBarItem(
+                icon: CommonAssetsImageWidget(
+                  imagePath: AppImagesConstants.productsIcon,
+                  imageHeight: AppSizes.icon24,
+                  imageWidth: AppSizes.icon24,
+                  color: state.selectedIndex == 2
+                      ? context.primaryRedColor
+                      : context.greyA3,
+                ),
+                label: AppStringsConstants.products,
+              ),
+              BottomNavigationBarItem(
+                icon: CommonAssetsImageWidget(
+                  imagePath: AppImagesConstants.customersIcon,
+                  imageHeight: AppSizes.icon24,
+                  imageWidth: AppSizes.icon24,
+                  color: state.selectedIndex == 3
+                      ? context.primaryRedColor
+                      : context.greyA3,
+                ),
+                label: AppStringsConstants.customers,
+              ),
+              BottomNavigationBarItem(
+                icon: CommonAssetsImageWidget(
+                  imagePath: AppImagesConstants.profileIcon,
+                  imageHeight: AppSizes.icon24,
+                  imageWidth: AppSizes.icon24,
+                  color: state.selectedIndex == 4
+                      ? context.primaryRedColor
+                      : context.greyA3,
+                ),
+                label: AppStringsConstants.profile,
+              ),
+            ],
           ),
-          currentIndex: state.selectedIndex,
-          selectedItemColor: context.primaryRedColor,
-          unselectedItemColor: context.greyA3,
-          type: BottomNavigationBarType.fixed,
-          onTap: (index) {
-            context.read<HomeBloc>().add(ChangeBottomNavEvent(index));
-          },
-          items: [
-            BottomNavigationBarItem(
-              icon: CommonAssetsImageWidget(
-                imagePath: AppImagesConstants.homeIcon,
-                imageHeight: AppSizes.icon24,
-                imageWidth: AppSizes.icon24,
-                color: state.selectedIndex == 0
-                    ? context.primaryRedColor
-                    : context.greyA3,
-              ),
-              label: AppStringsConstants.dashboard,
-            ),
-            BottomNavigationBarItem(
-              icon: CommonAssetsImageWidget(
-                imagePath: AppImagesConstants.ordersIcon,
-                imageHeight: AppSizes.icon24,
-                imageWidth: AppSizes.icon24,
-                color: state.selectedIndex == 1
-                    ? context.primaryRedColor
-                    : context.greyA3,
-              ),
-              label: AppStringsConstants.orders,
-            ),
-            BottomNavigationBarItem(
-              icon: CommonAssetsImageWidget(
-                imagePath: AppImagesConstants.productsIcon,
-                imageHeight: AppSizes.icon24,
-                imageWidth: AppSizes.icon24,
-                color: state.selectedIndex == 2
-                    ? context.primaryRedColor
-                    : context.greyA3,
-              ),
-              label: AppStringsConstants.products,
-            ),
-            BottomNavigationBarItem(
-              icon: CommonAssetsImageWidget(
-                imagePath: AppImagesConstants.customersIcon,
-                imageHeight: AppSizes.icon24,
-                imageWidth: AppSizes.icon24,
-                color: state.selectedIndex == 3
-                    ? context.primaryRedColor
-                    : context.greyA3,
-              ),
-              label: AppStringsConstants.customers,
-            ),
-            BottomNavigationBarItem(
-              icon: CommonAssetsImageWidget(
-                imagePath: AppImagesConstants.profileIcon,
-                imageHeight: AppSizes.icon24,
-                imageWidth: AppSizes.icon24,
-                color: state.selectedIndex == 4
-                    ? context.primaryRedColor
-                    : context.greyA3,
-              ),
-              label: AppStringsConstants.profile,
-            ),
-          ],
         ),
         body: _buildCurrentPage(state.selectedIndex),
       ),

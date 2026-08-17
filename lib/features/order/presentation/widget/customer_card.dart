@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/core/widgets/date_helper.dart';
-import 'package:yuri_sale/features/order/presentation/widget/text_chip.dart';
 
 class CustomerCard extends StatelessWidget {
   const CustomerCard({
@@ -21,7 +19,7 @@ class CustomerCard extends StatelessWidget {
   final String fullName;
   final String priceList;
   final String salesPerson;
-  final String orderStatus;
+  final Widget orderStatus;
   final String orderDate;
 
   @override
@@ -30,7 +28,8 @@ class CustomerCard extends StatelessWidget {
       padding: EdgeInsets.all(AppSizes.p12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
+        color: context.greyFA,
       ),
       child: Column(
         children: [
@@ -45,7 +44,8 @@ class CustomerCard extends StatelessWidget {
                 ),
               ),
               AppSizes.w16,
-              TextChip(color: AppColorsConstants.green, title: orderStatus),
+              orderStatus
+              // TextChip(color: AppColorsConstants.green, title: orderStatus),
             ],
           ),
           AppSizes.h12,

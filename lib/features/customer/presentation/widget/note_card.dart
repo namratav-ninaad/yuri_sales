@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
@@ -21,7 +20,15 @@ class NoteCard extends StatelessWidget {
       padding: EdgeInsets.all(AppSizes.p8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppSizes.r12),
-        border: Border.all(color: context.greyC8),
+        // border: Border.all(color: context.greyC8),
+        color: context.white,
+        boxShadow: [
+          BoxShadow(
+            color: context.black.withValues(alpha: 0.1),
+            offset: Offset(0, 2),
+            blurRadius: 2,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +83,7 @@ class NoteCard extends StatelessWidget {
               fontWeight: FontWeight.w400,
               color: context.grey89,
             )
-          else if (note.type.isVoice)
+        /*  else if (note.type.isVoice)
             Row(
               children: [
                 CommonIconWidget(
@@ -101,7 +108,7 @@ class NoteCard extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            )*/
           else
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,

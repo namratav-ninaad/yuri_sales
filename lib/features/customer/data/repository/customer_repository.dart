@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:yuri_sale/core/error/failures.dart';
 import 'package:yuri_sale/features/customer/data/datasource/customer_remote_datasource.dart';
-import 'package:yuri_sale/features/customer/data/model/company_model.dart';
+import 'package:yuri_sale/features/customer/data/model/company.dart';
 import 'package:yuri_sale/features/customer/data/model/contact_tag.dart';
 import 'package:yuri_sale/features/customer/data/model/country.dart';
 import 'package:yuri_sale/features/customer/data/model/customer.dart';

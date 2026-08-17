@@ -1,14 +1,20 @@
+import 'package:yuri_sale/core/enum/app_enum.dart';
+
 class SearchOrderData {
-  final String status;
+  final OrderStatus? status;
   final String name;
   final int? partnerId;
 
-  SearchOrderData({this.status = '', required this.name, this.partnerId});
+  const SearchOrderData({
+    this.status,
+    this.name = '',
+    this.partnerId,
+  });
 
   Map<String, dynamic> toMap() {
     return {
-      if (status.isNotEmpty) 'status': status,
-      'name': name,
+      if (status != null) 'status': status!.apiValue,
+      if (name.isNotEmpty) 'name': name,
       if (partnerId != null) 'partner_id': partnerId,
     };
   }

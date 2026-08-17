@@ -57,7 +57,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     Emitter<ProfileState> emit,
   ) async {
     await repository.saveTheme(event.themeMode);
-
     emit(state.copyWith(themeMode: event.themeMode));
   }
 
@@ -247,7 +246,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         (message) async {
           emit(state.copyWith(isLoading: false));
           homeBloc.add(ResetBottomNavEvent());
-          await SharedPrefHelper.remove(AppStringsConstants.accessToken);
+          await SharedPrefHelper.remove(AppStringsConstants.loginResponse);
           await SharedPrefHelper.remove(AppStringsConstants.sessionId);
 
           AppRoutes.pushReplacementNamed(RouteNames.login);

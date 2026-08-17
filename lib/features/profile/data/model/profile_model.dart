@@ -4,22 +4,27 @@ part 'profile_model.g.dart';
 
 @JsonSerializable()
 class ProfileModel {
-  num user_id;
-  String full_name;
+
+  @JsonKey(name: 'user_id')
+  num userId;
+  @JsonKey(name: 'full_name')
+  String fullName;
   String email;
   String phone;
   CompanyBean company;
-  String device_type;
-  String profile_image;
+  @JsonKey(name: 'device_type')
+  String deviceType;
+  @JsonKey(name: 'profile_image')
+  String profileImage;
 
   ProfileModel({
-    required this.user_id,
-    required this.full_name,
+    required this.userId,
+    required this.fullName,
     required this.email,
     required this.phone,
     required this.company,
-    required this.device_type,
-    required this.profile_image,
+    required this.deviceType,
+    required this.profileImage,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) =>

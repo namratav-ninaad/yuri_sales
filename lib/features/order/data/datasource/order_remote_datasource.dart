@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
-import 'package:yuri_sale/core/error/exeptions.dart';
+import 'package:yuri_sale/core/error/exception.dart';
 import 'package:yuri_sale/core/error/failures.dart';
 import 'package:yuri_sale/core/model/common_response.dart';
 import 'package:yuri_sale/features/order/data/model/order.dart';
