@@ -68,5 +68,14 @@ class DateHelper {
 
   static String time(String dateStr) =>
       format(dateStr, pattern: AppStringsConstants.time12);
+
   // → 05:28 AM
+
+  /// Mon, Tue, Wed...
+  static String weekdayShort(String dateStr) =>
+      format(dateStr, pattern: AppStringsConstants.day);
+
+  /// 1 Jul
+  static String dayMonth(String dateStr) =>
+      format(dateStr, pattern: AppStringsConstants.dMMM);
 }

@@ -29,6 +29,7 @@ class AddressDetails extends StatelessWidget {
         color: context.greyFA,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CommonBgIconAndText(
             icon: icon ?? Icons.local_shipping_outlined,

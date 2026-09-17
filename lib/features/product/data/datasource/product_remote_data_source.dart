@@ -3,6 +3,7 @@ import 'package:yuri_sale/core/constants/app_strings.dart';
 import 'package:yuri_sale/core/error/exception.dart';
 import 'package:yuri_sale/core/error/failures.dart';
 import 'package:yuri_sale/core/model/common_response.dart';
+import 'package:yuri_sale/features/cart/data/model/cart.dart';
 import 'package:yuri_sale/features/product/data/model/category.dart';
 import 'package:yuri_sale/features/product/data/model/product.dart' show  ProductModel;
 import 'package:yuri_sale/features/product/domain/entities/add_cart_data.dart';
@@ -13,7 +14,7 @@ abstract class ProductRemoteDataSource {
 
   Future<List<CategoryModel>> fetchCategories();
 
-  Future<String> addCart({required AddCartData data});
+  Future<CartModel> addCart({required AddCartData data});
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -63,13 +64,17 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   }
 
   @override
-  Future<String> addCart({required AddCartData data}) async {
+  Future<CartModel> addCart({required AddCartData data}) async {
     try {
       final response = await dio.post(
         AppStringsConstants.addCartURl,
         data: data.toMap(),
       );
-      return CommonResponse.fromJson(response.data, (json) => json).message;
+      return CommonResponse<CartModel>.fromJson(
+        response.data,
+            (json) => CartModel.fromJson(json as Map<String, dynamic>),
+      ).data;
+      // return CommonResponse.fromJson(response.data, (json) => json).message;
     } on DioException catch (e) {
       throw ServerException(getErrorMessage(e));
     }

@@ -65,38 +65,36 @@ class _AddLogNoteBottomSheetState extends State<AddLogNoteBottomSheet> {
   }
 
   Future<void> _pickFiles() async {
-    final result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.any,
-      withData: true,
-    );
+    try {
+      final result = await FilePicker.pickFiles(type: FileType.any);
 
-    if (result == null || result.files.isEmpty) return;
+      if (result.isEmpty) return;
 
-    for (final file in result.files) {
-      try {
-        late final String base64Content;
+      for (final file in result) {
+        try {
+          if (file.path == null || file.path!.isEmpty) {
+            debugPrint('File path is empty: ${file.name}');
+            continue;
+          }
 
-        if (file.bytes != null) {
-          base64Content = base64Encode(file.bytes!);
-        } else if (file.path != null) {
           final bytes = await File(file.path!).readAsBytes();
-          base64Content = base64Encode(bytes);
-        } else {
-          continue;
+          final base64Content = base64Encode(bytes);
+
+          final attachment = AttachmentData(
+            name: file.name,
+            mimetype: getMimeType(file.extension ?? ''),
+            content: base64Content,
+          );
+
+          if (!mounted) return;
+
+          context.read<LogNoteBloc>().add(AddAttachmentEvent(attachment));
+        } catch (e) {
+          debugPrint('Error reading file ${file.name}: $e');
         }
-
-        final attachment = AttachmentData(
-          name: file.name,
-          mimetype: getMimeType(file.extension ?? ''),
-          content: base64Content,
-        );
-
-        // ignore: use_build_context_synchronously
-        context.read<LogNoteBloc>().add(AddAttachmentEvent(attachment));
-      } catch (e) {
-        debugPrint('Error reading file: $e');
       }
+    } catch (e) {
+      debugPrint('Error picking files: $e');
     }
   }
 

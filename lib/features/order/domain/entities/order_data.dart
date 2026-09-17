@@ -4,6 +4,12 @@ class OrderData {
   final bool backButtonShow;
   final OrderStatus? status;
   final int? partnerId;
+  final int? saleOrderId;
 
-  OrderData({this.backButtonShow = false, this.status, this.partnerId});
+  OrderData({
+    this.backButtonShow = false,
+    this.status,
+    this.partnerId,
+    this.saleOrderId,
+  });
 }

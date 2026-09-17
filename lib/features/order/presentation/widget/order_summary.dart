@@ -55,7 +55,7 @@ class OrderSummary extends StatelessWidget {
           fontSize: AppSizes.f14,
           label: AppStringsConstants.total,
           value: '$currency $total',
-          textColor: context.grey89,
+          textColor: context.primaryRedColor,
           valueColor: AppColorsConstants.primaryRedColor,
         ),
       ],

@@ -41,13 +41,17 @@ class AddAttachmentBottomSheet extends StatelessWidget {
           CommonButton(
             title: AppStringsConstants.browseFiles,
             onTap: () async {
-              final result = await FilePicker.platform.pickFiles(
-                allowMultiple: true,
+              final result = await FilePicker.pickFiles(
                 type: FileType.custom,
                 allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png', 'doc', 'docx'],
               );
-              if (result != null) {
-                final paths = result.paths.whereType<String>().toList();
+
+              if (result.isNotEmpty) {
+                final paths = result
+                    .map((file) => file.path)
+                    .whereType<String>()
+                    .toList();
+
                 onFilesSelected(paths);
                 AppRoutes.pop();
               }
@@ -69,7 +73,7 @@ class AddAttachmentBottomSheet extends StatelessWidget {
           AppSizes.h12,
           CommonOutlineButton(
             title: 'Cancel',
-            onTap: () =>  AppRoutes.pop(),
+            onTap: () => AppRoutes.pop(),
             textColor: context.grey89,
             borderColor: context.greyC8,
           ),

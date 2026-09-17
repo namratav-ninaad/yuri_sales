@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:yuri_sale/core/error/failures.dart';
+import 'package:yuri_sale/features/cart/data/model/cart.dart';
 import 'package:yuri_sale/features/product/data/datasource/product_remote_data_source.dart';
 import 'package:yuri_sale/features/product/data/model/category.dart';
 import 'package:yuri_sale/features/product/data/model/product.dart' show ProductModel;
@@ -13,7 +14,7 @@ abstract class ProductRepository {
 
   Future<Either<Failure, List<CategoryModel>>> fetchCategories();
 
-  Future<Either<Failure, String>> addCart({required AddCartData data});
+  Future<Either<Failure, CartModel>> addCart({required AddCartData data});
 }
 
 class ProductRepositoryImpl implements ProductRepository {
@@ -44,7 +45,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, String>> addCart({required AddCartData data}) async {
+  Future<Either<Failure, CartModel>> addCart({required AddCartData data}) async {
     try {
       final model = await remoteDataSource.addCart(data: data);
       return Right(model);

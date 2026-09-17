@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yuri_sale/core/constants/app_colors.dart';
 import 'package:yuri_sale/core/constants/app_images.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
@@ -50,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             //App Logo
-            CommonAssetsImageWidget(imagePath: AppImagesConstants.logoIcon,color: context.white),
+            CommonAssetsImageWidget(imagePath: AppImagesConstants.logoBlackIcon,color: AppColorsConstants.white),
            /* //App Title
             CommonTextWidget(title: AppStringsConstants.appName,color: AppColorsConstants.white),*/
           ],

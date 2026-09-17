@@ -97,7 +97,10 @@ class CustomerRemoteDatasourceImpl implements CustomerRemoteDatasource {
   @override
   Future<List<StateModel>> fetchStates({required int countryId}) async {
     try {
-      final res = await dio.get(AppStringsConstants.stateURl);
+      final res = await dio.get(
+        AppStringsConstants.stateURl,
+        queryParameters: {'country_id': countryId},
+      );
 
       return CommonResponse<List<StateModel>>.fromJson(res.data, (json) {
         if (json is Map<String, dynamic> && json['states'] != null) {

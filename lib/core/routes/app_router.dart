@@ -26,8 +26,10 @@ import 'package:yuri_sale/features/invoice/presentation/page/invoice_page.dart';
 import 'package:yuri_sale/features/log_note/presentation/page/log_note_page.dart';
 import 'package:yuri_sale/features/order/data/model/order.dart';
 import 'package:yuri_sale/features/order/domain/entities/order_data.dart';
+import 'package:yuri_sale/features/order/domain/entities/quotation_pdf_data.dart';
 import 'package:yuri_sale/features/order/presentation/page/order_detail.dart';
 import 'package:yuri_sale/features/order/presentation/page/order_page.dart';
+import 'package:yuri_sale/features/order/presentation/page/quotation_pdf_page.dart';
 import 'package:yuri_sale/features/product/data/model/product.dart';
 import 'package:yuri_sale/features/product/presentation/page/product_details.dart';
 import 'package:yuri_sale/features/product/presentation/page/product_page.dart';
@@ -67,6 +69,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       final product = settings.arguments as ProductModel;
       return MaterialPageRoute(
         builder: (_) => ProductDetailPage(product: product),
+      );
+
+
+    case RouteNames.quotationPdfPage:
+      final quotationPdfData = settings.arguments as QuotationPdfData;
+      return MaterialPageRoute(
+        builder: (_) => QuotationPdfPage(quotationPdfData: quotationPdfData),
       );
 
     case RouteNames.cartPage:

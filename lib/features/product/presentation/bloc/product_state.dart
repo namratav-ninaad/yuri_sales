@@ -5,13 +5,22 @@ import 'package:yuri_sale/features/product/data/model/product.dart'
 
 class ProductState extends Equatable {
   final bool isLoading;
+
   final int? loadingProductId;
+
   final List<ProductModel> products;
+
   final List<CategoryModel> categories;
+
   final String? errorMessage;
+
   final String searchQuery;
+
   final bool isAddCartSuccess;
+
   final CategoryModel? selectedCategory;
+  final Map<int, int> cartQuantities;
+  final Map<int, int> lineIds;
 
   const ProductState({
     this.isLoading = false,
@@ -22,6 +31,8 @@ class ProductState extends Equatable {
     this.isAddCartSuccess = false,
     this.selectedCategory,
     this.categories = const [],
+    this.cartQuantities = const {},
+    this.lineIds = const {},
   });
 
   ProductState copyWith({
@@ -33,6 +44,8 @@ class ProductState extends Equatable {
     bool? isAddCartSuccess,
     CategoryModel? selectedCategory,
     List<CategoryModel>? categories,
+    Map<int, int>? cartQuantities,
+    Map<int, int>? lineIds,
   }) {
     return ProductState(
       isLoading: isLoading ?? this.isLoading,
@@ -43,6 +56,8 @@ class ProductState extends Equatable {
       isAddCartSuccess: isAddCartSuccess ?? this.isAddCartSuccess,
       selectedCategory: selectedCategory ?? this.selectedCategory,
       categories: categories ?? this.categories,
+      cartQuantities: cartQuantities ?? this.cartQuantities,
+      lineIds: lineIds ?? this.lineIds,
     );
   }
 
@@ -56,5 +71,7 @@ class ProductState extends Equatable {
     isAddCartSuccess,
     searchQuery,
     categories,
+    cartQuantities,
+    lineIds,
   ];
 }

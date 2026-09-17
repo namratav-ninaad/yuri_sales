@@ -1,4 +1,4 @@
-package com.example.yuri_sale
+package com.yuritools.sales
 
 import io.flutter.embedding.android.FlutterActivity
 

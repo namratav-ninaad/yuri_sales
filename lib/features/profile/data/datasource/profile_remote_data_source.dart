@@ -14,6 +14,8 @@ abstract class ProfileRemoteDataSource {
 
   Future<String> logout();
 
+  Future<String> deleteAccount({required int userId});
+
   Future<ProfileModel> getProfile();
 }
 
@@ -44,6 +46,19 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       final response = await dio.put(
         AppStringsConstants.updateProfileURl,
         data: formData,
+      );
+
+      return CommonResponse.fromJson(response.data, (json) => json).message;
+    } on DioException catch (e) {
+      throw ServerException(getErrorMessage(e));
+    }
+  }
+
+  @override
+  Future<String> deleteAccount({required int userId}) async {
+    try {
+      final response = await dio.put(
+        AppStringsConstants.deleteAccountURL(userId),
       );
 
       return CommonResponse.fromJson(response.data, (json) => json).message;

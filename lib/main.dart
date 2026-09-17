@@ -11,7 +11,14 @@ import 'package:yuri_sale/features/profile/presentation/bloc/profile_state.dart'
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await configureDependencies();
+  try {
+    debugPrint('Configuring dependencies...');
+    await configureDependencies();
+    debugPrint('Dependencies configured successfully');
+  } catch (e, stackTrace) {
+    debugPrint('❌ DEPENDENCY ERROR: $e');
+    debugPrint('$stackTrace');
+  }
   runApp(const MyApp());
 }
 

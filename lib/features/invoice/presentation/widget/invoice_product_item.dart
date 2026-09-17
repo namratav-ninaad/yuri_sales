@@ -21,7 +21,9 @@ class InvoiceProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return invoiceLine.isEmpty
+        ? AppSizes.h0
+        : Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CommonTextWidget(

@@ -16,6 +16,8 @@ abstract class ProfileRepository {
 
   Future<Either<Failure, String>> logout();
 
+  Future<Either<Failure, String>> deleteAccount({required int userId});
+
   Future<Either<Failure, ProfileModel>> getProfile();
 }
 
@@ -37,7 +39,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
     }
   }
 
+  @override
+  Future<Either<Failure, String>> deleteAccount({required int userId}) async {
+    try {
+      final message = await remoteDataSource.deleteAccount(userId: userId);
 
+      return Right(message);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    }
+  }
   @override
   Future<Either<Failure, String>> logout() async {
     try {

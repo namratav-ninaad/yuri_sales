@@ -28,6 +28,9 @@ import 'package:yuri_sale/features/customer/domain/usecases/payment_terms_uc.dar
 import 'package:yuri_sale/features/customer/domain/usecases/state_uc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_bloc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/customer/customer_bloc.dart';
+import 'package:yuri_sale/features/dashboard/data/datasource/dashboard_remote_data_source.dart';
+import 'package:yuri_sale/features/dashboard/data/repository/dashboard_repository.dart';
+import 'package:yuri_sale/features/dashboard/domain/usecases/fetch_dashboard_uc.dart';
 import 'package:yuri_sale/features/dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:yuri_sale/features/delivery/data/datasource/delivery_remote_data_source.dart';
 import 'package:yuri_sale/features/delivery/data/repository/delivery_repository.dart';
@@ -56,6 +59,7 @@ import 'package:yuri_sale/features/profile/data/datasource/profile_remote_data_s
 import 'package:yuri_sale/features/profile/data/repository/profile_repository.dart';
 import 'package:yuri_sale/features/profile/data/repository/theme_repository.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/change_password_uc.dart';
+import 'package:yuri_sale/features/profile/domain/usecases/delete_account_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/get_profile_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/logout_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/update_profile_uc.dart';
@@ -78,7 +82,7 @@ Future<void> configureDependencies() async {
   sl.registerFactory(() => ForgotPasswordBloc(forgotPasswordUseCase: sl()));
   sl.registerFactory(() => OtpBloc(verifyOtpUseCase: sl()));
   sl.registerFactory(() => ResetPasswordBloc(resetPasswordUseCase: sl()));
-  sl.registerFactory(() => DashboardBloc());
+  sl.registerFactory(() => DashboardBloc(dashboardUseCase: sl()));
   sl.registerFactory(() => HomeBloc());
   sl.registerFactory(() => CustomerBloc(customerUseCase: sl()));
   sl.registerFactory(
@@ -89,7 +93,12 @@ Future<void> configureDependencies() async {
     ),
   );
   sl.registerFactory(
-    () => ProductBloc(productUseCase: sl(), addCartUseCase: sl(), categoryUseCase: sl()),
+    () => ProductBloc(
+      productUseCase: sl(),
+      addCartUseCase: sl(),
+      categoryUseCase: sl(),
+      updateCartQtyUseCase: sl(),
+    ),
   );
   sl.registerFactory(
     () => LogNoteBloc(
@@ -120,11 +129,16 @@ Future<void> configureDependencies() async {
   );
   sl.registerFactory(() => InvoiceBloc(fetchInvoiceUseCase: sl()));
   sl.registerFactory(() => DeliveryBloc(fetchDeliveriesUseCase: sl()));
-  sl.registerFactory(() => OrderBloc(fetchOrdersUseCase: sl()));
+  sl.registerFactory(
+    () => OrderBloc(
+      fetchOrdersUseCase: sl(),
+      fetchQuotationPdfUseCase: sl(),
+      shareQuotationPdfUseCase: sl(),
+    ),
+  );
 
   sl.registerFactory(
     () => CreateCustomerBloc(
-      customerBloc: sl(),
       contactTagUseCase: sl(),
       paymentTermsUseCase: sl(),
       createCustomerUseCase: sl(),
@@ -135,8 +149,8 @@ Future<void> configureDependencies() async {
   );
   sl.registerFactory(
     () => ProfileBloc(
+      deleteAccountUseCase: sl(),
       repository: sl(),
-      homeBloc: sl(),
       changePasswordUseCase: sl(),
       getProfileUseCase: sl(),
       updateProfileUseCase: sl(),
@@ -155,6 +169,15 @@ Future<void> configureDependencies() async {
   sl.registerLazySingleton(() => ForgotPasswordUseCase(sl()));
   sl.registerLazySingleton(() => VerifyOtpUseCase(sl()));
   sl.registerLazySingleton(() => ResetPasswordUseCase(sl()));
+
+  //Dashboard
+  sl.registerLazySingleton<DashboardRemoteDataSource>(
+    () => DashboardRemoteDataSourceImpl(sl<DioClient>().dio),
+  );
+  sl.registerLazySingleton<DashboardRepository>(
+    () => DashboardRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => FetchDashboardUseCase(sl()));
 
   //Product
   sl.registerLazySingleton<ProductRemoteDataSource>(
@@ -179,6 +202,7 @@ Future<void> configureDependencies() async {
   sl.registerLazySingleton(() => GetProfileUseCase(sl()));
   sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));
   sl.registerLazySingleton(() => LogoutUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteAccountUseCase(sl()));
 
   //Customer
   sl.registerLazySingleton<CustomerRemoteDatasource>(
@@ -217,6 +241,8 @@ Future<void> configureDependencies() async {
   );
   sl.registerLazySingleton<OrderRepository>(() => OrderRepositoryImpl(sl()));
   sl.registerLazySingleton(() => FetchOrdersUseCase(sl()));
+  sl.registerLazySingleton(() => FetchQuotationPdfUseCase(sl()));
+  sl.registerLazySingleton(() => ShareQuotationPdfUseCase(sl()));
 
   //Invoice
   sl.registerLazySingleton<InvoiceRemoteDataSource>(

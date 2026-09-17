@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yuri_sale/core/constants/app_images.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
+import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_assets_image_widget.dart';
 
 class CommonLogoImage extends StatelessWidget {
@@ -16,7 +16,7 @@ class CommonLogoImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonAssetsImageWidget(
-      imagePath: AppImagesConstants.logoIcon,
+      imagePath: context.logoIcon,
       imageHeight: imageHeight,
       imageWidth: imageWidth,
     );

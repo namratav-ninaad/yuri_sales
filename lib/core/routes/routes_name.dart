@@ -18,6 +18,7 @@ class RouteNames {
   static const requestToQuotePage = '/request_to_quote_page';
   static const thankYouPage = '/thank_you_page';
   static const orderDetailPage = '/order_detail';
+  static const quotationPdfPage = 'quotation_pdf_page';
   static const orderPage = '/order_page';
   static const invoicePage = '/invoice_page';
   static const deliveryPage = '/delivery_page';

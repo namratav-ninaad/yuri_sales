@@ -12,9 +12,10 @@ import 'package:yuri_sale/features/order/presentation/bloc/order_event.dart';
 import 'package:yuri_sale/features/order/presentation/bloc/order_state.dart';
 
 class OrderFilterBottomSheet extends StatelessWidget {
-  const OrderFilterBottomSheet({super.key, this.partnerId});
+  const OrderFilterBottomSheet({super.key, this.partnerId, this.saleOrderId});
 
   final int? partnerId;
+  final int? saleOrderId;
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,7 @@ class OrderFilterBottomSheet extends StatelessWidget {
                             partnerId: partnerId,
                             name: '',
                             status: null,
+                            saleUserId: saleOrderId,
                           ),
                         ),
                       );
@@ -71,6 +73,7 @@ class OrderFilterBottomSheet extends StatelessWidget {
                         partnerId: partnerId,
                         name: '',
                         status: value,
+                        saleUserId: saleOrderId,
                       ),
                     ),
                   );

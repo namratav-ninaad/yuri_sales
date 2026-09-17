@@ -53,6 +53,7 @@ class AppSizes {
   static const double p60 = 60.0;
 
   // Radius
+  static const double r2 = 2.0;
   static const double r4 = 4.0;
   static const double r5 = 5.0;
   static const double r8 = 8.0;

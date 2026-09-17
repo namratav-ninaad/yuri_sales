@@ -54,14 +54,19 @@ class UpdateProfileEvent extends ProfileEvent {
 
   const UpdateProfileEvent(this.data);
 }
+
 class ChangeThemeEvent extends ProfileEvent {
   final ThemeMode themeMode;
 
   const ChangeThemeEvent(this.themeMode);
-
 }
 
 class LoadThemeEvent extends ProfileEvent {}
 
-
 class LogoutEvent extends ProfileEvent {}
+
+class DeleteAccountEvent extends ProfileEvent {
+  final int userId;
+
+  const DeleteAccountEvent(this.userId);
+}

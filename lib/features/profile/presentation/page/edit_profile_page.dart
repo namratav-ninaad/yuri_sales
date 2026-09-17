@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
+import 'package:yuri_sale/core/constants/app_validators.dart';
 import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
@@ -43,23 +44,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
     emailController.dispose();
     mobileController.dispose();
     super.dispose();
-  }
-
-  String cleanMobileNumber(String mobile) {
-    // Remove all spaces and special characters
-    String cleaned = mobile.replaceAll(RegExp(r'[^0-9]'), '');
-
-    // If number starts with 91 and length is 12 → remove country code
-    if (cleaned.startsWith('91') && cleaned.length == 12) {
-      cleaned = cleaned.substring(2);
-    }
-
-    // If number starts with 0 → remove leading 0
-    if (cleaned.startsWith('0') && cleaned.length == 11) {
-      cleaned = cleaned.substring(1);
-    }
-
-    return cleaned;
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -140,12 +124,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           controller: fullNameController,
                           labelText: AppStringsConstants.fullName,
                           prefixIcon: Icons.person_outline,
+                          validator: (value) => AppValidators.requiredField(
+                            value,
+                            AppStringsConstants.fullName,
+                          ),
                         ),
                         AppSizes.h12,
                         CommonTextFormField(
                           controller: companyController,
                           labelText: AppStringsConstants.companyName,
                           prefixIcon: Icons.business,
+                          validator: (value) => AppValidators.requiredField(
+                            value,
+                            AppStringsConstants.companyName,
+                          ),
                         ),
                         AppSizes.h12,
                         CommonTextFormField(
@@ -167,6 +159,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           maxLength: 9,
                           prefixIcon: Icons.phone,
                           keyboardType: TextInputType.phone,
+                          validator: (value) => AppValidators.phone(value),
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                           ],
@@ -186,9 +179,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 companyId: profileData.company.id.toString(),
                                 email: emailController.text.trim().toString(),
 
-                                mobileNumber: cleanMobileNumber(
-                                  mobileController.text.trim().toString(),
-                                ),
+                                mobileNumber: mobileController.text
+                                    .trim()
+                                    .toString(),
+
                                 profileImage: state.selectedProfileImage?.path,
                               );
                               context.read<ProfileBloc>().add(

@@ -154,23 +154,27 @@ enum DeliveryStatus {
 enum InvoiceStatus {
   draft,
   posted,
+  notPaid,
   cancel;
 
   String get label => switch (this) {
     InvoiceStatus.draft => AppStringsConstants.draft,
     InvoiceStatus.posted => AppStringsConstants.posted,
+    InvoiceStatus.notPaid => AppStringsConstants.notPaid,
     InvoiceStatus.cancel => AppStringsConstants.cancelled,
   };
 
   String get apiValue => switch (this) {
     InvoiceStatus.draft => AppStringsConstants.draftL,
     InvoiceStatus.posted => AppStringsConstants.postedL,
+    InvoiceStatus.notPaid => AppStringsConstants.notPaidL,
     InvoiceStatus.cancel => AppStringsConstants.cancelL,
   };
 
   Color get color => switch (this) {
     InvoiceStatus.draft => AppColorsConstants.grey89,
     InvoiceStatus.posted => AppColorsConstants.green,
+    InvoiceStatus.notPaid => AppColorsConstants.red,
     InvoiceStatus.cancel => AppColorsConstants.red,
   };
 
@@ -180,8 +184,74 @@ enum InvoiceStatus {
     return switch (status) {
       AppStringsConstants.draftL => InvoiceStatus.draft,
       AppStringsConstants.postedL => InvoiceStatus.posted,
+      AppStringsConstants.notPaid => InvoiceStatus.notPaid,
       AppStringsConstants.cancelL => InvoiceStatus.cancel,
       _ => InvoiceStatus.draft,
+    };
+  }
+}
+
+enum PaymentStatus {
+  notPaid,
+  inPayment,
+  paid,
+  partial,
+  reversed,
+  blocked,
+  invoicingLegacy,
+  draft,
+  cancel;
+
+  String get label => switch (this) {
+    PaymentStatus.notPaid => AppStringsConstants.notPaid,
+    PaymentStatus.inPayment => AppStringsConstants.inPayment,
+    PaymentStatus.paid => AppStringsConstants.paid,
+    PaymentStatus.partial => AppStringsConstants.partiallyPaid,
+    PaymentStatus.reversed => AppStringsConstants.reversed,
+    PaymentStatus.blocked => AppStringsConstants.blocked,
+    PaymentStatus.invoicingLegacy => AppStringsConstants.invoicingLegacy,
+    PaymentStatus.draft => AppStringsConstants.draft,
+    PaymentStatus.cancel => AppStringsConstants.cancelled,
+  };
+
+  String get apiValue => switch (this) {
+    PaymentStatus.notPaid => AppStringsConstants.notPaidL,
+    PaymentStatus.inPayment => AppStringsConstants.inPaymentL,
+    PaymentStatus.paid => AppStringsConstants.paidL,
+    PaymentStatus.partial => AppStringsConstants.partialL,
+    PaymentStatus.reversed => AppStringsConstants.reversedL,
+    PaymentStatus.blocked => AppStringsConstants.blockedL,
+    PaymentStatus.invoicingLegacy => AppStringsConstants.invoicingLegacyL,
+    PaymentStatus.draft => AppStringsConstants.draftL,
+    PaymentStatus.cancel => AppStringsConstants.cancelL,
+  };
+
+  Color get color => switch (this) {
+    PaymentStatus.notPaid => AppColorsConstants.red,
+    PaymentStatus.inPayment => AppColorsConstants.orange,
+    PaymentStatus.paid => AppColorsConstants.green,
+    PaymentStatus.partial => AppColorsConstants.orange,
+    PaymentStatus.reversed => AppColorsConstants.red,
+    PaymentStatus.blocked => AppColorsConstants.red,
+    PaymentStatus.invoicingLegacy => AppColorsConstants.grey89,
+    PaymentStatus.draft => AppColorsConstants.grey89,
+    PaymentStatus.cancel => AppColorsConstants.red,
+  };
+
+  static PaymentStatus fromString(String? value) {
+    final status = value?.toLowerCase().trim();
+
+    return switch (status) {
+      'not_paid' => PaymentStatus.notPaid,
+      'in_payment' => PaymentStatus.inPayment,
+      'paid' => PaymentStatus.paid,
+      'partial' => PaymentStatus.partial,
+      'reversed' => PaymentStatus.reversed,
+      'blocked' => PaymentStatus.blocked,
+      'invoicing_legacy' => PaymentStatus.invoicingLegacy,
+      'draft' => PaymentStatus.draft,
+      'cancel' => PaymentStatus.cancel,
+      _ => PaymentStatus.draft,
     };
   }
 }

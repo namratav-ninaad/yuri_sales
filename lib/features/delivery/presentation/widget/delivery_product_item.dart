@@ -14,29 +14,31 @@ class DeliveryProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CommonTextWidget(
-          title: AppStringsConstants.invoiceItems,
-          fontSize: AppSizes.f16,
-          fontWeight: FontWeight.w700,
-        ),
-        AppSizes.h12,
-        Container(
-          decoration: BoxDecoration(
-            color: context.greyFA,
-            // color: context.white,
-            // border: Border.all(color: context.greyC8),
-            borderRadius: BorderRadius.circular(AppSizes.r12),
-          ),
-          child: /*ClipRRect(
+    return deliveryProducts.isEmpty
+        ? AppSizes.h0
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CommonTextWidget(
+                title: AppStringsConstants.invoiceItems,
+                fontSize: AppSizes.f16,
+                fontWeight: FontWeight.w700,
+              ),
+              AppSizes.h12,
+              Container(
+                decoration: BoxDecoration(
+                  color: context.greyFA,
+                  // color: context.white,
+                  // border: Border.all(color: context.greyC8),
+                  borderRadius: BorderRadius.circular(AppSizes.r12),
+                ),
+                child: /*ClipRRect(
             borderRadius: BorderRadius.circular(AppSizes.r12),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
-                child: */Column(
+                child: */ Column(
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -98,16 +100,17 @@ class DeliveryProductItem extends StatelessWidget {
                       itemBuilder: (context, index) => DeliveryProductRowData(
                         deliveryProduct: deliveryProducts[index],
                       ),
-                      separatorBuilder: (context, index) => CommonDivider(color: context.white),
+                      separatorBuilder: (context, index) =>
+                          CommonDivider(color: context.white),
                       itemCount: deliveryProducts.length,
                     ),
                   ],
                 ),
-             /* ),
+                /* ),
             ),
           ),*/
-        ),
-      ],
-    );
+              ),
+            ],
+          );
   }
 }

@@ -1,6 +1,7 @@
 class AppImagesConstants {
   //Logo
-  static const String logoIcon = 'assets/logo/logo.png';
+  static const String logoBlackIcon = 'assets/logo/logo_black.png';
+  static const String logoWhiteIcon = 'assets/logo/logo_white.webp';
 
   //Icons
   static const String googleIcon = 'assets/icons/google.png';
@@ -13,7 +14,8 @@ class AppImagesConstants {
   static const String walletIcon = 'assets/icons/wallet.png';
   static const String currencyRupeeIcon = 'assets/icons/currency_rupee.png';
   static const String averageChartIcon = 'assets/icons/average_chart.png';
-  static const String conversionFilterIcon = 'assets/icons/conversion_filter.png';
+  static const String conversionFilterIcon =
+      'assets/icons/conversion_filter.png';
   static const String monthlyTargetIcon = 'assets/icons/monthly_target.png';
   static const String customersIcon = 'assets/icons/customers.png';
   static const String profileIcon = 'assets/icons/profile.png';

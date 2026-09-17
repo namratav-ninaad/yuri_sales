@@ -26,6 +26,8 @@ import 'package:yuri_sale/features/customer/domain/entities/create_customer_data
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_bloc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_event.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_state.dart';
+import 'package:yuri_sale/features/customer/presentation/bloc/customer/customer_bloc.dart';
+import 'package:yuri_sale/features/customer/presentation/bloc/customer/customer_event.dart';
 import 'package:yuri_sale/features/customer/presentation/widget/add_attachment_bs.dart';
 import 'package:yuri_sale/features/customer/presentation/widget/add_note_bs.dart';
 import 'package:yuri_sale/features/customer/presentation/widget/address_selection_widget.dart';
@@ -175,7 +177,9 @@ class _CreateCustomerPageState extends State<CreateCustomerPage>
             prev.errorMessage != curr.errorMessage,
         listener: (context, state) {
           if (state.isSuccess) {
+
             ToastHelper.success(AppStringsConstants.createCustomerMsg);
+            context.read<CustomerBloc>().add(FetchCustomerEvent(''));
             AppRoutes.pop();
           }
           if (state.errorMessage?.isNotEmpty == true) {

@@ -36,7 +36,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
-    context.read<CartBloc>().add(FetchCart());
+    context.read<CartBloc>().add(FetchCart(isProductQtySetData: true));
     context.read<ProductBloc>().add(FetchCategoriesEvent());
   }
 
@@ -206,156 +206,190 @@ class _ProductPageState extends State<ProductPage> {
         ),
       ),
 
-      body: BlocConsumer<ProductBloc, ProductState>(
-        listener: (context, state) {
-          if (state.isAddCartSuccess) {
-            context.read<CartBloc>().add(FetchCart());
+      body: BlocListener<CartBloc, CartState>(
+        listenWhen: (previous, current) {
+          return previous.cartQuantities != current.cartQuantities ||
+              previous.lineIds != current.lineIds;
+        },
+        listener: (context, cartState) {
+          if (cartState.cartData != null) {
+            if (cartState.cartQuantities.isNotEmpty &&
+                cartState.lineIds.isNotEmpty) {
+              debugPrint('========== PRODUCT PAGE CART SYNC ==========');
+              debugPrint('Cart Quantities: ${cartState.cartQuantities}');
+              debugPrint('Line IDs: ${cartState.lineIds}');
+
+              context.read<ProductBloc>().add(
+                SyncCartDataToProducts(
+                  cartQuantities: cartState.cartQuantities,
+                  lineIds: cartState.lineIds,
+                ),
+              );
+            }
           }
         },
-
-        builder: (context, state) {
-          return RefreshIndicator(
-            edgeOffset: 80,
-            onRefresh: () async {
+        child: BlocConsumer<ProductBloc, ProductState>(
+          listener: (context, state) {
+            if (state.isAddCartSuccess) {
               context.read<CartBloc>().add(FetchCart());
-              context.read<ProductBloc>().add(FetchCategoriesEvent());
-            },
-            child: Column(
-              children: [
-                // CATEGORY LIST
-                SizedBox(
-                  height: AppSizes.s35,
+            }
+          },
+          builder: (context, state) {
+            return RefreshIndicator(
+              edgeOffset: 80,
+              onRefresh: () async {
+                context.read<CartBloc>().add(
+                  FetchCart(isProductQtySetData: true),
+                );
+                context.read<ProductBloc>().add(FetchCategoriesEvent());
+              },
+              child: Column(
+                children: [
+                  // CATEGORY LIST
+                  SizedBox(
+                    height: AppSizes.s35,
 
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
 
-                    padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: horizontalPadding,
+                      ),
 
-                    itemCount: state.categories.length,
+                      itemCount: state.categories.length,
 
-                    separatorBuilder: (context, index) => AppSizes.w12,
+                      separatorBuilder: (context, index) => AppSizes.w12,
 
-                    itemBuilder: (context, index) {
-                      final category = state.categories[index];
+                      itemBuilder: (context, index) {
+                        final category = state.categories[index];
 
-                      final bool isSelected = category == state.selectedCategory;
+                        final bool isSelected =
+                            category == state.selectedCategory;
 
-                      return GestureDetector(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          if (category.id != state.selectedCategory?.id) {
-                            searchController.clear();
-                            context.read<ProductBloc>().add(
-                              SelectCategoryEvent(category),
-                            );
-                          }
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: AppSizes.p8,
+                        return GestureDetector(
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            if (category.id != state.selectedCategory?.id) {
+                              searchController.clear();
+                              context.read<ProductBloc>().add(
+                                SelectCategoryEvent(category),
+                              );
+                            }
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: AppSizes.p8,
 
-                            horizontal: AppSizes.p12,
-                          ),
+                              horizontal: AppSizes.p12,
+                            ),
 
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? context.primaryRedColor
-                                : context.greyFA,
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? context.primaryRedColor
+                                  : context.greyFA,
 
-                            borderRadius: BorderRadius.circular(AppSizes.r12),
-                          ),
+                              borderRadius: BorderRadius.circular(AppSizes.r12),
+                            ),
 
-                          child: Center(
-                            child: CommonTextWidget(
-                              title: category.name,
+                            child: Center(
+                              child: CommonTextWidget(
+                                title: category.name,
 
-                              fontSize: AppSizes.f12,
+                                fontSize: AppSizes.f12,
 
-                              textAlign: TextAlign.center,
+                                textAlign: TextAlign.center,
 
-                              fontWeight: isSelected
-                                  ? FontWeight.w600
-                                  : FontWeight.w400,
+                                fontWeight: isSelected
+                                    ? FontWeight.w600
+                                    : FontWeight.w400,
 
-                              color: isSelected ? context.white : context.grey89,
+                                color: isSelected
+                                    ? context.white
+                                    : context.grey89,
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
 
-                AppSizes.h24,
+                  AppSizes.h24,
 
-                // PRODUCT GRID
-                Expanded(
-                  child: state.isLoading
-                      ? const Center(child: CommonCircularProgressIndicator())
-                      : state.products.isEmpty
-                      ? CommonEmptyText(title: AppStringsConstants.noProductData)
-                      : GridView.builder(
-                          padding: EdgeInsets.fromLTRB(
-                            horizontalPadding,
-                            0,
-                            horizontalPadding,
-                            AppSizes.p24,
+                  // PRODUCT GRID
+                  Expanded(
+                    child: state.isLoading
+                        ? const Center(child: CommonCircularProgressIndicator())
+                        : state.products.isEmpty
+                        ? CommonEmptyText(
+                            title: AppStringsConstants.noProductData,
+                          )
+                        : GridView.builder(
+                            padding: EdgeInsets.fromLTRB(
+                              horizontalPadding,
+                              0,
+                              horizontalPadding,
+                              AppSizes.p24,
+                            ),
+
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
+
+                                  crossAxisSpacing: crossAxisSpacing,
+
+                                  mainAxisSpacing: mainAxisSpacing,
+
+                                  childAspectRatio: childAspectRatio,
+                                ),
+
+                            itemCount: state.products.length,
+
+                            itemBuilder: (context, index) {
+                              final product = state.products[index];
+
+                              return ProductCard(
+                                product: product,
+
+                                onTapItem: () async {
+                                  FocusManager.instance.primaryFocus?.unfocus();
+                                  final res = await AppRoutes.pushNamed(
+                                    RouteNames.productDetail,
+
+                                    arguments: product,
+                                  );
+
+                                  if (res == true) {
+                                    searchController.clear();
+                                  }
+                                },
+
+                                onTapAddCart: /*product.alreadyInCart
+                                    ? () {
+                                        FocusManager.instance.primaryFocus
+                                            ?.unfocus();
+                                        AppRoutes.pushNamed(
+                                          RouteNames.cartPage,
+                                        );
+                                      }
+                                    : */ () {
+                                  context.read<ProductBloc>().add(
+                                    AddCartEvent(
+                                      AddCartData(
+                                        productId: product.id.toInt(),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           ),
-
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: crossAxisCount,
-
-                            crossAxisSpacing: crossAxisSpacing,
-
-                            mainAxisSpacing: mainAxisSpacing,
-
-                            childAspectRatio: childAspectRatio,
-                          ),
-
-                          itemCount: state.products.length,
-
-                          itemBuilder: (context, index) {
-                            final product = state.products[index];
-
-                            return ProductCard(
-                              product: product,
-
-                              onTap: () async {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                final res = await AppRoutes.pushNamed(
-                                  RouteNames.productDetail,
-
-                                  arguments: product,
-                                );
-
-                                if (res == true) {
-                                  searchController.clear();
-                                }
-                              },
-
-                              onTapAddCart: product.alreadyInCart
-                                  ? () {
-                                      FocusManager.instance.primaryFocus
-                                          ?.unfocus();
-                                      AppRoutes.pushNamed(RouteNames.cartPage);
-                                    }
-                                  : () {
-                                      context.read<ProductBloc>().add(
-                                        AddCartEvent(
-                                          AddCartData(
-                                            productId: product.id.toInt(),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                            );
-                          },
-                        ),
-                ),
-              ],
-            ),
-          );
-        },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

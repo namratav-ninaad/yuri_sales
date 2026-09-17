@@ -18,8 +18,6 @@ import 'package:yuri_sale/features/customer/domain/usecases/create_customer_uc.d
 import 'package:yuri_sale/features/customer/domain/usecases/payment_terms_uc.dart';
 import 'package:yuri_sale/features/customer/domain/usecases/state_uc.dart';
 import 'package:yuri_sale/features/customer/presentation/bloc/create_customer_bloc/create_customer_state.dart';
-import 'package:yuri_sale/features/customer/presentation/bloc/customer/customer_bloc.dart';
-import 'package:yuri_sale/features/customer/presentation/bloc/customer/customer_event.dart';
 import 'create_customer_event.dart';
 
 class CreateCustomerBloc
@@ -29,7 +27,6 @@ class CreateCustomerBloc
   CompanyUseCase companyUseCase;
   PaymentTermsUseCase paymentTermsUseCase;
   ContactTagUseCase contactTagUseCase;
-  final CustomerBloc customerBloc;
   CountryUseCase countryUseCase;
   StateUseCase stateUseCase;
 
@@ -40,7 +37,6 @@ class CreateCustomerBloc
     required this.companyUseCase,
     required this.createCustomerUseCase,
     required this.paymentTermsUseCase,
-    required this.customerBloc,
   }) : super(CreateCustomerState()) {
     on<ChangeNoteType>(_onChangeNoteType);
     on<UpdateNoteText>(_onUpdateNoteText);
@@ -191,7 +187,6 @@ class CreateCustomerBloc
         },
         (_) {
           emit(state.copyWith(isLoading: false, isSuccess: true));
-          customerBloc.add(FetchCustomerEvent(''));
         },
       );
     } catch (e) {
@@ -318,7 +313,7 @@ class CreateCustomerBloc
       newNote = Note(
         type: NoteType.text,
         title: AppStringsConstants.customers,
-        time: '${AppStringsConstants.today}, $timeString',
+        time: '${AppStringsConstants.todayLabel}, $timeString',
         content: state.noteText.trim(),
         label: state.selectedNoteType.label,
         labelColor: AppColorsConstants.green,
@@ -337,7 +332,7 @@ class CreateCustomerBloc
       newNote = Note(
         type: NoteType.followup,
         title: AppStringsConstants.customers,
-        time: '${AppStringsConstants.today}, $timeString',
+        time: '${AppStringsConstants.todayLabel}, $timeString',
         content: AppStringsConstants.followUpDate,
         label: state.selectedNoteType.label,
         labelColor: AppColorsConstants.orange,

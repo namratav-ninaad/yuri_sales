@@ -18,6 +18,7 @@ class CommonIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: Icon(icon, size: size ?? AppSizes.icon24, color: color),
     );

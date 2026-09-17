@@ -1,9 +1,10 @@
 class AppStringsConstants {
   //APP name
-  static const String appName = 'Yuri Sales';
+  static const String appName = 'Yuri Tools Sales';
 
   // Api Base URL
-  static const String baseUrl = 'http://194.233.64.122:8080/api/';
+  static const String baseUrl = /*'https://yuritools.com/api/';*/
+      'http://194.233.64.122:8080/api/';
   static const String loginURl = 'auth/login';
   static const String forgotPasswordURl = 'auth/forgot-password';
   static const String verifyOtpURl = 'auth/verify-otp';
@@ -14,6 +15,8 @@ class AppStringsConstants {
   static const String categoriesURl = 'categories';
   static const String updateProfileURl = 'profile/update';
   static const String logoutURl = 'auth/logout';
+
+  static String deleteAccountURL(int id) => 'profile/$id/deactivate';
   static const String addCartURl = 'cart/add';
   static const String customersURl = 'contact/list';
   static const String ordersURl = 'orders';
@@ -33,6 +36,7 @@ class AppStringsConstants {
   static const String userURl = 'users';
   static const String messagesURl = 'contact/messages';
   static const String markDoneActivityURl = 'contact/activities/mark-done';
+  static const String salesDashboardURl = 'sales/dashboard';
 
   //Date Format
   static const String ddMMMyyyy = 'dd MMM yyyy'; // 28 Jul 2026
@@ -52,6 +56,8 @@ class AppStringsConstants {
   static const String MMMd = 'MMM d'; // Jul 6
   static const String time12 = 'hh:mm a'; // 05:28 AM
   static const String time24 = 'HH:mm';
+  static const String day = 'EEE';
+  static const String dMMM =  'd MMM';
 
   //font
   static const String fontFamily = 'Poppins';
@@ -116,7 +122,7 @@ class AppStringsConstants {
   static const String passwordResetMsg = 'Password Reset Successfully!';
   static const String browseProduct = 'Browse Products';
   static const String searchProduct = 'Search Products';
-  static const String addToCart = 'Add to cart';
+  static const String addToCart = 'Add';
   static const String goToCart = 'Go to Cart';
   static const String searchCustomer = 'Search Customer';
   static const String searchActivity = 'Search Activity';
@@ -197,7 +203,6 @@ class AppStringsConstants {
   static const String logout = 'Logout';
   static const String gallery = 'Gallery';
   static const String camera = 'Camera';
-  static const String today = 'Today';
   static const String passwordChangeMsg = 'Password changed successfully!';
   static const String changePasswordDescription =
       'For your security, please create a strong password that you don\'t use on other websites.';
@@ -210,6 +215,7 @@ class AppStringsConstants {
   static const String logoutAccountMsg =
       'Are you sure you want to logout\nfrom your account?';
   static const String logoutMsg = 'Logout Successful!';
+  static const String deleteAccountMsg = 'Delete Account Successful!';
   static const String productCartMsg = 'Product added to cart';
   static const String routeNotFound = 'Route not found';
   static const String createCustomerMsg = 'Create customer successfully!';
@@ -241,14 +247,15 @@ class AppStringsConstants {
   static const String vat = 'VAT(5%)';
   static const String subtotal = 'Subtotal';
   static const String total = 'Total';
-  static const String requestToQuote = 'Request to Quote';
-  static const String submitRequest = 'Submit Request';
+  static const String requestToQuote = /*Request*/ 'Create to Quote';
+  static const String submitRequest = /*'Submit Request'*/ 'Create to Quote';
   static const String qtyUpdateMsg = 'Quantity updated successfully';
   static const String itemRemoveCartMsg = 'Item removed from cart';
   static const String thankYou = 'Thank You!';
   static const String goToHome = 'Go to Home';
   static const String thankYouMsg =
       'Your message has been sent.\nWe will get back to you shortly.';
+
   //Theme
   static const String chooseTheme = 'Choose Theme';
   static const String light = 'Light';
@@ -257,7 +264,6 @@ class AppStringsConstants {
   static const String darkL = 'dark';
   static const String systemDefault = 'System Default';
 
-
   static const String orderItems = 'Order Items';
   static const String customerStatementItems = 'Customer Statement Items';
   static const String invoiceItems = 'Invoice Items';
@@ -265,10 +271,14 @@ class AppStringsConstants {
   static const String invoiceSummary = 'Invoice Summary';
   static const String customerStatementSummary = 'Customer Statement Summary';
   static const String paymentMethod = 'Payment Method';
+  static const String paymentTerm = 'Payment Term';
   static const String invoiceDetail = 'Invoice Detail';
   static const String product = 'Product';
   static const String price = 'Price';
   static const String qty = 'Qty';
+  static const String hashtag = '#';
+  static const String customer = 'Customer';
+  static const String revenue = 'Revenue';
   static const String demand = 'Demand';
   static const String unit = 'Unit';
   static const String untaxedAmount = 'Untaxed Amount';
@@ -279,6 +289,11 @@ class AppStringsConstants {
   static const String confirmed = 'Confirmed';
   static const String formQuotation = 'Form Quotation';
   static const String standardDelivery = 'Standard Delivery';
+  static const String quotationPdfEmpty =  'Quotation PDF URL is empty.';
+  static const String quotationPdfResponseEmpty =  'Quotation PDF response is empty.';
+  static const String pdfNotSharing =  'PDF is not available for sharing.';
+  static const String quotationPdfNotAvailable = 'Quotation PDF is not available.';
+  static const String viewQuotationPdf =  'View Quotation PDF';
 
   ///Order Status
   static const String quotation = "Quotation";
@@ -296,6 +311,23 @@ class AppStringsConstants {
   static const String posted = "Posted";
 
   static const String postedL = "posted";
+
+  ///Payment status
+  static const String notPaid = "Not Paid";
+  static const String inPayment = "In Payment";
+  static const String paid = "Paid";
+  static const String partiallyPaid = "Partially Paid";
+  static const String reversed = "Reversed";
+  static const String blocked = "Blocked";
+  static const String invoicingLegacy = "Invoicing App Legacy";
+
+  static const String notPaidL = "not_paid";
+  static const String inPaymentL = "in_payment";
+  static const String paidL = "paid";
+  static const String partialL = "partial";
+  static const String reversedL = "reversed";
+  static const String blockedL = "blocked";
+  static const String invoicingLegacyL = "invoicing_legacy";
 
   ///Delivery status
   static const String waitingAnother = "Waiting Another Operation";
@@ -341,7 +373,6 @@ class AppStringsConstants {
   static const String callL = "call";
   static const String emailL = "email";
 
-  static const String yesterday = "Yesterday";
   static const String tomorrow = "Tomorrow";
   static const String dueIn = "Due in";
   static const String days = "days";
@@ -351,6 +382,9 @@ class AppStringsConstants {
   static const String markDone = 'Mark Done';
   static const String edit = 'Edit';
   static const String delete = 'Delete';
+  static const String deleteAccount = 'Delete Account';
+  static const String deleteAccountDescription =
+      'Are you sure you want to delete your account from this device?';
   static const String editL = 'edit';
   static const String deleteL = 'delete';
   static const String attachment = 'Attachment';
@@ -370,6 +404,66 @@ class AppStringsConstants {
   static const String company = 'Company';
   static const String clear = 'Clear';
   static const String filterByStatus = 'Filter by Status';
+  static const String salePerson = 'Sale Person';
+  static const String period = 'Period';
+  static const String chart = 'Chart';
+  static const String totalRevenue = 'Total Revenue';
+  static const String grossProfit = 'Gross Profit';
+  static const String perOrder = 'Per Order';
+  static const String avgSaleCustomer = 'Avg Sale / Customer';
+  static const String perCustomer = 'Per Customer';
+  static const String newCustomers = 'New Customers';
+  static const String customersInvoiced = 'Customers Invoiced';
+  static const String customerNotInvoiced = 'Customers Not Invoiced';
+  static const String totalOrders = 'Total Orders';
+  static const String totalInvoices = 'Total Invoices';
+  static const String totalCustomers = 'Total Customers';
+  static const String totalReceivable = 'Total Receivable';
+  static const String receivable = 'Receivable';
+  static const String noDashboardData = 'No Dashboard Data';
+  static const String revenueTrend = 'Revenue Trend';
+  static const String noRevenueData = 'No revenue data available';
+  static const String noCountrySalesData = 'No country sales data';
+  static const String selectDate = 'Select Date';
+  static const String endDate = 'End Date';
+  static const String startDate = 'Start Date';
+  static const String salesByCountry = 'Sales by Country';
+  static const String revenueDistribution = 'Revenue distribution';
+  static const String salesByState = 'Sales by State';
+  static const String salesByCategory = 'Sales by Category';
+  static const String revenueDistributionMsg =
+      'Revenue distribution across product categories — click a category to view its orders';
+  static const String topProduct = 'Top Products';
+  static const String bestPerformingProducts = 'Best performing products';
+  static const String noTopProductData = 'No Top Products Data';
+  static const String noTopCustomerData = 'No Top Customer Data';
+  static const String noLeastProductData = 'No Least Products Data';
+  static const String leastPerformingProducts = 'Least Performing Products';
+  static const String lowestRevenueMsg =  'Lowest revenue / never sold this period';
+  static const String topCustomers = 'Top Customers';
+  static const String highestRevenueCustomers ='Highest revenue customers';
+
+  // Dashboard Period API Keys
+  static const String todayKeys = 'today';
+  static const String yesterdayKeys = 'yesterday';
+  static const String thisWeekKeys = 'this_week';
+  static const String thisMonthKeys = 'this_month';
+  static const String lastMonthKeys = 'last_month';
+  static const String thisQuarterKeys = 'this_quarter';
+  static const String thisYearKeys = 'this_year';
+  static const String previousYearKeys = 'previous_year';
+  static const String customKeys = 'custom';
+
+  // Dashboard Period Display Labels
+  static const String todayLabel = 'Today';
+  static const String yesterdayLabel = 'Yesterday';
+  static const String thisWeekLabel = 'This Week';
+  static const String thisMonthLabel = 'This Month';
+  static const String lastMonthLabel = 'Last Month';
+  static const String thisQuarterLabel = 'This Quarter';
+  static const String thisYearLabel = 'This Year';
+  static const String previousYearLabel = 'Previous Year';
+  static const String customLabel = 'Custom';
 
   /// MIME Types
   static const String imageMimeType = 'image/';

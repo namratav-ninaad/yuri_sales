@@ -5,11 +5,19 @@ import 'package:yuri_sale/features/order/presentation/bloc/order_state.dart';
 
 class OrderBloc extends Bloc<OrderEvent, OrderState> {
   final FetchOrdersUseCase fetchOrdersUseCase;
+  final FetchQuotationPdfUseCase fetchQuotationPdfUseCase;
+  final ShareQuotationPdfUseCase shareQuotationPdfUseCase;
 
-  OrderBloc({required this.fetchOrdersUseCase}) : super(OrderState()) {
+  OrderBloc({
+    required this.fetchOrdersUseCase,
+    required this.fetchQuotationPdfUseCase,
+    required this.shareQuotationPdfUseCase,
+  }) : super(OrderState()) {
     on<FetchOrdersEvent>(_onFetchOrders);
     on<ResetOrdersEvent>(_onResetOrders);
     on<OrderStatusFilterChanged>(_onOrderStatusFilterChanged);
+    on<FetchQuotationPdfEvent>(_onFetchQuotationPdf);
+    on<ShareQuotationPdfEvent>(_onShareQuotationPdf);
   }
 
   Future<void> _onOrderStatusFilterChanged(
@@ -42,6 +50,57 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       );
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e.toString()));
+    }
+  }
+
+  Future<void> _onFetchQuotationPdf(
+    FetchQuotationPdfEvent event,
+    Emitter<OrderState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        isPdfLoading: true,
+        pdfErrorMessage: null,
+        clearPdfError: true,
+      ),
+    );
+
+    try {
+      final result = await fetchQuotationPdfUseCase.call(pdfUrl: event.pdfUrl);
+
+      result.fold(
+        (failure) => emit(
+          state.copyWith(isPdfLoading: false, pdfErrorMessage: failure.message),
+        ),
+        (bytes) => emit(
+          state.copyWith(
+            isPdfLoading: false,
+            quotationPdfBytes: bytes,
+            quotationPdfOrderNumber: event.orderNumber,
+          ),
+        ),
+      );
+    } catch (e) {
+      emit(state.copyWith(isPdfLoading: false, pdfErrorMessage: e.toString()));
+    }
+  }
+
+  Future<void> _onShareQuotationPdf(
+    ShareQuotationPdfEvent event,
+    Emitter<OrderState> emit,
+  ) async {
+    emit(state.copyWith(isPdfSharing: true, clearSharePdfError: true));
+
+    try {
+      await shareQuotationPdfUseCase.call(
+        pdfBytes: event.pdfBytes,
+        orderNumber: event.orderNumber,
+      );
+      emit(state.copyWith(isPdfSharing: false));
+    } catch (e) {
+      emit(
+        state.copyWith(isPdfSharing: false, sharePdfErrorMessage: e.toString()),
+      );
     }
   }
 }

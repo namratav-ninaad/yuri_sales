@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_sizes.dart';
 import 'package:yuri_sale/core/constants/app_strings.dart';
+import 'package:yuri_sale/core/enum/app_enum.dart';
 import 'package:yuri_sale/core/theme/theme_color_extension.dart';
 import 'package:yuri_sale/core/widgets/common_appbar_widget.dart';
 import 'package:yuri_sale/core/widgets/common_text_widget.dart';
@@ -68,7 +69,13 @@ class InvoiceDetail extends StatelessWidget {
                   AppSizes.h24,
                   if (data.invoiceModel.paymentState.isNotEmpty) ...[
                     PaymentMethod(
-                      paymentMethod: data.invoiceModel.paymentState,
+                      paymentMethod: PaymentStatus.fromString(
+                        data.invoiceModel.paymentState,
+                      ).label,
+                      textColor: PaymentStatus.fromString(
+                        data.invoiceModel.paymentState,
+                      ).color,
+                      title: AppStringsConstants.paymentMethod,
                     ),
                     AppSizes.h24,
                   ],

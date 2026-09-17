@@ -11,10 +11,21 @@ import 'package:yuri_sale/core/widgets/common_text_widget.dart';
 import 'package:yuri_sale/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:yuri_sale/features/profile/presentation/bloc/profile_state.dart';
 
-class LogoutDialog extends StatelessWidget {
+class CommonShowDialog extends StatelessWidget {
   final VoidCallback onLogout;
+  final String? leftButton;
+  final String? textDescription;
+  final String? title;
+  final IconData? icon;
 
-  const LogoutDialog({super.key, required this.onLogout});
+  const CommonShowDialog({
+    super.key,
+    required this.onLogout,
+    this.leftButton,
+    this.textDescription,
+    this.title,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,47 +42,53 @@ class LogoutDialog extends StatelessWidget {
               height: AppSizes.icon60,
               width: AppSizes.icon60,
               decoration: BoxDecoration(
-                color: context.primaryRedColor.withValues(
-                  alpha: 0.1,
-                ),
+                color: context.primaryRedColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: CommonIconWidget(
-                icon: Icons.logout_outlined,
+                icon: icon ?? Icons.logout_outlined,
                 color: context.primaryRedColor,
                 size: AppSizes.icon32,
               ),
             ),
             AppSizes.h20,
             CommonTextWidget(
-              title: AppStringsConstants.logout,
+              title: title ?? AppStringsConstants.logout,
               color: context.black,
               fontSize: AppSizes.f20,
               fontWeight: FontWeight.w700,
             ),
             AppSizes.h8,
             CommonTextWidget(
-              title: AppStringsConstants.logoutAccountMsg,
+              title: textDescription ?? AppStringsConstants.logoutAccountMsg,
               textAlign: TextAlign.center,
               color: context.grey89,
               fontSize: AppSizes.f14,
               fontWeight: FontWeight.w500,
             ),
             AppSizes.h24,
-            BlocBuilder<ProfileBloc, ProfileState>(
-              builder: (context, state) => CommonButton(
-                title: AppStringsConstants.logout,
-                isLoading: state.isLoading,
-                onTap: onLogout,
-              ),
-            ),
+            Row(
+              children: [
+                BlocBuilder<ProfileBloc, ProfileState>(
+                  builder: (context, state) => Expanded(
+                    child: CommonButton(
+                      title: leftButton ?? AppStringsConstants.logout,
+                      isLoading: state.isLoading,
+                      onTap: onLogout,
+                    ),
+                  ),
+                ),
 
-            AppSizes.h12,
-            CommonOutlineButton(
-              title: AppStringsConstants.cancel,
-              onTap: () => AppRoutes.pop(),
-              borderColor: context.primaryRedColor,
-              textColor: context.primaryRedColor,
+                AppSizes.w12,
+                Expanded(
+                  child: CommonOutlineButton(
+                    title: AppStringsConstants.cancel,
+                    onTap: () => AppRoutes.pop(),
+                    borderColor: context.primaryRedColor,
+                    textColor: context.primaryRedColor,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

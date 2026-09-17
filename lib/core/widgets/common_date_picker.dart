@@ -7,12 +7,14 @@ class CommonDatePicker {
   static Future<DateTime?> pickDate({
     required BuildContext context,
     DateTime? initialDate,
+    DateTime? firstDate,
+    DateTime? lastDate,
   }) async {
     return showDatePicker(
       context: context,
       initialDate: initialDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2050),
+      firstDate: firstDate ?? DateTime(1900),
+      lastDate: lastDate ?? DateTime(2050),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(

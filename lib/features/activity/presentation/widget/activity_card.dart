@@ -35,8 +35,8 @@ class ActivityCard extends StatelessWidget {
 
     final diff = deadline.difference(today).inDays;
 
-    if (diff == 0) return AppStringsConstants.today;
-    if (diff == -1) return AppStringsConstants.yesterday;
+    if (diff == 0) return AppStringsConstants.todayLabel;
+    if (diff == -1) return AppStringsConstants.yesterdayLabel;
     if (diff == 1) return AppStringsConstants.tomorrow;
     if (diff > 1) {
       return '${AppStringsConstants.dueIn} $diff ${AppStringsConstants.days}';
@@ -46,11 +46,11 @@ class ActivityCard extends StatelessWidget {
   }
 
   Color get dueColor {
-    if (dueLabel == AppStringsConstants.today) {
+    if (dueLabel == AppStringsConstants.todayLabel) {
       return AppColorsConstants.orange;
     }
 
-    if (dueLabel == AppStringsConstants.yesterday ||
+    if (dueLabel == AppStringsConstants.yesterdayLabel ||
         dueLabel.contains(AppStringsConstants.overdue)) {
       return AppColorsConstants.red;
     }

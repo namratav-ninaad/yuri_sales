@@ -8,6 +8,8 @@ class CartState extends Equatable {
   final CartModel? cartData;
   final String? errorMessage;
   final int cartItemCount;
+  final Map<int, int> cartQuantities;
+  final Map<int, int> lineIds;
 
   const CartState({
     this.errorMessage,
@@ -16,6 +18,8 @@ class CartState extends Equatable {
     this.isQuantityUpdated = false,
     this.isItemRemoved = false,
     this.cartItemCount = 0,
+    this.cartQuantities = const {},
+    this.lineIds = const {},
   });
 
   CartState copyWith({
@@ -25,6 +29,9 @@ class CartState extends Equatable {
     bool? isQuantityUpdated,
     bool? isItemRemoved,
     int? cartItemCount,
+    Map<int, int>? cartQuantities,
+    Map<int, int>? lineIds,
+
   }) {
     return CartState(
       isLoading: isLoading ?? this.isLoading,
@@ -33,6 +40,11 @@ class CartState extends Equatable {
       isQuantityUpdated: isQuantityUpdated ?? this.isQuantityUpdated,
       isItemRemoved: isItemRemoved ?? this.isItemRemoved,
       cartItemCount: cartItemCount ?? this.cartItemCount,
+      cartQuantities:
+      cartQuantities ?? this.cartQuantities,
+
+      lineIds:
+      lineIds ?? this.lineIds,
     );
   }
 
@@ -45,5 +57,7 @@ class CartState extends Equatable {
     isItemRemoved,
     isQuantityUpdated,
     cartItemCount,
+    cartQuantities,
+    lineIds
   ];
 }

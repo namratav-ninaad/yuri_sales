@@ -107,7 +107,9 @@ class SessionInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      await SharedPrefHelper.clearAll();
+      /* await SharedPrefHelper.clearAll();*/
+      await SharedPrefHelper.remove(AppStringsConstants.loginResponse);
+      await SharedPrefHelper.remove(AppStringsConstants.sessionId);
 
       // Navigate to Login Screen if needed
       AppRoutes.pushReplacementNamed(RouteNames.login);

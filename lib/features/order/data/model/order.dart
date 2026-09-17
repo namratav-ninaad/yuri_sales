@@ -16,6 +16,9 @@ class OrderModel {
   @JsonKey(name: 'quotation_template')
   final String quotationTemplate;
 
+  @JsonKey(name: 'quotation_pdf_url')
+  final String quotationPdfUrl;
+
   @JsonKey(name: 'payment_term')
   final String paymentTerm;
 
@@ -91,6 +94,7 @@ class OrderModel {
     required this.orderLines,
     required this.createDate,
     required this.writeDate,
+    required this.quotationPdfUrl,
   });
 
   factory OrderModel.fromJson(Map<String, dynamic> json) =>

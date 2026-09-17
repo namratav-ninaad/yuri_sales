@@ -12,8 +12,9 @@ class ResetCart extends CartEvent {}
 
 class FetchCart extends CartEvent {
   final bool? isFirstTimeLoading;
+  final bool? isProductQtySetData;
 
-  const FetchCart({this.isFirstTimeLoading});
+  const FetchCart({this.isFirstTimeLoading, this.isProductQtySetData});
 
   @override
   List<Object?> get props => [isFirstTimeLoading];
@@ -44,4 +45,17 @@ class RemoveCart extends CartEvent {
 
   @override
   List<Object?> get props => [lineId];
+}
+
+class SetCartQuantity extends CartEvent {
+  final int productId;
+  final int quantity;
+
+  const SetCartQuantity({
+    required this.productId,
+    required this.quantity,
+  });
+
+  @override
+  List<Object?> get props => [productId, quantity];
 }

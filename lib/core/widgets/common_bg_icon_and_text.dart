@@ -12,6 +12,7 @@ class CommonBgIconAndText extends StatelessWidget {
     this.iconSize,
     this.radius,
     this.fontWeight,
+    this.fontSize,
   });
 
   final IconData icon;
@@ -19,10 +20,12 @@ class CommonBgIconAndText extends StatelessWidget {
   final double? iconSize;
   final double? radius;
   final FontWeight? fontWeight;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           padding: EdgeInsets.all(AppSizes.p6),
@@ -38,11 +41,13 @@ class CommonBgIconAndText extends StatelessWidget {
         ),
         if (title.isNotEmpty) ...[
           AppSizes.w8,
-          CommonTextWidget(
-            title: title,
-            fontSize: AppSizes.f14,
-            fontWeight: fontWeight ?? FontWeight.w600,
-          ),
+          Expanded(
+            child: CommonTextWidget(
+              title: title,
+              fontSize: fontSize ?? AppSizes.f14,
+              fontWeight: fontWeight ?? FontWeight.w600,
+            ),
+           ),
         ],
       ],
     );

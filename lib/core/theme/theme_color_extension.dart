@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yuri_sale/core/constants/app_colors.dart';
+import 'package:yuri_sale/core/constants/app_images.dart';
 
 extension ThemeColors on BuildContext {
   bool get isDark => Theme.of(this).brightness == Brightness.dark;
@@ -27,4 +28,9 @@ extension ThemeColors on BuildContext {
       isDark ? AppColorsConstants.grey2C : AppColorsConstants.greyF2;
 
   Color get primaryRedColor => AppColorsConstants.primaryRedColor;
+
+  //LOGO Image
+  String get logoIcon =>
+      isDark ? AppImagesConstants.logoWhiteIcon : AppImagesConstants.logoBlackIcon;
+
 }

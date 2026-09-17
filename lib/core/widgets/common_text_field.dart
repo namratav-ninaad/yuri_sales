@@ -27,6 +27,11 @@ class CommonTextFormField extends StatelessWidget {
   final int? maxLength;
   final List<TextInputFormatter>? inputFormatters;
 
+  // ADD THIS
+  final FocusNode? focusNode;
+  final TextAlign textAlign;
+  final EdgeInsetsGeometry? contentPadding;
+
   const CommonTextFormField({
     super.key,
     required this.controller,
@@ -50,12 +55,16 @@ class CommonTextFormField extends StatelessWidget {
     this.borderColor,
     this.maxLength,
     this.onFieldSubmitted,
+    this.focusNode,
+    this.textAlign = TextAlign.start,
+    this.contentPadding,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      focusNode: focusNode,
       keyboardType: keyboardType,
       obscureText: obscureText,
       validator: validator,
@@ -66,6 +75,7 @@ class CommonTextFormField extends StatelessWidget {
       readOnly: readOnly,
       enabled: enabled,
       maxLength: maxLength,
+      textAlign: textAlign,
       cursorColor: context.primaryRedColor,
       style: TextStyle(
         fontSize: AppSizes.f14,
@@ -82,10 +92,12 @@ class CommonTextFormField extends StatelessWidget {
         isDense: true,
         errorText: errorText,
         labelText: labelText,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: AppSizes.p16,
-          vertical: AppSizes.p12,
-        ),
+        contentPadding:
+            contentPadding ??
+            const EdgeInsets.symmetric(
+              horizontal: AppSizes.p16,
+              vertical: AppSizes.p12,
+            ),
         labelStyle: TextStyle(
           color: textColor ?? context.black,
           fontSize: AppSizes.f14,

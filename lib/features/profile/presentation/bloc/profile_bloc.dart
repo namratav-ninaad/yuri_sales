@@ -4,11 +4,10 @@ import 'package:yuri_sale/core/routes/app_routes.dart';
 import 'package:yuri_sale/core/routes/routes_name.dart';
 import 'package:yuri_sale/core/share_preference/share_pref_helper.dart';
 import 'package:yuri_sale/core/toast/toast_helper.dart';
-import 'package:yuri_sale/features/home/presentation/bloc/home_bloc.dart';
-import 'package:yuri_sale/features/home/presentation/bloc/home_event.dart';
 import 'package:yuri_sale/features/profile/data/repository/theme_repository.dart';
 import 'package:yuri_sale/features/profile/domain/entities/change_password_data.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/change_password_uc.dart';
+import 'package:yuri_sale/features/profile/domain/usecases/delete_account_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/get_profile_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/logout_uc.dart';
 import 'package:yuri_sale/features/profile/domain/usecases/update_profile_uc.dart';
@@ -20,16 +19,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetProfileUseCase getProfileUseCase;
   final UpdateProfileUseCase updateProfileUseCase;
   final LogoutUseCase logoutUseCase;
-  final HomeBloc homeBloc;
   final ThemeRepository repository;
+  final DeleteAccountUseCase deleteAccountUseCase;
 
   ProfileBloc({
     required this.changePasswordUseCase,
     required this.getProfileUseCase,
     required this.updateProfileUseCase,
     required this.logoutUseCase,
-    required this.homeBloc,
     required this.repository,
+    required this.deleteAccountUseCase,
   }) : super(const ProfileState()) {
     on<OldPasswordChanged>(_onOldPasswordChanged);
     on<NewPasswordChanged>(_onNewPasswordChanged);
@@ -43,6 +42,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UpdateProfileEvent>(_onUpdateProfile);
     on<PickProfileImageEvent>(_onPickProfileImage);
     on<LogoutEvent>(_onLogout);
+    on<DeleteAccountEvent>(_onDeleteAccount);
     on<LoadThemeEvent>(_load);
     on<ChangeThemeEvent>(_change);
   }
@@ -245,12 +245,36 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         },
         (message) async {
           emit(state.copyWith(isLoading: false));
-          homeBloc.add(ResetBottomNavEvent());
           await SharedPrefHelper.remove(AppStringsConstants.loginResponse);
           await SharedPrefHelper.remove(AppStringsConstants.sessionId);
-
           AppRoutes.pushReplacementNamed(RouteNames.login);
           ToastHelper.success(AppStringsConstants.logoutMsg);
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, error: e.toString()));
+    }
+  }
+
+  Future<void> _onDeleteAccount(
+    DeleteAccountEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    emit(state.copyWith(isLoading: true));
+    try {
+      final result = await deleteAccountUseCase.call(userId: event.userId);
+      result.fold(
+        (failure) {
+          if (failure.message.isNotEmpty) {
+            ToastHelper.error(failure.message);
+          }
+          emit(state.copyWith(isLoading: false, error: failure.message));
+        },
+        (message) async {
+          emit(state.copyWith(isLoading: false));
+          await SharedPrefHelper.clearAll();
+          AppRoutes.pushReplacementNamed(RouteNames.login);
+          ToastHelper.success(AppStringsConstants.deleteAccountMsg);
         },
       );
     } catch (e) {

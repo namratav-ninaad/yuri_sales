@@ -19,6 +19,7 @@ import 'package:yuri_sale/features/cart/presentation/widget/cart_card.dart';
 import 'package:yuri_sale/features/cart/presentation/widget/cart_sumary.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_bloc.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_event.dart';
+import 'package:yuri_sale/features/product/presentation/bloc/product_state.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -32,7 +33,7 @@ class _CartPageState extends State<CartPage> {
   void initState() {
     super.initState();
     context.read<CartBloc>().add(ResetCart());
-    context.read<CartBloc>().add(FetchCart());
+    context.read<CartBloc>().add(FetchCart(isProductQtySetData: true));
   }
 
   @override
@@ -48,17 +49,14 @@ class _CartPageState extends State<CartPage> {
             title: AppStringsConstants.myCart,
             leading: CommonBackButton(
               onTap: () {
+                var bloc = context.read<ProductBloc>();
                 AppRoutes.pop(context);
-                context.read<ProductBloc>().add(
+                bloc.add(
                   FetchProductsEvent(
                     query: '',
-                    categoryId:
-                        context
-                            .read<ProductBloc>()
-                            .state
-                            .selectedCategory
-                            ?.id ??
-                        0,
+                    categoryId: bloc.state.selectedCategory?.id == 0
+                        ? null
+                        : bloc.state.selectedCategory?.id ?? 0,
                   ),
                 );
               },
@@ -82,115 +80,212 @@ class _CartPageState extends State<CartPage> {
               }
             },
             builder: (context, state) {
-              return RefreshIndicator(
-                onRefresh: () async {
-                  context.read<CartBloc>().add(ResetCart());
-                  context.read<CartBloc>().add(FetchCart());
-                },
-                child: state.isLoading
-                    ? Center(child: CircularProgressIndicator())
-                    : state.cartData == null ||
-                          (state.cartData != null &&
-                              state.cartData!.cartProducts.isEmpty)
-                    ? CommonEmptyText(title: AppStringsConstants.cartEmpty)
-                    : Column(
-                        children: [
-                          Expanded(
-                            child: ListView.separated(
-                              padding: EdgeInsets.all(AppSizes.p24),
-                              itemCount: state.cartData!.cartProducts.length,
-                              separatorBuilder: (_, _) => Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: AppSizes.p12,
-                                ),
-                                child: CommonDivider(),
-                              ),
-                              itemBuilder: (context, index) {
-                                var cartData =
-                                    state.cartData!.cartProducts[index];
-                                return CartCard(
-                                  item: cartData,
-                                  onDecrease: () {
-                                    if (cartData.qty <= 1) return;
+              return BlocBuilder<ProductBloc, ProductState>(
+                builder: (context, productState) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      context.read<CartBloc>().add(ResetCart());
+                      context.read<CartBloc>().add(FetchCart());
+                    },
+                    child: state.isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : state.cartData == null ||
+                              (state.cartData != null &&
+                                  state.cartData!.cartProducts.isEmpty)
+                        ? CommonEmptyText(title: AppStringsConstants.cartEmpty)
+                        : Column(
+                            children: [
+                              Expanded(
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  padding: EdgeInsets.all(AppSizes.p24),
+                                  itemCount:
+                                      state.cartData!.cartProducts.length,
+                                  separatorBuilder: (_, _) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: AppSizes.p12,
+                                    ),
+                                    child: CommonDivider(),
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    var cartData =
+                                        state.cartData!.cartProducts[index];
+                                    int maxQuantity = 1;
+                                    if (productState.products.isNotEmpty) {
+                                      maxQuantity = productState.products
+                                          .firstWhere(
+                                            (e) => e.id == cartData.productId,
+                                          )
+                                          .totalStock
+                                          .onHand
+                                          .toInt();
+                                    }
 
-                                    bloc.add(
-                                      DecreaseQuantity(
-                                        data: UpdateCartQty(
-                                          lineId: cartData.lineId.toInt(),
-                                          qty: cartData.qty.toInt() - 1,
+                                    return CartCard(
+                                      currentCode: state.cartData!.currency,
+                                      maxQuantity: maxQuantity,
+                                      item: cartData,
+                                      onDecrease: () {
+                                        if (cartData.qty <= 1) {
+                                          bloc.add(
+                                            RemoveCart(
+                                              lineId: cartData.lineId.toInt(),
+                                            ),
+                                          );
+                                          var productBloc = context
+                                              .read<ProductBloc>();
+                                          productBloc.add(
+                                            FetchProductsEvent(
+                                              query: '',
+                                              categoryId:
+                                                  productBloc
+                                                          .state
+                                                          .selectedCategory
+                                                          ?.id ==
+                                                      0
+                                                  ? null
+                                                  : productBloc
+                                                            .state
+                                                            .selectedCategory
+                                                            ?.id ??
+                                                        0,
+                                            ),
+                                          );
+                                        } else {
+                                          bloc.add(
+                                            DecreaseQuantity(
+                                              data: UpdateCartQty(
+                                                lineId: cartData.lineId.toInt(),
+                                                qty: cartData.qty
+                                                    .toInt() /*- 1*/,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      },
+
+                                      onQuantityChanged: (newQuantity) {
+                                        if (newQuantity <= 1) {
+                                          bloc.add(
+                                            RemoveCart(
+                                              lineId: cartData.lineId.toInt(),
+                                            ),
+                                          );
+                                          var productBloc = context
+                                              .read<ProductBloc>();
+                                          productBloc.add(
+                                            FetchProductsEvent(
+                                              query: '',
+                                              categoryId:
+                                                  productBloc
+                                                          .state
+                                                          .selectedCategory
+                                                          ?.id ==
+                                                      0
+                                                  ? null
+                                                  : productBloc
+                                                            .state
+                                                            .selectedCategory
+                                                            ?.id ??
+                                                        0,
+                                            ),
+                                          );
+                                        } else {
+                                          if (newQuantity !=
+                                              cartData.qty.toInt()) {
+                                            bloc.add(
+                                              SetCartQuantity(
+                                                productId: cartData.productId
+                                                    .toInt(),
+                                                quantity: newQuantity,
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      onIncrease: () => bloc.add(
+                                        IncreaseQuantity(
+                                          data: UpdateCartQty(
+                                            lineId: cartData.lineId.toInt(),
+                                            qty: cartData.qty.toInt() /*+ 1*/,
+                                          ),
                                         ),
                                       ),
+                                      onRemove: () {
+                                        bloc.add(
+                                          RemoveCart(
+                                            lineId: cartData.lineId.toInt(),
+                                          ),
+                                        );
+                                        var productBloc = context
+                                            .read<ProductBloc>();
+                                        productBloc.add(
+                                          FetchProductsEvent(
+                                            query: '',
+                                            categoryId:
+                                                productBloc
+                                                        .state
+                                                        .selectedCategory
+                                                        ?.id ==
+                                                    0
+                                                ? null
+                                                : productBloc
+                                                          .state
+                                                          .selectedCategory
+                                                          ?.id ??
+                                                      0,
+                                          ),
+                                        );
+                                      },
                                     );
                                   },
-                                  onIncrease: () => bloc.add(
-                                    IncreaseQuantity(
-                                      data: UpdateCartQty(
-                                        lineId: cartData.lineId.toInt(),
-                                        qty: cartData.qty.toInt() + 1,
-                                      ),
-                                    ),
-                                  ),
-                                  onRemove: () {
-                                    bloc.add(
-                                      RemoveCart(lineId: cartData.lineId.toInt()),
-                                    );
-                                    context.read<ProductBloc>().add(
-                                      FetchProductsEvent(
-                                        query: '',
-                                        categoryId:
-                                            context
-                                                .read<ProductBloc>()
-                                                .state
-                                                .selectedCategory
-                                                ?.id ??
-                                            0,
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-
-                          // Summary + Button
-                          Container(
-                            decoration: BoxDecoration(
-                              color: context.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: context.black.withValues(alpha: 0.1),
-                                  blurRadius: 10,
-                                  spreadRadius: 0,
-                                  offset: const Offset(0, -4),
                                 ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(AppSizes.p24),
-                              child: Column(
-                                children: [
-                                  if (state.cartData != null)
-                                    CartSummary(
-                                      subtotal:
-                                          '${state.cartData!.currency} ${state.cartData!.amountUntaxed}',
-                                      vat:
-                                          '${state.cartData!.currency} ${state.cartData!.amountTax}',
-                                      total:
-                                          '${state.cartData!.currency} ${state.cartData!.amountTotal}',
-                                    ),
-                                  AppSizes.h24,
-                                  CommonButton(
-                                    onTap: () => AppRoutes.pushNamed(
-                                      RouteNames.requestToQuotePage,
-                                    ),
-                                    title: AppStringsConstants.requestToQuote,
-                                  ),
-                                ],
                               ),
-                            ),
+
+                              // Summary + Button
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: context.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: context.black.withValues(
+                                        alpha: 0.1,
+                                      ),
+                                      blurRadius: 10,
+                                      spreadRadius: 0,
+                                      offset: const Offset(0, -4),
+                                    ),
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(AppSizes.p24),
+                                  child: Column(
+                                    children: [
+                                      if (state.cartData != null)
+                                        CartSummary(
+                                          subtotal:
+                                              '${state.cartData!.currency} ${state.cartData!.amountUntaxed}',
+                                          vat:
+                                              '${state.cartData!.currency} ${state.cartData!.amountTax}',
+                                          total:
+                                              '${state.cartData!.currency} ${state.cartData!.amountTotal}',
+                                        ),
+                                      AppSizes.h24,
+                                      CommonButton(
+                                        onTap: () => AppRoutes.pushNamed(
+                                          RouteNames.requestToQuotePage,
+                                        ),
+                                        title:
+                                            AppStringsConstants.requestToQuote,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                  );
+                },
               );
             },
           ),

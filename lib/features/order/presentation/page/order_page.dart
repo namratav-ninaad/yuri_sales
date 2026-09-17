@@ -41,6 +41,7 @@ class _OrderPageState extends State<OrderPage> {
           partnerId: widget.data.partnerId,
           name: '',
           status: widget.data.status,
+          saleUserId: widget.data.saleOrderId,
         ),
       ),
     );
@@ -100,6 +101,7 @@ class _OrderPageState extends State<OrderPage> {
                           top: false,
                           child: OrderFilterBottomSheet(
                             partnerId: widget.data.partnerId,
+                            saleOrderId: widget.data.saleOrderId,
                           ),
                         ),
                       );
@@ -130,6 +132,7 @@ class _OrderPageState extends State<OrderPage> {
                       partnerId: widget.data.partnerId,
                       name: '',
                       status: widget.data.status,
+                      saleUserId: widget.data.saleOrderId,
                     ),
                   ),
                 );

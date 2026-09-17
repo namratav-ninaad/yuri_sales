@@ -18,16 +18,22 @@ import 'package:yuri_sale/features/product/domain/entities/add_cart_data.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_bloc.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_event.dart';
 import 'package:yuri_sale/features/product/presentation/bloc/product_state.dart';
+import 'package:yuri_sale/features/product/presentation/widget/common_quantity_selector.dart';
 import 'package:yuri_sale/features/product/presentation/widget/product_two_text.dart';
 
-class ProductDetailPage extends StatelessWidget {
+class ProductDetailPage extends StatefulWidget {
   final ProductModel product;
 
   const ProductDetailPage({super.key, required this.product});
 
+  @override
+  State<ProductDetailPage> createState() => _ProductDetailPageState();
+}
+
+class _ProductDetailPageState extends State<ProductDetailPage> {
   String getAttribute(String key) {
     try {
-      return product.attributes
+      return widget.product.attributes
           .firstWhere((e) => e.attributeName == key)
           .values
           .first
@@ -39,22 +45,26 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var bloc = context.read<ProductBloc>();
     return SafeArea(
       top: false,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: context.white,
         appBar: CommonAppbarWidget(
-          title: product.internalReference,
+          title: widget.product.internalReference,
           leading: BlocBuilder<ProductBloc, ProductState>(
             builder: (context, state) {
               return CommonBackButton(
                 onTap: () {
                   AppRoutes.pop(true);
                   context.read<CartBloc>().add(FetchCart());
-                  context.read<ProductBloc>().add(
+                  bloc.add(
                     FetchProductsEvent(
                       query: '',
-                      categoryId: state.selectedCategory?.id ?? 0,
+                      categoryId: state.selectedCategory?.id == 0
+                          ? null
+                          : state.selectedCategory?.id,
                     ),
                   );
                 },
@@ -64,6 +74,115 @@ class ProductDetailPage extends StatelessWidget {
         ),
 
         bottomNavigationBar: BlocBuilder<ProductBloc, ProductState>(
+          buildWhen: (previous, current) {
+            return previous.loadingProductId != current.loadingProductId ||
+                previous.cartQuantities != current.cartQuantities;
+          },
+          builder: (context, state) {
+            final bool isLoading = state.loadingProductId == widget.product.id;
+
+            final bool isInCart = widget.product.alreadyInCart;
+
+            final num quantity = state.cartQuantities[widget.product.id] ?? 1;
+
+            // Keyboard-safe padding
+            final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
+            // ==========================================================
+            // GO TO CART / QUANTITY
+            // ==========================================================
+
+            if (isInCart) {
+              return AnimatedPadding(
+                duration: const Duration(milliseconds: 150),
+                curve: Curves.easeOut,
+                padding: EdgeInsets.fromLTRB(
+                  AppSizes.p24,
+                  AppSizes.p12,
+                  AppSizes.p24,
+                  AppSizes.p24 + bottomInset,
+                ),
+                child: CommonQuantitySelector(
+                  height: AppSizes.s45,
+                  padding: AppSizes.p8,
+                  radius: AppSizes.r12,
+                  minQuantity: 0,
+                  maxQuantity: widget.product.totalStock.onHand.toInt(),
+                  onQuantityChanged: (newQuantity) {
+                    if (newQuantity <= 1) {
+                      bloc.add(
+                        RemoveProductFromCart(productId: widget.product.id),
+                      );
+                      context.read<CartBloc>().add(
+                        RemoveCart(
+                          lineId: state.lineIds[widget.product.id]!.toInt(),
+                        ),
+                      );
+                    } else {
+                      if (newQuantity != quantity.toInt()) {
+                        bloc.add(
+                          SetProductQuantity(
+                            productId: widget.product.id,
+                            quantity: newQuantity,
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  onDecrease: quantity <= 1
+                      ? () {
+                          bloc.add(
+                            RemoveProductFromCart(productId: widget.product.id),
+                          );
+                          context.read<CartBloc>().add(
+                            RemoveCart(
+                              lineId: state.lineIds[widget.product.id]!.toInt(),
+                            ),
+                          );
+                        }
+                      : () {
+                          bloc.add(
+                            DecreaseProductQuantity(
+                              productId: widget.product.id,
+                            ),
+                          );
+                        },
+                  onIncrease: () {
+                    bloc.add(
+                      IncreaseProductQuantity(productId: widget.product.id),
+                    );
+                  },
+                  quantity: quantity.toInt(),
+                ),
+              );
+            }
+
+            // ==========================================================
+            // ADD TO CART
+            // ==========================================================
+
+            return Padding(
+              padding: const EdgeInsets.all(AppSizes.p24),
+              child: CommonButton(
+                isLoading: isLoading,
+
+                onTap: widget.product.alreadyInCart
+                    ? () => AppRoutes.pushNamed(RouteNames.cartPage)
+                    : () {
+                        bloc.add(
+                          AddCartEvent(
+                            AddCartData(productId: widget.product.id.toInt()),
+                          ),
+                        );
+                      },
+
+                title: AppStringsConstants.addToCart,
+              ),
+            );
+          },
+        ),
+
+        /*BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
             return Padding(
               padding: const EdgeInsets.all(AppSizes.p12),
@@ -84,7 +203,7 @@ class ProductDetailPage extends StatelessWidget {
               ),
             );
           },
-        ),
+        ),*/
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(AppSizes.p24),
           child: Column(
@@ -92,14 +211,14 @@ class ProductDetailPage extends StatelessWidget {
             children: [
               Center(
                 child: CommonNetworkImage(
-                  imageUrl: product.image,
+                  imageUrl: widget.product.image,
                   height: AppSizes.image150,
                 ),
               ),
 
               AppSizes.h20,
               CommonTextWidget(
-                title: product.name,
+                title: widget.product.name,
                 fontSize: AppSizes.f16,
                 fontWeight: FontWeight.w700,
               ),
@@ -109,7 +228,7 @@ class ProductDetailPage extends StatelessWidget {
                   Expanded(
                     child: CommonTextWidget(
                       title:
-                          '${product.currencySymbol} ${product.listPrice.toStringAsFixed(2)}',
+                          '${widget.product.currencySymbol} ${widget.product.listPrice.toStringAsFixed(2)}',
                       fontSize: AppSizes.f16,
                       fontWeight: FontWeight.w700,
                       color: context.primaryRedColor,
@@ -118,7 +237,7 @@ class ProductDetailPage extends StatelessWidget {
                   Expanded(
                     child: CommonTextWidget(
                       title:
-                          '${AppStringsConstants.stock}\t${AppStringsConstants.colon}\t${product.totalStock.onHand.toInt()}',
+                          '${AppStringsConstants.stock}\t${AppStringsConstants.colon}\t${widget.product.totalStock.onHand.toInt()}',
                       fontSize: AppSizes.f14,
                       fontWeight: FontWeight.w600,
                       color: AppColorsConstants.green,
@@ -134,7 +253,7 @@ class ProductDetailPage extends StatelessWidget {
               ),
               ProductTwoText(
                 title: AppStringsConstants.sku,
-                value: product.internalReference,
+                value: widget.product.internalReference,
               ),
               ProductTwoText(
                 title: AppStringsConstants.diameter,
@@ -148,7 +267,7 @@ class ProductDetailPage extends StatelessWidget {
                 title: AppStringsConstants.bore,
                 value: getAttribute(AppStringsConstants.bore),
               ),
-              if (product.warehouseStock.isNotEmpty) ...[
+              if (widget.product.warehouseStock.isNotEmpty) ...[
                 AppSizes.h12,
                 CommonTextWidget(
                   title: AppStringsConstants.warehouseStock,
@@ -161,9 +280,9 @@ class ProductDetailPage extends StatelessWidget {
                   separatorBuilder: (context, index) => AppSizes.h10,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: product.warehouseStock.length,
+                  itemCount: widget.product.warehouseStock.length,
                   itemBuilder: (context, index) {
-                    final warehouse = product.warehouseStock[index];
+                    final warehouse = widget.product.warehouseStock[index];
                     return Container(
                       decoration: BoxDecoration(
                         color: context.greyFA,
@@ -187,9 +306,7 @@ class ProductDetailPage extends StatelessWidget {
 
                             ProductTwoText(
                               title: AppStringsConstants.stock,
-                              value: warehouse.availableStock
-                                  .toInt()
-                                  .toString(),
+                              value: warehouse.onHand.toInt().toString(),
                             ),
                           ],
                         ),
@@ -197,6 +314,9 @@ class ProductDetailPage extends StatelessWidget {
                     );
                   },
                 ),
+                // Extra space so content is not hidden behind the bottom bar
+                // when keyboard is open
+                SizedBox(height: MediaQuery.of(context).viewInsets.bottom + 80),
               ],
             ],
           ),
